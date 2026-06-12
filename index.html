@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>提單追蹤｜DHL / FedEx / SF 順豐 / JER</title>
+<style>
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: "Microsoft JhengHei", "Segoe UI", -apple-system, sans-serif;
+    background: linear-gradient(135deg, #f5f7fa 0%, #e8eef5 100%);
+    min-height: 100vh;
+    padding: 40px 20px;
+    color: #1f2937;
+  }
+  .wrapper { max-width: 1100px; margin: 0 auto; }
+  header { text-align: center; margin-bottom: 36px; }
+  header h1 {
+    font-size: 32px;
+    margin: 0 0 8px;
+    letter-spacing: 1px;
+  }
+  header p {
+    color: #6b7280;
+    margin: 0;
+    font-size: 15px;
+  }
+  .opt-bar {
+    display: flex;
+    justify-content: center;
+    gap: 18px;
+    margin: 14px 0 0;
+    font-size: 13px;
+    color: #6b7280;
+  }
+  .opt-bar label {
+    cursor: pointer;
+    user-select: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 10px;
+    border-radius: 20px;
+    background: rgba(255,255,255,.7);
+    border: 1px solid #e5e7eb;
+  }
+  .opt-bar input { cursor: pointer; }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+  @media (max-width: 1100px) {
+    .grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 720px) {
+    .grid { grid-template-columns: 1fr; }
+  }
+  .card {
+    background: #fff;
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 6px 24px rgba(0,0,0,.08);
+    display: flex;
+    flex-direction: column;
+    transition: transform .15s ease, box-shadow .15s ease;
+  }
+  .card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 30px rgba(0,0,0,.12);
+  }
+  .card-head {
+    padding: 22px 22px 16px;
+    color: #fff;
+    position: relative;
+  }
+  .card-head .logo {
+    font-size: 22px;
+    font-weight: 800;
+    letter-spacing: 2px;
+    margin: 0;
+  }
+  .card-head .sub {
+    font-size: 12px;
+    opacity: .85;
+    margin: 4px 0 0;
+    letter-spacing: 1px;
+  }
+  .card-head .stripe {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 4px;
+  }
+  .card-body {
+    padding: 20px 22px 22px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    flex: 1;
+  }
+  label {
+    font-size: 13px;
+    color: #6b7280;
+    font-weight: 600;
+  }
+  input[type="text"] {
+    width: 100%;
+    padding: 12px 14px;
+    font-size: 15px;
+    font-family: "Consolas", "Menlo", monospace;
+    border: 1.5px solid #e5e7eb;
+    border-radius: 8px;
+    outline: none;
+    transition: border-color .15s;
+  }
+  input[type="text"]:focus { border-color: #2563eb; }
+  .btn {
+    padding: 12px 18px;
+    border: none;
+    border-radius: 8px;
+    color: #fff;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: opacity .15s, transform .1s;
+    font-family: inherit;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+  }
+  .btn:hover { opacity: .9; }
+  .btn:active { transform: scale(.98); }
+  .btn.disabled {
+    opacity: .4;
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+  .hint {
+    font-size: 12px;
+    color: #9ca3af;
+    margin: 0;
+  }
+  .last {
+    font-size: 11px;
+    color: #9ca3af;
+    margin-top: auto;
+    padding-top: 8px;
+    border-top: 1px dashed #e5e7eb;
+  }
+  .last a {
+    color: #2563eb;
+    cursor: pointer;
+    text-decoration: none;
+  }
+  .last a:hover { text-decoration: underline; }
+
+  /* DHL — 黃底紅字 */
+  .dhl .card-head { background: #FFCC00; color: #D40511; }
+  .dhl .card-head .sub { color: #8B0000; opacity: 1; }
+  .dhl .card-head .stripe { background: #D40511; }
+  .dhl .btn { background: #D40511; }
+
+  /* FedEx — 紫底橘字 */
+  .fedex .card-head { background: #4D148C; }
+  .fedex .card-head .logo { color: #fff; }
+  .fedex .card-head .logo .ex { color: #FF6600; }
+  .fedex .card-head .stripe { background: #FF6600; }
+  .fedex .btn { background: #4D148C; }
+
+  /* SF — 黑底紅字 */
+  .sf .card-head { background: #1a1a1a; }
+  .sf .card-head .logo { color: #fff; }
+  .sf .card-head .logo .ef { color: #E60012; }
+  .sf .card-head .stripe { background: #E60012; }
+  .sf .btn { background: #E60012; }
+
+  /* UPS — 棕底金字 */
+  .ups .card-head { background: #351C15; }
+  .ups .card-head .logo { color: #FFB500; }
+  .ups .card-head .sub { color: #FFB500; }
+  .ups .card-head .stripe { background: #FFB500; }
+  .ups .btn { background: #351C15; }
+
+  /* 嘉里大榮 — 紅底白字 */
+  .kerry .card-head { background: #C8102E; }
+  .kerry .card-head .logo { color: #fff; }
+  .kerry .card-head .stripe { background: #FFD100; }
+  .kerry .btn { background: #C8102E; }
+
+  /* 黑貓 — 黃底黑字 */
+  .tcat .card-head { background: #FFD500; color: #1a1a1a; }
+  .tcat .card-head .logo { color: #1a1a1a; }
+  .tcat .card-head .sub { color: #1a1a1a; opacity: .85; }
+  .tcat .card-head .stripe { background: #1a1a1a; }
+  .tcat .btn { background: #1a1a1a; }
+
+  /* DPEX — 橘紅底白字 */
+  .dpex .card-head { background: #E04A1E; }
+  .dpex .card-head .logo { color: #fff; }
+  .dpex .card-head .stripe { background: #fff; }
+  .dpex .btn { background: #E04A1E; }
+
+  /* JER 捷麟 — 橘底白字、深藍飾條 */
+  .jer .card-head { background: #F7941D; }
+  .jer .card-head .logo { color: #fff; }
+  .jer .card-head .sub { color: #fff; }
+  .jer .card-head .stripe { background: #1B3A6B; }
+  .jer .btn { background: #1B3A6B; }
+
+  footer {
+    text-align: center;
+    margin-top: 36px;
+    color: #9ca3af;
+    font-size: 12px;
+  }
+  .toast {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #1f2937;
+    color: #fff;
+    padding: 10px 18px;
+    border-radius: 8px;
+    font-size: 14px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .25s;
+    z-index: 99;
+  }
+  .toast.show { opacity: 1; }
+  .toast a { color: #FFD500; text-decoration: underline; pointer-events: auto; }
+
+  /* Help button & panel */
+  .help-btn {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: #1f2937;
+    color: #fff;
+    border: none;
+    padding: 10px 16px;
+    border-radius: 24px;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0,0,0,.15);
+    font-family: inherit;
+    z-index: 90;
+    transition: transform .15s;
+  }
+  .help-btn:hover { transform: scale(1.05); }
+  .help-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,.5);
+    display: none;
+    align-items: flex-start;
+    justify-content: center;
+    z-index: 100;
+    padding: 40px 20px;
+    overflow-y: auto;
+  }
+  .help-overlay.show { display: flex; }
+  .help-panel {
+    background: #fff;
+    border-radius: 14px;
+    max-width: 720px;
+    width: 100%;
+    padding: 28px 32px;
+    box-shadow: 0 20px 60px rgba(0,0,0,.3);
+    position: relative;
+  }
+  .help-panel h2 {
+    margin: 0 0 6px;
+    font-size: 22px;
+    color: #1f2937;
+  }
+  .help-panel .lead {
+    color: #6b7280;
+    margin: 0 0 18px;
+    font-size: 14px;
+  }
+  .help-close {
+    position: absolute;
+    top: 14px;
+    right: 16px;
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    color: #6b7280;
+    line-height: 1;
+  }
+  .help-close:hover { color: #1f2937; }
+  .help-step {
+    display: flex;
+    gap: 14px;
+    padding: 14px 0;
+    border-bottom: 1px dashed #e5e7eb;
+  }
+  .help-step:last-of-type { border-bottom: none; }
+  .help-step .num {
+    flex-shrink: 0;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: #D40511;
+    color: #fff;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 15px;
+  }
+  .help-step .content { flex: 1; }
+  .help-step h3 {
+    margin: 0 0 4px;
+    font-size: 15px;
+    color: #1f2937;
+  }
+  .help-step p {
+    margin: 0;
+    font-size: 13px;
+    color: #4b5563;
+    line-height: 1.6;
+  }
+  .help-tip {
+    margin-top: 18px;
+    padding: 14px 16px;
+    background: #FFF8DC;
+    border-left: 4px solid #F59E0B;
+    border-radius: 6px;
+    font-size: 13px;
+    color: #4b5563;
+    line-height: 1.7;
+  }
+  .help-tip strong { color: #B45309; }
+</style>
+</head>
+<body>
+<div class="wrapper">
+  <header>
+    <h1>📦 提單追蹤一鍵查</h1>
+    <p>輸入提單號 → 按查詢 → 自動開啟對應物流網站查件</p>
+    <div class="opt-bar">
+      <label><input type="checkbox" id="opt-newtab" checked> 🚀 開新分頁（取消勾就同分頁跳轉）</label>
+    </div>
+  </header>
+
+  <div class="grid">
+    <!-- DHL -->
+    <div class="card dhl">
+      <div class="card-head">
+        <p class="logo">DHL</p>
+        <p class="sub">EXPRESS</p>
+        <div class="stripe"></div>
+      </div>
+      <div class="card-body">
+        <label for="dhl-awb">DHL 提單號（AWB）</label>
+        <input type="text" id="dhl-awb" placeholder="例：1234567890" autocomplete="off" oninput="updateLink('dhl')">
+        <p class="hint">通常為 10 位數字</p>
+        <a class="btn disabled" id="dhl-btn" href="#" target="_blank" rel="noopener" onclick="return beforeGo('dhl')">查詢 DHL</a>
+        <div class="last" id="dhl-last"></div>
+      </div>
+    </div>
+
+    <!-- FedEx -->
+    <div class="card fedex">
+      <div class="card-head">
+        <p class="logo">Fed<span class="ex">Ex</span></p>
+        <p class="sub">EXPRESS</p>
+        <div class="stripe"></div>
+      </div>
+      <div class="card-body">
+        <label for="fedex-awb">FedEx 提單號（Tracking No.）</label>
+        <input type="text" id="fedex-awb" placeholder="例：123456789012" autocomplete="off" oninput="updateLink('fedex')">
+        <p class="hint">通常為 12 位數字</p>
+        <a class="btn disabled" id="fedex-btn" href="#" target="_blank" rel="noopener" onclick="return beforeGo('fedex')">查詢 FedEx</a>
+        <div class="last" id="fedex-last"></div>
+      </div>
+    </div>
+
+    <!-- SF -->
+    <div class="card sf">
+      <div class="card-head">
+        <p class="logo">S<span class="ef">F</span> 順豐</p>
+        <p class="sub">SF EXPRESS</p>
+        <div class="stripe"></div>
+      </div>
+      <div class="card-body">
+        <label for="sf-awb">順豐運單號</label>
+        <input type="text" id="sf-awb" placeholder="例：SF1234567890123" autocomplete="off" oninput="updateLink('sf')">
+        <p class="hint">12 位數字，部分以 SF 開頭</p>
+        <a class="btn disabled" id="sf-btn" href="#" target="_blank" rel="noopener" onclick="return beforeGo('sf')">查詢 順豐</a>
+        <div class="last" id="sf-last"></div>
+      </div>
+    </div>
+
+    <!-- JER 捷麟 -->
+    <div class="card jer">
+      <div class="card-head">
+        <p class="logo">JER</p>
+        <p class="sub">捷麟航空貨運 JER WORLDWIDE EXPRESS</p>
+        <div class="stripe"></div>
+      </div>
+      <div class="card-body">
+        <label for="jer-awb">JER 提單號（AWB）</label>
+        <input type="text" id="jer-awb" placeholder="例：1234567890" autocomplete="off" oninput="updateLink('jer')">
+        <p class="hint">按查詢後到 JER 官網首頁，於「追蹤」查詢框 <strong>Ctrl + V</strong> 貼上（單號已自動複製，可一次貼多筆）</p>
+        <a class="btn disabled" id="jer-btn" href="#" target="_blank" rel="noopener" onclick="return beforeGo('jer')">查詢 JER</a>
+        <div class="last" id="jer-last"></div>
+      </div>
+    </div>
+
+    <!-- UPS -->
+    <div class="card ups">
+      <div class="card-head">
+        <p class="logo">UPS</p>
+        <p class="sub">UNITED PARCEL SERVICE</p>
+        <div class="stripe"></div>
+      </div>
+      <div class="card-body">
+        <label for="ups-awb">UPS 提單號（Tracking No.）</label>
+        <input type="text" id="ups-awb" placeholder="例：1Z999AA10123456784" autocomplete="off" oninput="updateLink('ups')">
+        <p class="hint">通常以 1Z 開頭，共 18 碼</p>
+        <a class="btn disabled" id="ups-btn" href="#" target="_blank" rel="noopener" onclick="return beforeGo('ups')">查詢 UPS</a>
+        <div class="last" id="ups-last"></div>
+      </div>
+    </div>
+
+    <!-- 嘉里大榮 -->
+    <div class="card kerry">
+      <div class="card-head">
+        <p class="logo">嘉里大榮</p>
+        <p class="sub">KERRY TJ LOGISTICS</p>
+        <div class="stripe"></div>
+      </div>
+      <div class="card-body">
+        <label for="kerry-awb">嘉里大榮 貨件條碼</label>
+        <input type="text" id="kerry-awb" placeholder="例：900123456789" autocomplete="off" oninput="updateLink('kerry')">
+        <p class="hint">10～12 位數字</p>
+        <a class="btn disabled" id="kerry-btn" href="#" target="_blank" rel="noopener" onclick="return beforeGo('kerry')">查詢 嘉里大榮</a>
+        <div class="last" id="kerry-last"></div>
+      </div>
+    </div>
+
+    <!-- 黑貓 -->
+    <div class="card tcat">
+      <div class="card-head">
+        <p class="logo">黑貓宅急便</p>
+        <p class="sub">T-CAT 統一速達</p>
+        <div class="stripe"></div>
+      </div>
+      <div class="card-body">
+        <label for="tcat-awb">黑貓宅急便 託運單號</label>
+        <input type="text" id="tcat-awb" placeholder="例：123456789012" autocomplete="off" oninput="updateLink('tcat')">
+        <p class="hint">12 位數字</p>
+        <a class="btn disabled" id="tcat-btn" href="#" target="_blank" rel="noopener" onclick="return beforeGo('tcat')">查詢 黑貓</a>
+        <div class="last" id="tcat-last"></div>
+      </div>
+    </div>
+
+    <!-- DPEX 台灣（迪比翼） -->
+    <div class="card dpex">
+      <div class="card-head">
+        <p class="logo">DPEX</p>
+        <p class="sub">台灣迪比翼國際快遞</p>
+        <div class="stripe"></div>
+      </div>
+      <div class="card-body">
+        <label for="dpex-awb">DPEX 提單號（AWB）</label>
+        <input type="text" id="dpex-awb" placeholder="例：410610124650" autocomplete="off" oninput="updateLink('dpex')">
+        <p class="hint">按查詢後到 DPEX 台灣首頁，於「貨件查詢」<strong>Ctrl + V</strong> 貼上（單號已自動複製）</p>
+        <a class="btn disabled" id="dpex-btn" href="#" target="_blank" rel="noopener" onclick="return beforeGo('dpex')">查詢 DPEX</a>
+        <div class="last" id="dpex-last"></div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <p>單號會自動記在這台電腦的瀏覽器內，方便下次回查 ・ 製作：Sandy</p>
+  </footer>
+</div>
+
+<button class="help-btn" onclick="toggleHelp()">📖 使用說明</button>
+
+<div class="help-overlay" id="help-overlay" onclick="if(event.target===this)toggleHelp()">
+  <div class="help-panel">
+    <button class="help-close" onclick="toggleHelp()">×</button>
+    <h2>📖 使用說明</h2>
+    <p class="lead">三步驟查件，新人也能秒上手</p>
+
+    <div class="help-step">
+      <div class="num">1</div>
+      <div class="content">
+        <h3>找到對應物流</h3>
+        <p>看你手上的提單是哪一家貨運（DHL / FedEx / 順豐 / JER / UPS / 嘉里大榮 / 黑貓 / DPEX），就找到頁面上同名的卡片。</p>
+      </div>
+    </div>
+
+    <div class="help-step">
+      <div class="num">2</div>
+      <div class="content">
+        <h3>輸入提單號</h3>
+        <p>把提單號（AWB / Tracking No. / 託運單號）貼到該家的欄位裡。<br>
+        貼進去的時候如果不小心有空白、橫線（例如 <code>1234-5678-90</code>），系統會自動幫你清掉，不用手動處理。</p>
+      </div>
+    </div>
+
+    <div class="help-step">
+      <div class="num">3</div>
+      <div class="content">
+        <h3>按「查詢」或 Enter</h3>
+        <p>點下藍色／彩色按鈕，或直接按鍵盤 <strong>Enter</strong> 鍵，會在新分頁自動打開該物流的官方查件頁面，並帶入你的單號。</p>
+      </div>
+    </div>
+
+    <div class="help-step">
+      <div class="num">4</div>
+      <div class="content">
+        <h3>下次回查更快</h3>
+        <p>查完之後，每個欄位下方會顯示「上次查：xxx」，直接點那個藍字就能再查一次，不用重打單號。<br>
+        想刪掉紀錄就點旁邊的「清除」。</p>
+      </div>
+    </div>
+
+    <div class="help-step">
+      <div class="num">5</div>
+      <div class="content">
+        <h3>🚀 開新分頁開關</h3>
+        <p>頁面標題下方有一個 <strong>「🚀 開新分頁」</strong> 勾選方塊：<br>
+        ・ <strong>預設打勾</strong>：查詢會開「新分頁」，查詢頁不會關掉，方便連續查多筆。<br>
+        ・ <strong>取消打勾</strong>：在「同一個分頁」直接跳轉。如果你的公司電腦會擋掉「開新分頁」，把這個取消打勾，100% 不會被擋（但要按瀏覽器的「上一頁 ←」才能回到查詢頁）。<br>
+        設定會自動記住，下次打開不用重設。</p>
+      </div>
+    </div>
+
+    <div class="help-tip">
+      <strong>💡 小提醒：</strong><br>
+      ・ 這個頁面不需要網路也能打開（純前端網頁），但要查件當然要連網。<br>
+      ・ 單號紀錄只存在「這台電腦」的瀏覽器裡，換電腦不會跟著走，安全無外傳。<br>
+      ・ <strong>每次按查詢，單號會自動複製到剪貼簿</strong>，JER / DPEX / 嘉里 / 黑貓官網沒自動帶入時，直接 <strong>Ctrl+V</strong> 貼上即可。<br>
+      ・ <strong>JER / DPEX 查件頁固定要手動貼上</strong>（官網不支援單號 URL 參數），按查詢會自動帶你到查件頁。JER 還可以一次貼多筆單號，用空格或換行分隔。<br>
+      ・ 按了「查詢」完全沒反應 → 把上方「🚀 開新分頁」取消打勾再試。
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+  const URL_TEMPLATES = {
+    dhl:   awb => `https://www.dhl.com/tw-zh/home/tracking/tracking-express.html?submit=1&tracking-id=${encodeURIComponent(awb)}`,
+    fedex: awb => `https://www.fedex.com/fedextrack/?trknbr=${encodeURIComponent(awb)}`,
+    sf:    awb => `https://htm.sf-express.com/tw/tc/dynamic_function/waybill/#search/bill-number/${encodeURIComponent(awb)}`,
+    ups:   awb => `https://www.ups.com/track?loc=zh_TW&tracknum=${encodeURIComponent(awb)}`,
+    kerry: awb => `https://www.kerrytj.com/zh/Search/Search_Track.aspx?ftn=${encodeURIComponent(awb)}`,
+    tcat:  awb => `https://www.t-cat.com.tw/Inquire/Trace.aspx?BillID=${encodeURIComponent(awb)}`,
+    // DPEX 台灣（迪比翼）首頁；查件表單在頁面上，不吃 URL 參數，單號由 clipboard 自動複製
+    dpex:  awb => `https://www.dpex.com.tw/zh/home`,
+    // JER 捷麟（jer2000.com）首頁；track.asp 只吃 POST 表單，不吃 URL 參數，單號由 clipboard 自動複製
+    jer:   awb => `http://www.jer2000.com/`,
+  };
+
+  // 哪些物流的官網不吃 URL 參數帶入，需要靠剪貼簿輔助手動貼上
+  const NEEDS_PASTE = new Set(['dpex', 'jer']);
+
+  const LABELS = { dhl: 'DHL', fedex: 'FedEx', sf: '順豐', ups: 'UPS', kerry: '嘉里大榮', tcat: '黑貓宅急便', dpex: 'DPEX', jer: 'JER' };
+  const COURIERS = ['dhl', 'fedex', 'sf', 'jer', 'ups', 'kerry', 'tcat', 'dpex'];
+
+  function clean(v) {
+    // 去掉空白、全形空白、奇怪符號
+    return (v || '').replace(/[\s　\-_,]/g, '').trim();
+  }
+
+  function showToast(msg, html) {
+    const t = document.getElementById('toast');
+    if (html) { t.innerHTML = msg; } else { t.textContent = msg; }
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), html ? 8000 : 1800);
+  }
+
+  // 即時把欄位內容塞進按鈕的 href
+  // 使用者實際點按鈕 = 真的點連結，瀏覽器不會擋
+  function updateLink(courier) {
+    const input = document.getElementById(courier + '-awb');
+    const btn = document.getElementById(courier + '-btn');
+    const awb = clean(input.value);
+    if (awb) {
+      btn.href = URL_TEMPLATES[courier](awb);
+      btn.classList.remove('disabled');
+    } else {
+      btn.href = '#';
+      btn.classList.add('disabled');
+    }
+  }
+
+  // 連結被點下去之前先做：清欄位、記住單號、複製剪貼簿、處理「同分頁」選項
+  function beforeGo(courier) {
+    const input = document.getElementById(courier + '-awb');
+    const btn = document.getElementById(courier + '-btn');
+    const awb = clean(input.value);
+    if (!awb) {
+      showToast('請先輸入 ' + LABELS[courier] + ' 提單號');
+      input.focus();
+      return false; // 阻止跳轉
+    }
+    input.value = awb;
+    btn.href = URL_TEMPLATES[courier](awb);
+    localStorage.setItem('awb_' + courier, awb);
+    renderLast(courier);
+
+    // 把單號自動複製到剪貼簿，當作官網不吃 URL 參數時的保險
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(awb).catch(() => {});
+      if (NEEDS_PASTE.has(courier)) {
+        showToast('單號 ' + awb + ' 已複製，到 ' + LABELS[courier] + ' 頁面按 Ctrl+V 貼上');
+      }
+    }
+
+    // 同分頁開啟模式：拿掉 target，瀏覽器會在這個分頁直接跳轉
+    const newTab = document.getElementById('opt-newtab').checked;
+    btn.target = newTab ? '_blank' : '_self';
+    localStorage.setItem('opt_newtab', newTab ? '1' : '0');
+
+    return true; // 放行
+  }
+
+  function renderLast(courier) {
+    const last = localStorage.getItem('awb_' + courier);
+    const el = document.getElementById(courier + '-last');
+    if (last) {
+      el.innerHTML = '上次查：<a onclick="reuse(\'' + courier + '\',\'' + last + '\')">' + last + '</a>　<a onclick="clearLast(\'' + courier + '\')" style="color:#9ca3af">清除</a>';
+    } else {
+      el.innerHTML = '';
+    }
+  }
+
+  function reuse(courier, awb) {
+    const input = document.getElementById(courier + '-awb');
+    const btn = document.getElementById(courier + '-btn');
+    input.value = awb;
+    updateLink(courier);
+    // 用真連結點擊（不是 window.open）
+    btn.click();
+  }
+
+  function clearLast(courier) {
+    localStorage.removeItem('awb_' + courier);
+    renderLast(courier);
+  }
+
+  function toggleHelp() {
+    document.getElementById('help-overlay').classList.toggle('show');
+  }
+  // ESC 關閉說明
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') {
+      document.getElementById('help-overlay').classList.remove('show');
+    }
+  });
+
+  // 初始化：載入上次的新分頁偏好；綁定 Enter 鍵；初始化每張卡片
+  const savedNewtab = localStorage.getItem('opt_newtab');
+  if (savedNewtab === '0') document.getElementById('opt-newtab').checked = false;
+
+  COURIERS.forEach(courier => {
+    const input = document.getElementById(courier + '-awb');
+    const btn = document.getElementById(courier + '-btn');
+    input.addEventListener('keydown', e => {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        if (beforeGo(courier)) btn.click();
+      }
+    });
+    updateLink(courier); // 初始如果有 localStorage 不會自動填，這裡只是把按鈕設為 disabled
+    renderLast(courier);
+  });
+</script>
+</body>
+</html>
