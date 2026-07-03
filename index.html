@@ -408,7 +408,7 @@
       <div class="card-body">
         <label for="jer-awb">JER 提單號（AWB）</label>
         <input type="text" id="jer-awb" placeholder="例：1234567890" autocomplete="off" oninput="updateLink('jer')">
-        <p class="hint">按查詢後到 JER 官網首頁，於「追蹤」查詢框 <strong>Ctrl + V</strong> 貼上（單號已自動複製，可一次貼多筆）</p>
+        <p class="hint">輸入單號後按查詢，直接在新分頁顯示追蹤結果</p>
         <a class="btn disabled" id="jer-btn" href="#" target="_blank" rel="noopener" onclick="return beforeGo('jer')">查詢 JER</a>
         <div class="last" id="jer-last"></div>
       </div>
@@ -541,8 +541,9 @@
       <strong>💡 小提醒：</strong><br>
       ・ 這個頁面不需要網路也能打開（純前端網頁），但要查件當然要連網。<br>
       ・ 單號紀錄只存在「這台電腦」的瀏覽器裡，換電腦不會跟著走，安全無外傳。<br>
-      ・ <strong>每次按查詢，單號會自動複製到剪貼簿</strong>，JER / DPEX / 嘉里 / 黑貓官網沒自動帶入時，直接 <strong>Ctrl+V</strong> 貼上即可。<br>
-      ・ <strong>JER / DPEX 查件頁固定要手動貼上</strong>（官網不支援單號 URL 參數），按查詢會自動帶你到查件頁。JER 還可以一次貼多筆單號，用空格或換行分隔。<br>
+      ・ <strong>每次按查詢，單號會自動複製到剪貼簿</strong>，DPEX / 嘉里 / 黑貓官網沒自動帶入時，直接 <strong>Ctrl+V</strong> 貼上即可。<br>
+      ・ <strong>DPEX 查件頁需手動貼上</strong>（官網不支援單號 URL 參數），按查詢會自動帶你到查件頁。<br>
+      ・ <strong>JER</strong> 按查詢後直接在新分頁顯示追蹤結果，不需手動操作。<br>
       ・ 按了「查詢」完全沒反應 → 把上方「🚀 開新分頁」取消打勾再試。
     </div>
   </div>
@@ -560,12 +561,35 @@
     tcat:  awb => `https://www.t-cat.com.tw/Inquire/Trace.aspx?BillID=${encodeURIComponent(awb)}`,
     // DPEX 台灣（迪比翼）首頁；查件表單在頁面上，不吃 URL 參數，單號由 clipboard 自動複製
     dpex:  awb => `https://www.dpex.com.tw/zh/home`,
-    // JER 捷麟（jer2000.com）首頁；track.asp 只吃 POST 表單，不吃 URL 參數，單號由 clipboard 自動複製
-    jer:   awb => `http://www.jer2000.com/`,
   };
 
+  // JER 捷麟只接受 POST 表單，用 blob URL 自動送出
+  const POST_CARRIERS = {
+    jer: { action: 'http://www.jer2000.com/track.asp', field: 'AWBNo' }
+  };
+
+  function openViaPost(carrier, awb) {
+    const cfg = POST_CARRIERS[carrier];
+    const safeAwb = awb.replace(/&/g, '&amp;').replace(/"/g, '&quot;');
+    const html = `<!DOCTYPE html><html><head><meta charset="UTF-8"></head><body>
+<form id="f" method="post" action="${cfg.action}">
+  <input name="${cfg.field}" value="${safeAwb}">
+</form>
+<script>document.getElementById('f').submit();<\/script>
+</body></html>`;
+    const blob = new Blob([html], { type: 'text/html' });
+    const url = URL.createObjectURL(blob);
+    const newTab = document.getElementById('opt-newtab').checked;
+    if (newTab) {
+      window.open(url, '_blank');
+    } else {
+      location.href = url;
+    }
+    setTimeout(() => URL.revokeObjectURL(url), 10000);
+  }
+
   // 哪些物流的官網不吃 URL 參數帶入，需要靠剪貼簿輔助手動貼上
-  const NEEDS_PASTE = new Set(['dpex', 'jer']);
+  const NEEDS_PASTE = new Set(['dpex']);
 
   const LABELS = { dhl: 'DHL', fedex: 'FedEx', sf: '順豐', ups: 'UPS', kerry: '嘉里大榮', tcat: '黑貓宅急便', dpex: 'DPEX', jer: 'JER' };
   const COURIERS = ['dhl', 'fedex', 'sf', 'jer', 'ups', 'kerry', 'tcat', 'dpex'];
@@ -582,14 +606,12 @@
     setTimeout(() => t.classList.remove('show'), html ? 8000 : 1800);
   }
 
-  // 即時把欄位內容塞進按鈕的 href
-  // 使用者實際點按鈕 = 真的點連結，瀏覽器不會擋
   function updateLink(courier) {
     const input = document.getElementById(courier + '-awb');
     const btn = document.getElementById(courier + '-btn');
     const awb = clean(input.value);
     if (awb) {
-      btn.href = URL_TEMPLATES[courier](awb);
+      if (!POST_CARRIERS[courier]) btn.href = URL_TEMPLATES[courier](awb);
       btn.classList.remove('disabled');
     } else {
       btn.href = '#';
@@ -597,7 +619,6 @@
     }
   }
 
-  // 連結被點下去之前先做：清欄位、記住單號、複製剪貼簿、處理「同分頁」選項
   function beforeGo(courier) {
     const input = document.getElementById(courier + '-awb');
     const btn = document.getElementById(courier + '-btn');
@@ -605,27 +626,30 @@
     if (!awb) {
       showToast('請先輸入 ' + LABELS[courier] + ' 提單號');
       input.focus();
-      return false; // 阻止跳轉
+      return false;
     }
     input.value = awb;
-    btn.href = URL_TEMPLATES[courier](awb);
     localStorage.setItem('awb_' + courier, awb);
     renderLast(courier);
+    localStorage.setItem('opt_newtab', document.getElementById('opt-newtab').checked ? '1' : '0');
 
-    // 把單號自動複製到剪貼簿，當作官網不吃 URL 參數時的保險
+    // POST 表單類（JER）：用 blob 自動送出，不走 <a href>
+    if (POST_CARRIERS[courier]) {
+      openViaPost(courier, awb);
+      return false;
+    }
+
+    // 一般 GET 類
+    btn.href = URL_TEMPLATES[courier](awb);
     if (navigator.clipboard && navigator.clipboard.writeText) {
       navigator.clipboard.writeText(awb).catch(() => {});
       if (NEEDS_PASTE.has(courier)) {
         showToast('單號 ' + awb + ' 已複製，到 ' + LABELS[courier] + ' 頁面按 Ctrl+V 貼上');
       }
     }
-
-    // 同分頁開啟模式：拿掉 target，瀏覽器會在這個分頁直接跳轉
     const newTab = document.getElementById('opt-newtab').checked;
     btn.target = newTab ? '_blank' : '_self';
-    localStorage.setItem('opt_newtab', newTab ? '1' : '0');
-
-    return true; // 放行
+    return true;
   }
 
   function renderLast(courier) {
