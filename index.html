@@ -570,22 +570,35 @@
 
   function openViaPost(carrier, awb) {
     const cfg = POST_CARRIERS[carrier];
-    const safeAwb = awb.replace(/&/g, '&amp;').replace(/"/g, '&quot;');
-    const html = `<!DOCTYPE html><html><head><meta charset="UTF-8"></head><body>
-<form id="f" method="post" action="${cfg.action}">
-  <input name="${cfg.field}" value="${safeAwb}">
-</form>
-<script>document.getElementById('f').submit();<\/script>
-</body></html>`;
-    const blob = new Blob([html], { type: 'text/html' });
-    const url = URL.createObjectURL(blob);
     const newTab = document.getElementById('opt-newtab').checked;
-    if (newTab) {
-      window.open(url, '_blank');
-    } else {
-      location.href = url;
-    }
-    setTimeout(() => URL.revokeObjectURL(url), 10000);
+
+    // JER 的 track.asp 只接受 HTTP POST，從 HTTPS 頁面直接送會觸發 Chrome 混合內容警告。
+    // 解法：透過 sandbox="allow-scripts allow-popups" 的 iframe（null origin，非 secure context），
+    // 在其中建立 blob URL 並 window.open，讓新分頁的 origin 也是 null，不觸發混合內容檢查。
+    const iframeScript = `
+window.addEventListener('message', function(e) {
+  var d = e.data;
+  var esc = function(s) { return s.replace(/&/g,'&amp;').replace(/"/g,'&quot;'); };
+  var h = '<!DOCTYPE html><html><head><meta charset="UTF-8"></head><body>'
+        + '<form id="f" method="post" action="' + esc(d.a) + '">'
+        + '<input name="' + esc(d.f) + '" value="' + esc(d.v) + '"></form>'
+        + '\\x3cscript>document.getElementById("f").submit();\\x3c/script>'
+        + '</body></html>';
+  window.open(URL.createObjectURL(new Blob([h], {type:'text/html'})), d.t);
+});`;
+
+    const iframe = document.createElement('iframe');
+    iframe.sandbox = 'allow-scripts allow-popups allow-popups-to-escape-sandbox';
+    iframe.style.cssText = 'position:absolute;left:-9999px;width:1px;height:1px;border:0';
+    iframe.srcdoc = '<script>' + iframeScript + '<\/script>';
+    document.body.appendChild(iframe);
+    iframe.addEventListener('load', function() {
+      iframe.contentWindow.postMessage(
+        { a: cfg.action, f: cfg.field, v: awb, t: newTab ? '_blank' : '_self' },
+        '*'
+      );
+      setTimeout(() => iframe.remove(), 8000);
+    });
   }
 
   // 哪些物流的官網不吃 URL 參數帶入，需要靠剪貼簿輔助手動貼上
