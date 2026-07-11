@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sandy Lai — Production Coordinator Resume</title>
+<style>
+  :root {
+    --paper: #FBFAF6;
+    --ink: #21262B;
+    --body: #3C434B;
+    --muted: #6F767E;
+    --accent: #35558A;
+    --rule: #E3E1D9;
+    --fill-bg: #FDF3D7;
+    --fill-edge: #C9A227;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --paper: #15181C;
+      --ink: #ECEEF1;
+      --body: #C5CAD1;
+      --muted: #8A9199;
+      --accent: #85A9DC;
+      --rule: #2B3138;
+      --fill-bg: #37301A;
+      --fill-edge: #D8B84A;
+    }
+  }
+  :root[data-theme="dark"] {
+    --paper: #15181C;
+    --ink: #ECEEF1;
+    --body: #C5CAD1;
+    --muted: #8A9199;
+    --accent: #85A9DC;
+    --rule: #2B3138;
+    --fill-bg: #37301A;
+    --fill-edge: #D8B84A;
+  }
+  :root[data-theme="light"] {
+    --paper: #FBFAF6;
+    --ink: #21262B;
+    --body: #3C434B;
+    --muted: #6F767E;
+    --accent: #35558A;
+    --rule: #E3E1D9;
+    --fill-bg: #FDF3D7;
+    --fill-edge: #C9A227;
+  }
+
+  body {
+    background: var(--paper);
+    color: var(--body);
+    font-family: -apple-system, "Segoe UI", "Helvetica Neue", "PingFang TC", "Microsoft JhengHei", Arial, sans-serif;
+    font-size: 13.5px;
+    line-height: 1.55;
+    margin: 0;
+  }
+  .sheet {
+    max-width: 47rem;
+    margin: 0 auto;
+    padding: 48px 52px 56px;
+  }
+
+  .screen-note {
+    max-width: 47rem;
+    margin: 20px auto 0;
+    padding: 10px 52px;
+    font-size: 12px;
+    color: var(--muted);
+  }
+  .screen-note .dot { color: var(--fill-edge); font-weight: 700; }
+
+  header.rhead {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 24px;
+    padding-bottom: 18px;
+    border-bottom: 2px solid var(--ink);
+    flex-wrap: wrap;
+  }
+  h1 {
+    font-family: "Palatino Linotype", Palatino, "Book Antiqua", Georgia, serif;
+    font-size: 30px;
+    font-weight: 700;
+    letter-spacing: .5px;
+    color: var(--ink);
+    margin: 0;
+    text-wrap: balance;
+  }
+  .zh-name {
+    font-size: 17px;
+    font-weight: 400;
+    color: var(--muted);
+    margin-left: 8px;
+    letter-spacing: 2px;
+  }
+  .headline {
+    margin: 6px 0 0;
+    font-size: 14px;
+    color: var(--accent);
+    font-weight: 600;
+    letter-spacing: .3px;
+  }
+  .contact {
+    text-align: right;
+    font-size: 12.5px;
+    color: var(--muted);
+    line-height: 1.7;
+    white-space: nowrap;
+  }
+  .contact a { color: var(--accent); text-decoration: none; }
+
+  section { margin-top: 26px; }
+  h2 {
+    font-size: 11.5px;
+    font-weight: 700;
+    letter-spacing: 2.2px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin: 0 0 10px;
+    padding-bottom: 5px;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .summary { margin: 0; max-width: 65ch; }
+
+  .job { margin-bottom: 18px; }
+  .job:last-child { margin-bottom: 0; }
+  .job-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  .job-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--ink);
+    margin: 0;
+  }
+  .job-org {
+    font-weight: 600;
+    color: var(--body);
+    margin: 2px 0 0;
+    font-size: 13px;
+  }
+  .job-org .co-note { font-weight: 400; color: var(--muted); }
+  .job-dates {
+    font-size: 12.5px;
+    color: var(--muted);
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+  }
+  ul.bullets {
+    margin: 8px 0 0;
+    padding-left: 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+  ul.bullets li { padding-left: 2px; }
+  ul.bullets li::marker { color: var(--accent); }
+  .brands { color: var(--ink); font-weight: 600; }
+
+  .skills-grid {
+    display: grid;
+    grid-template-columns: 9.5em 1fr;
+    gap: 7px 18px;
+  }
+  .skills-grid dt {
+    font-weight: 700;
+    color: var(--ink);
+    font-size: 12.5px;
+  }
+  .skills-grid dd { margin: 0; }
+  @media (max-width: 560px) {
+    .sheet { padding: 32px 22px 40px; }
+    .screen-note { padding: 10px 22px; }
+    .contact { text-align: left; white-space: normal; }
+    .skills-grid { grid-template-columns: 1fr; gap: 2px 0; }
+    .skills-grid dd { margin-bottom: 8px; }
+  }
+
+  .fill {
+    background: var(--fill-bg);
+    border-bottom: 1.5px dashed var(--fill-edge);
+    padding: 0 3px;
+    border-radius: 2px;
+  }
+
+  @media print {
+    :root {
+      --paper: #fff;
+      --ink: #1a1d21;
+      --body: #33383e;
+      --muted: #5f656c;
+      --accent: #2e4a79;
+      --rule: #d9d7d0;
+      --fill-bg: #fdf3d7;
+      --fill-edge: #c9a227;
+    }
+    .screen-note { display: none; }
+    body { font-size: 12px; }
+    .sheet { max-width: none; padding: 0; }
+    section { margin-top: 18px; }
+    .job { break-inside: avoid; }
+    @page { size: A4; margin: 16mm 15mm; }
+  }
+</style>
+</head>
+<body>
+
+<p class="screen-note"><span class="dot">●</span> 黃底虛線處為待補資訊（電話、LinkedIn、前職起訖時間、學歷）。補完後以瀏覽器「列印 → 另存 PDF」即可輸出 A4 履歷；列印時此提示不會出現。</p>
+
+<div class="sheet">
+  <header class="rhead">
+    <div>
+      <h1>Shih-Hsuan &ldquo;Sandy&rdquo; Lai<span class="zh-name">賴仕軒</span></h1>
+      <p class="headline">Apparel Production Coordinator · Garment Merchandising &amp; Sourcing</p>
+    </div>
+    <div class="contact">
+      Taipei, Taiwan<br>
+      <a href="mailto:sandy.lai.tpe@gmail.com">sandy.lai.tpe@gmail.com</a><br>
+      <span class="fill">+886-9XX-XXX-XXX</span> · <span class="fill">linkedin.com/in/your-id</span>
+    </div>
+  </header>
+
+  <section>
+    <h2>Profile</h2>
+    <p class="summary">
+      Apparel production coordinator at <strong>Makalot Industrial (TWSE: 1477)</strong>, one of the
+      world&rsquo;s leading garment manufacturers for major US and international retailers. Coordinates
+      development-to-delivery execution for <span class="brands">Champion (High Life), ASICS, Kohl&rsquo;s
+      private brands, and Quince</span> &mdash; covering baby, kids, and adult apparel across activewear,
+      ready-to-wear, sleepwear, and loungewear. Works daily in English with US brand teams and
+      Southeast Asian factories to keep sampling, materials, bulk production, and shipments on calendar.
+    </p>
+  </section>
+
+  <section>
+    <h2>Experience</h2>
+
+    <div class="job">
+      <div class="job-head">
+        <div>
+          <p class="job-title">Production &amp; Sourcing Coordinator（採購管理師）</p>
+          <p class="job-org">Makalot Industrial Co., Ltd. 聚陽實業 <span class="co-note">· Taipei, Taiwan · listed apparel manufacturer (TWSE: 1477)</span></p>
+        </div>
+        <span class="job-dates">May 2023 – Present</span>
+      </div>
+      <ul class="bullets">
+        <li>Coordinate end-to-end order execution for US brand accounts &mdash; <span class="brands">Champion (High Life)</span>, <span class="brands">ASICS</span>, <span class="brands">Kohl&rsquo;s</span> (Tek Gear men&rsquo;s / women&rsquo;s / boys&rsquo;, FLX, Sonoma, Big &amp; Tall, women&rsquo;s sleepwear), and <span class="brands">Quince</span> &mdash; from development and sampling through bulk production and shipment.</li>
+        <li>Serve as daily point of contact for US brand production teams: manage seasonal submit trackers, AD / TOP (photo-ad and top-of-production) sample deadlines, BOM revisions, and production shift and delivery-change requests across SP / SU / FA seasons.</li>
+        <li>Partner with overseas factories (Vietnam and other Makalot facilities) to align fabric and trim readiness with sewing-line schedules; maintain the company&rsquo;s material-arrival (T&amp;A) tracking platform so sales and factory teams can re-plan line loading in real time.</li>
+        <li>Support Quince&rsquo;s baby &amp; kids program: handle tech-pack handoffs, grading rules and measurement methods, sample-process alignment, and chargeback investigation directly with the brand&rsquo;s US team.</li>
+        <li>Track vessel schedules and courier shipments end-to-end; designed and built a one-click multi-carrier tracking web tool (DHL, FedEx, UPS, SF Express, Kerry, T-cat, DPEX, JER) adopted by the team to speed up daily sample and document tracing.</li>
+      </ul>
+    </div>
+
+    <div class="job">
+      <div class="job-head">
+        <div>
+          <p class="job-title">Buyer（採購）</p>
+          <p class="job-org">Sports City 飛雁有限公司 <span class="co-note">· Taipei, Taiwan · sporting-goods retailer</span></p>
+        </div>
+        <span class="job-dates"><span class="fill">MMM YYYY</span> – Apr 2023</span>
+      </div>
+      <ul class="bullets">
+        <li>Sourced and purchased sporting-goods merchandise; managed supplier negotiation, order placement, and delivery follow-up.</li>
+        <li><span class="fill">請補 1–2 條具體成果（例：負責品類、年採購額、導入的流程改善）</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <section>
+    <h2>Skills</h2>
+    <dl class="skills-grid">
+      <dt>Production</dt>
+      <dd>Time-and-action calendar management · sample development &amp; submits (proto / SMS / AD / TOP) · BOM management · fabric &amp; trim tracking · production scheduling · shipping and logistics coordination · chargeback handling</dd>
+      <dt>Tools</dt>
+      <dd>Excel / Google Sheets · ERP and internal T&amp;A platforms · Google Drive&ndash;based brand collaboration (tech packs, trackers) · built an internal web tracking utility</dd>
+      <dt>Languages</dt>
+      <dd>Mandarin (native) · English (business &mdash; daily written and spoken communication with US brand teams)</dd>
+    </dl>
+  </section>
+
+  <section>
+    <h2>Education</h2>
+    <div class="job-head">
+      <div>
+        <p class="job-title"><span class="fill">學位・科系（例：B.A. in International Trade）</span></p>
+        <p class="job-org"><span class="fill">學校名稱 University</span></p>
+      </div>
+      <span class="job-dates"><span class="fill">YYYY – YYYY</span></span>
+    </div>
+  </section>
+</div>
+
+</body>
+</html>
