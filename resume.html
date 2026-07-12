@@ -131,7 +131,7 @@
     border-bottom: 1px solid var(--rule);
   }
 
-  .summary { margin: 0; max-width: 65ch; }
+  .summary { margin: 0; }
 
   .job { margin-bottom: 18px; }
   .job:last-child { margin-bottom: 0; }
@@ -210,11 +210,22 @@
       --fill-edge: #c9a227;
     }
     .screen-note { display: none; }
-    body { font-size: 12px; }
+    body { font-size: 10.6px; line-height: 1.42; }
     .sheet { max-width: none; padding: 0; }
-    section { margin-top: 18px; }
-    .job { break-inside: avoid; }
-    @page { size: A4; margin: 16mm 15mm; }
+    header.rhead { padding-bottom: 12px; }
+    h1 { font-size: 24px; }
+    .headline { font-size: 12px; margin-top: 4px; }
+    .contact { margin-top: 8px; font-size: 10.5px; }
+    .photo { width: 78px; height: 98px; }
+    section { margin-top: 12px; }
+    h2 { margin-bottom: 7px; padding-bottom: 4px; }
+    .job { margin-bottom: 11px; break-inside: avoid; }
+    .job-title { font-size: 12.5px; }
+    .job-org { font-size: 10.8px; }
+    .job-dates { font-size: 10.5px; }
+    ul.bullets { gap: 3px; margin-top: 5px; }
+    .skills-grid { gap: 4px 14px; }
+    @page { size: A4; margin: 11mm 13mm; }
   }
 </style>
 </head>
