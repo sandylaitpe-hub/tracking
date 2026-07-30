@@ -4,7 +4,7 @@ MKT_MO = 153435.0
 N_WD, N_NOWD = 53, 65
 COST_INT, COST_WD = 13000, 5000
 PREM_INT, PREM_WD = 125, 75
-RENO_START, PACE, DOWNTIME = 3, 5, 14
+RENO_START, PACE, DOWNTIME = 4, 5, 14
 
 cost_blend = (N_WD * COST_INT + N_NOWD * (COST_INT + COST_WD)) / UNITS
 prem_blend = (N_WD * PREM_INT + N_NOWD * (PREM_INT + PREM_WD)) / UNITS
@@ -28,9 +28,9 @@ capex_reno = {y: sum(x["capex"] for x in Y[y]) for y in Y}
 dvac = {y: sum(x["dvac"] for x in Y[y]) / 12 for y in Y}
 cum_y = {y: Y[y][-1]["eom"] for y in Y}
 
-G = {y: 0.03 for y in range(1, 7)}
+G = {1: .015, 2: .020, 3: .025, 4: .030, 5: .030, 6: .030}
 LL = {1: .022, 2: .020, 3: .0175, 4: .015, 5: .015, 6: .015}
-VAC = {y: .05 for y in range(1, 7)}
+VAC = {y: .055 for y in range(1, 7)}
 CONC = {1: .0075, 2: .0075, 3: .005, 4: .005, 5: .005, 6: .005}
 BD = {1: .015, 2: .0125, 3: .0125, 4: .010, 5: .010, 6: .010}
 idx, fac = {0: 1.0}, {}
@@ -162,7 +162,7 @@ print("CoC       ", [f"{(model[y]['noi']-res[y]-interest)/equity:.1%}" for y in 
 print(f"Avg CoC   {sum((model[y]['noi']-res[y]-interest) for y in range(1,6))/5/equity:.1%}")
 print()
 print("PRICE SENSITIVITY at 6.75% exit cap")
-for p in [11_500_000, 12_000_000, 12_500_000, 13_000_000, 13_500_000, 14_200_000, 14_750_000]:
+for p in [10_500_000, 11_000_000, 11_250_000, 11_750_000, 12_500_000, 13_250_000, 14_200_000]:
     t = p + reno_cap + PROP_CAPEX + cont
     ln = size_loan(t, model[1]["noi"])
     eq = p + p * ACQ + reno_cap + PROP_CAPEX + cont + ln * FEE + FINCOST - ln

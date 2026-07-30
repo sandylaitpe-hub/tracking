@@ -224,18 +224,33 @@ for a, b in [
      "vintage, Graham Rd & Binford) achieves $1,178 / $1,655 / $1,834 for 1/2/3-bedrooms; submarket averages are "
      "$1,044 / $1,305 / $1,597. CBRE's own light-touch Upgrade Forecast is $1,094-$1,631 with a $50 premium and "
      "$1,375 on the Verdun with a W/D added."),
-    ("Renovation pace and downtime",
-     "5 units per month beginning month 3, completing all 118 units in month 26. Consistent with natural turnover "
-     "(T-12 physical occupancy 93.2% implies roughly 55-60 turns a year). 14 days of incremental downtime per "
-     "renovated unit over and above a normal turn."),
+    ("Renovation pace, permits and downtime",
+     "5 units per month beginning month 4, completing all 118 units in month 27. Consistent with natural "
+     "turnover (T-12 physical occupancy 93.2% implies roughly 55-60 turns a year). The month-4 start reflects "
+     "Indiana's two-step permit path: multifamily is a Class 1 structure requiring a STATE Construction Design "
+     "Release from IDHS (10-business-day clock, 15-20 business days typical first review) BEFORE the local "
+     "Marion County DBNS permit (5-20 days) can issue — roughly 8-12 weeks from closing once design time is "
+     "included. Cosmetic scope is permit-exempt; the 65 washer/dryer additions are what require permits. On a "
+     "five-year hold this timing is not a returns risk (a five-month delay costs about 0.3 points of IRR "
+     "because the programme still completes well inside the hold); the risk is scope discovery, not calendar. "
+     "14 days of incremental downtime per renovated unit over and above a normal turn."),
     ("Market rent growth",
-     "3.0% per year. Above CBRE's 1.5%+1.5% two-step rollover assumption for 2026 and consistent with long-run "
-     "Indianapolis Class B/C performance. Applied on a mid-year convention."),
+     "1.5% / 2.0% / 2.5% / 3.0% / 3.0%, applied on a mid-year convention. Set off ACTUALS rather than a "
+     "forecast: Yardi Matrix 1Q-2026 reports Indianapolis rents FLAT on a trailing-three-month basis at $1,310 "
+     "and up only 1.1% year over year, and 2025 construction starts MORE THAN DOUBLED versus 2024 — that wave "
+     "delivers in 2027-28, inside our hold, with Carmel alone taking more than half of 2026 metro deliveries "
+     "immediately north of this asset. Year 1 sits slightly above the 1.1% actual, Year 2 is held down by the "
+     "delivery wave, and 3.0% is reached only once it clears. A flat 3.0% would add roughly 3 points of "
+     "levered IRR and is not supportable on current evidence."),
     ("Real estate taxes",
      "$140,000 in Year 1 (CBRE 2025-pay-2026 estimate with the SB-1 deduction is $135,374), stepping to $170,000 "
      "in Year 2 and $210,000 by Year 5. Indiana reassesses on sale; the OM's own comp study shows assessed value "
      "averaging 69% of sale price and rising 6.2% a year after a trade. THIS IS THE SINGLE LARGEST UNDERWRITING "
      "JUDGEMENT ON THE EXPENSE SIDE — see the DD Questions tab."),
+    ("Stabilised vacancy",
+     "5.5% operating physical vacancy (94.5% occupancy) plus renovation downtime, against a 94.0% metro figure "
+     "and a 6.8% T-12 actual. CBRE forecasts 5.0%. The half-point of conservatism reflects the 2027-28 delivery "
+     "wave and Carmel's share of it."),
     ("Insurance",
      "$95,000 in Year 1 ($805/unit) growing 5%, versus $94,611 T-12 actual and CBRE's $88,326 forecast. No "
      "current loss run or bindable quote was provided."),
@@ -258,6 +273,30 @@ for a, b in [
     w(ws, f"A{r}", a, BOLD, fill=FILL_KEY)
     w(ws, f"B{r}", b, BLACK, align="wrap")
     ws.row_dimensions[r].height = 46
+    r += 1
+
+r += 1
+r = section(ws, r, "UNDERWRITING POSTURE", "B")
+for a, b in [
+    ("Conservative on what we do not control",
+     "Rent growth, exit cap, real estate taxes and insurance are all set at or below observable market "
+     "evidence. These are forecasts, not decisions, and paying for them is how a basis gets away from you."),
+    ("Confident on what we do control",
+     "The renovation premium, the ancillary income build, expense management and the renovation pace are "
+     "underwritten at what a competent operator should deliver — not haircut for the sake of it. The premium "
+     "is still sensitised from $125 to $190 because it is unproven on this asset."),
+    ("The model answers a bid, not a justification",
+     "It solves for the highest price at which the business plan clears a 14% levered IRR and a 1.8x multiple "
+     "under the conservative case. It is not reverse-engineered to make the asking price work. On this deal "
+     "those two questions give very different answers, which is the whole finding."),
+    ("Expect to lose the deal",
+     "At $11.25mm this is a 21% discount to the implied ask. We should expect to be outbid by a buyer with a "
+     "lower cost of capital or a more aggressive rent view. Losing at the right price is a better outcome than "
+     "winning at the wrong one — the renovation cannot fix a basis mistake."),
+]:
+    w(ws, f"A{r}", a, BOLD)
+    w(ws, f"B{r}", b, BLACK, align="wrap")
+    ws.row_dimensions[r].height = 40
     r += 1
 
 r += 1
@@ -383,9 +422,12 @@ r = a_val(r, "Units WITHOUT In-Unit Washer/Dryer", f"={A['units']}-{A['n_wd']}",
 
 r += 1
 r = section(wsa, r, "RENOVATION PROGRAMME")
-r = a_val(r, "Renovation Start (month of hold)", 3, NUM,
-          "Months 1-2 for permitting, GC mobilisation, mock-up units and leasing the 4 in-place vacants.",
-          key="reno_start")
+r = a_val(r, "Renovation Start (month of hold)", 4, NUM,
+          "Indiana permits multifamily in two sequential steps: a STATE Construction Design Release from IDHS "
+          "(Class 1 structure; 10-business-day clock, 15-20 business days typical first review) and only then "
+          "the local Marion County DBNS permit (5-20 days). With design time that is 8-12 weeks from closing. "
+          "Cosmetic scope is exempt; the 65 washer/dryer additions are what require the permit (new 240V "
+          "circuit plus supply and drain).", key="reno_start", fill=FILL_KEY)
 r = a_val(r, "Units Renovated per Month", 5, NUM,
           "60/year against roughly 55-60 natural turns a year at 93% occupancy — renovations happen on the "
           "turn, not by forcing residents out. Completes all 118 units in month 26.", key="reno_pace", fill=FILL_KEY)
@@ -413,14 +455,18 @@ r = a_val(r, "Capex Contingency (% of all capital)", 0.08, PCT, key="conting")
 r += 1
 r = section(wsa, r, "REVENUE DRIVERS")
 r = yr_hdr(r)
-r = a_years(r, "Market Rent Growth", [0.03] * 5, PCT,
-            "Long-run Indianapolis Class B/C. CBRE's rollover analysis uses 1.5% in 3/26 plus 1.5% in 6/26.",
-            key="g_rent", fill=FILL_KEY)
+r = a_years(r, "Market Rent Growth", [0.015, 0.020, 0.025, 0.030, 0.030], PCT,
+            "Yardi Matrix 1Q-2026: metro rents were FLAT on a trailing-three-month basis at $1,310 and up only "
+            "1.1% year over year. Construction starts MORE THAN DOUBLED in 2025, so the delivery wave lands in "
+            "2027-28, inside our hold. Year 1 is set slightly above the 1.1% actual, Year 2 held down by that "
+            "wave, normalising to 3.0% only once it clears.", key="g_rent", fill=FILL_KEY)
 r = a_years(r, "Loss to Lease (% of GPR)", [0.022, 0.020, 0.0175, 0.015, 0.015], PCT,
             "2.2% in place today. Burns down as the renovation programme resets leases to market.", key="ll")
-r = a_years(r, "Operating Physical Vacancy", [0.050, 0.050, 0.050, 0.050, 0.050], PCT,
-            "T-12 actual physical vacancy is 6.8%; CBRE forecasts 5.0% stabilised. Renovation downtime is "
-            "added separately from the Reno Schedule.", key="vac")
+r = a_years(r, "Operating Physical Vacancy", [0.055, 0.055, 0.055, 0.055, 0.055], PCT,
+            "T-12 actual physical vacancy is 6.8%; CBRE forecasts 5.0% stabilised. Underwritten at 5.5% "
+            "(94.5% occupancy) against a 94.0% metro figure: Carmel alone takes more than half of 2026 metro "
+            "deliveries and sits immediately north of this asset across the county line. Renovation downtime is "
+            "added separately from the Reno Schedule.", key="vac", fill=FILL_KEY)
 r = a_years(r, "Concessions (% of GPR)", [0.0075, 0.0075, 0.005, 0.005, 0.005], PCT,
             "T-12 actual 0.5% and rising in recent months. Elevated while renovated units are first leased.",
             key="conc")
@@ -1671,12 +1717,13 @@ w(wsq, f"D{r}", f"='Annual Model'!G{MR['noi']}/C{tc}-{A['exitcap']}", BLACK, PCT
 w(wsq, f"E{r}", f'=IF(D{r}>=C{r},"PASS","FAIL")', BOLD, align="center")
 r += 1
 w(wsq, f"A{r}", "Recommended Maximum Bid", BOLD, fill=FILL_KEY)
-w(wsq, f"C{r}", 12250000, BLUE, CUR, fill=FILL_KEY)
+w(wsq, f"C{r}", 11250000, BLUE, CUR, fill=FILL_KEY)
 QR["bid"] = r
 w(wsq, f"D{r}", f"=C{r}/{A['units']}", BOLD, CUR, fill=FILL_KEY)
 w(wsq, f"J{r}",
   "The highest basis at which this business plan clears a 14% levered IRR and a 1.8x multiple on our "
-  "underwriting. See the Sensitivities tab, which computes the full price ladder live.", NOTE, align="wrap")
+  "underwriting on the supply-aware rent path. See the Sensitivities tab, which computes the full price "
+  "ladder live.", NOTE, align="wrap")
 r += 1
 w(wsq, f"A{r}", "Implied Going-In Cap at the Recommended Bid", BLACK)
 w(wsq, f"C{r}", f"='Annual Model'!C{MR['noi']}/C{r-1}", BLACK, PCT2)
@@ -1847,7 +1894,7 @@ for c in "BCDEFGHIJKLM":
     wss.column_dimensions[c].width = 13
 title_block(wss, "Live Sensitivity Grids — recalculate with every change to the Assumptions tab", "L")
 
-PRICES = [11500000, 12000000, 12250000, 12750000, 13250000, 14200000, 14750000]
+PRICES = [10500000, 11000000, 11250000, 11750000, 12500000, 13250000, 14200000]
 CAPS = [0.0600, 0.0650, 0.0675, 0.0700, 0.0750]
 PREMS = [125, 150, 166, 190]        # blended $/month
 AMc = "'Annual Model'"
@@ -1900,8 +1947,8 @@ for i, p in enumerate(PRICES):
     for j, cap in enumerate(CAPS):
         src = h1 + i * len(CAPS) + j
         cell = f"{'BCDEF'[j]}{r}"
-        hl = abs(cap - 0.0675) < 1e-9 and p in (14200000, 12250000)
-        w(wss, cell, f"=K{src}", BOLD if p in (14200000, 12250000) else BLACK, PCT, align="center",
+        hl = abs(cap - 0.0675) < 1e-9 and p in (14200000, 11250000)
+        w(wss, cell, f"=K{src}", BOLD if p in (14200000, 11250000) else BLACK, PCT, align="center",
           fill=FILL_KEY if hl else None, border=BOX)
     w(wss, f"G{r}", f"=A{r}/{A['units']}", ITAL, CUR)
     r += 1
