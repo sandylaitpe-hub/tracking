@@ -84,17 +84,17 @@
    ],
    [
     "Have any units been renovated to a current standard in the last three years? If so, what premium was achieved, over what lease-up period, and at what cost?",
-    "No recent renovations, so there is no in-place proof of premium. This is the single largest unproven assumption in the model and the reason premium is sensitised from $125 to $190 per month.",
+    "No recent renovations, so there is no in-place proof of premium. This remains the largest unproven assumption. Ladder A prices it: $125/month returns 12.0% and $190/month returns 16.2%, against 14.0% at our $155 base. A leased mock-up of each floor plan before we go hard would settle it.",
     "High"
    ],
    [
     "Please provide two or three general contractor bids on our scope for a representative Abbey, Verdun and Brunswick unit, inclusive of the washer/dryer addition.",
-    "$13,000 per unit interior plus $5,000 for the laundry addition, a $15,754 blended cost. A $2,000 per unit miss is $236,000 of capital.",
+    "Track A (53 units, in-place) $10,000/unit; Track B (65 units, vacant plus laundry) $13,000 interior plus the case-prescribed $5,000 addition. Blended $14,407/unit for a $155/month premium, a 12.9% return on cost. Ladder B on the Sensitivities tab prices the cost risk: $18,000/unit blended still returns 12.3%.",
     "High"
    ],
    [
     "What is realistic turn time from vacate to rent-ready under our scope, and can the site sustain five units a month with the current team?",
-    "14 days of incremental downtime beyond a normal turn, five units a month starting in month 4 once the state Construction Design Release and the local DBNS permit are in hand. We fund a second maintenance technician in payroll.",
+    "Track A is executed with the resident in occupancy over 2-3 days at 10 units a month from month 2, so it consumes no vacancy; the premium lands at the next renewal, modelled as a 6-month lag. Track B runs at natural turnover, 5 units a month from month 4, with 14 days of incremental downtime. All 118 complete in month 16. We fund a second maintenance technician.",
     "Medium"
    ],
    [
@@ -219,7 +219,7 @@
   [
    [
     "Please provide the last three Form 11A reassessment notices, the current tax bills, and any pending appeal or settlement.",
-    "The 2025 assessed value of $5,547,800 and the 2.539% rate are correct and no appeal is pending.",
+    "Marion County parcel 8000002 shows gross assessed value of $5,547,800 for 2025, a $332,868 '2% deduction' and a $129,648 net bill at 2.4861%. Assessed value has been range-bound $5.1-6.6mm since 2012 and the last change was recorded 15 March 2022. No appeal pending.",
     "High"
    ],
    [
@@ -334,7 +334,7 @@
   [
    [
     "What will the seller accept, and is guidance still the 6.9% Year-1 cap rate on CBRE's $980,838 Acquisition Forecast — roughly $14.2mm?",
-    "$14.2mm is the ask. On our underwriting that produces a 3.1% levered IRR and a 1.15x multiple over five years, with a Year-5 yield on cost of 6.58% against a 6.75% exit cap. Our bid is $11.25mm ($95,339/unit) with a hard walk at $12.0mm. We expect to be outbid.",
+    "The asset traded on 12 June 2026 for $13,625,000 ($115,466/unit) per the Marion County deed record. Our maximum bid is $12,000,000 ($101,695/unit), 12% below, where the plan returns 14.0% and 1.81x. At the trade price the same plan returns 7.9% and 1.42x. We would have been outbid.",
     "High"
    ],
    [

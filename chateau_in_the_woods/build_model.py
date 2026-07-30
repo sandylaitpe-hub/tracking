@@ -210,30 +210,33 @@ w(ws, f"A{r}", "Item", BOLD, fill=FILL_SUB)
 w(ws, f"B{r}", "Assumption and basis", BOLD, fill=FILL_SUB)
 r += 1
 for a, b in [
-    ("Purchase price / basis",
-     "$14,200,000 ($120,339/unit, $105.68/SF). The case does not state a price. Derived from the OM cover: a 6.9% "
-     "Year-1 cap rate on CBRE's $980,838 Acquisition Forecast NOI implies $14.2mm, and 7.3% on the $1,034,543 "
-     "Upgrade Forecast NOI implies $14.17mm. Treated as a lever — see the price sensitivity."),
-    ("Renovation scope and premium",
-     "Comprehensive interior renovation of all 118 units: $13,000/unit for cabinets, counters, LVP flooring, "
-     "appliances, lighting, plumbing fixtures, hardware and paint, at a $125/month premium. Plus $5,000/unit "
-     "(per case instruction) to add hookups and a washer/dryer in the 65 units without one, at an incremental "
-     "$75/month. Blended $15,754/unit at a $166/month premium = 12.7% return on cost."),
+    ("Purchase price — the answer, not an input",
+     "$12,000,000 ($101,695/unit). The case states no price, so the model SOLVES for one: the highest basis at "
+     "which the five-year plan clears a 14% levered IRR and a 1.80x multiple on the conservative case. For "
+     "reference the asset actually traded on 12 June 2026 for $13,625,000 ($115,466/unit) per the Marion "
+     "County deed record (special warranty deed, assessor validity flag 'Y'), 12% above our bid, where the "
+     "same plan returns 7.9% and 1.42x."),
+    ("Renovation scope, premium and the two-track programme",
+     "TRACK A — the 53 units that already have laundry are renovated IN PLACE at 10 a month from month 2: no "
+     "permit (cosmetic work is exempt in Marion County), no vacancy loss, $10,000/unit for a lighter scope, a "
+     "$100/month premium captured at the next renewal (6-month lag). TRACK B — the 65 units gaining laundry "
+     "need a state Construction Design Release plus a local permit AND a vacant unit, so they run at natural "
+     "turnover, 5 a month from month 4, $13,000 interior plus the case-prescribed $5,000 laundry addition, a "
+     "$200/month premium captured immediately, 14 days of incremental downtime. Blended $14,407/unit at "
+     "$155/month = 12.9% return on cost, all 118 units complete in month 16 without forcing a single resident "
+     "out. A single-track plan at 5 a month would take 27 months for the same result."),
     ("Renovated rent support",
      "Renovated rents of $1,250 (1x1) to $1,725 (3x2) sit inside the OM rent comp set. Avalon Lake (1974, same "
      "vintage, Graham Rd & Binford) achieves $1,178 / $1,655 / $1,834 for 1/2/3-bedrooms; submarket averages are "
      "$1,044 / $1,305 / $1,597. CBRE's own light-touch Upgrade Forecast is $1,094-$1,631 with a $50 premium and "
      "$1,375 on the Verdun with a W/D added."),
-    ("Renovation pace, permits and downtime",
-     "5 units per month beginning month 4, completing all 118 units in month 27. Consistent with natural "
-     "turnover (T-12 physical occupancy 93.2% implies roughly 55-60 turns a year). The month-4 start reflects "
-     "Indiana's two-step permit path: multifamily is a Class 1 structure requiring a STATE Construction Design "
-     "Release from IDHS (10-business-day clock, 15-20 business days typical first review) BEFORE the local "
-     "Marion County DBNS permit (5-20 days) can issue — roughly 8-12 weeks from closing once design time is "
-     "included. Cosmetic scope is permit-exempt; the 65 washer/dryer additions are what require permits. On a "
-     "five-year hold this timing is not a returns risk (a five-month delay costs about 0.3 points of IRR "
-     "because the programme still completes well inside the hold); the risk is scope discovery, not calendar. "
-     "14 days of incremental downtime per renovated unit over and above a normal turn."),
+    ("Permit path",
+     "Indiana permits multifamily in two sequential steps: multifamily is a Class 1 structure requiring a "
+     "STATE Construction Design Release from IDHS (10-business-day clock, 15-20 business days typical first "
+     "review) BEFORE the local Marion County DBNS permit (5-20 days) can issue — roughly 8-12 weeks from "
+     "closing once design time is included, which is why Track B starts in month 4. Cosmetic work is exempt, "
+     "which is what lets Track A start in month 2. On a five-year hold permit timing is not a returns risk; "
+     "the risk is scope discovery — if the 65 units need panel or riser upgrades the $5,000 allowance breaks."),
     ("Market rent growth",
      "1.5% / 2.0% / 2.5% / 3.0% / 3.0%, applied on a mid-year convention. Set off ACTUALS rather than a "
      "forecast: Yardi Matrix 1Q-2026 reports Indianapolis rents FLAT on a trailing-three-month basis at $1,310 "
@@ -242,11 +245,15 @@ for a, b in [
      "immediately north of this asset. Year 1 sits slightly above the 1.1% actual, Year 2 is held down by the "
      "delivery wave, and 3.0% is reached only once it clears. A flat 3.0% would add roughly 3 points of "
      "levered IRR and is not supportable on current evidence."),
-    ("Real estate taxes",
-     "$140,000 in Year 1 (CBRE 2025-pay-2026 estimate with the SB-1 deduction is $135,374), stepping to $170,000 "
-     "in Year 2 and $210,000 by Year 5. Indiana reassesses on sale; the OM's own comp study shows assessed value "
-     "averaging 69% of sale price and rising 6.2% a year after a trade. THIS IS THE SINGLE LARGEST UNDERWRITING "
-     "JUDGEMENT ON THE EXPENSE SIDE — see the DD Questions tab."),
+    ("Real estate taxes — corrected against the public record",
+     "$137,000 in Year 1 growing 4% to $160,300 by Year 5, set off the ACTUAL Marion County bill. Parcel "
+     "8000002 paid $129,648 in 2025 on a $5,214,932 net assessed value at 2.4861%. The 25-year record on the "
+     "'Tax Record' tab shows assessed value range-bound at $5.1-6.6mm every year since 2012 (0.36% a year), "
+     "the last assessment change recorded 15 March 2022, and — decisively — assessed value FELL the year after "
+     "the March 2006 sale. Indiana values apartments at the lowest of the income, market and cost approaches, "
+     "which is why assessed value does not track trade prices here. An earlier draft stepped taxes to a share "
+     "of the purchase price; the record does not support that, and correcting it is worth about 1.5 points of "
+     "levered IRR. The reassessment risk is still priced explicitly in Ladder C on the Sensitivities tab."),
     ("Stabilised vacancy",
      "5.5% operating physical vacancy (94.5% occupancy) plus renovation downtime, against a 94.0% metro figure "
      "and a 6.8% T-12 actual. CBRE forecasts 5.0%. The half-point of conservatism reflects the 2027-28 delivery "
@@ -265,6 +272,13 @@ for a, b in [
     ("Debt",
      "65% loan-to-cost on price plus all capital, 5.85% fixed, interest-only, 5-year term, 1% origination. "
      "Sized to a 10.4% Year-1 debt yield and a 1.38x Year-1 DSCR. No financing terms were provided."),
+    ("A number we could not source",
+     "An earlier draft compared our renovated rents to a '$1.40 per square foot' metro average. Yardi Matrix "
+     "publishes a $1,310 average asking rent per unit but not a per-foot figure, so that comparison was an "
+     "inference presented as data and has been removed. What can be said from the source: our Year-5 portfolio "
+     "average of $1,627 per unit is about 10% above the $1,310 metro average grown at the same rates, which is "
+     "what you would expect for a property whose units average 1,139 SF against a materially smaller metro "
+     "average."),
     ("Excluded upside",
      "Not underwritten: converting the Building 4042 maintenance storage into two additional units, and "
      "converting 9 carports to garages. Both are real but return roughly 5-10% on cost, below the interior "
@@ -379,9 +393,16 @@ def yr_hdr(row):
 
 r = 5
 r = section(wsa, r, "TRANSACTION")
-r = a_val(r, "Purchase Price", 14200000, CUR,
-          "No price given in the case. Implied by the OM cover: 6.9% Yr-1 cap on CBRE's $980,838 Acquisition "
-          "Forecast NOI. Primary lever — see Sensitivities.", key="price", fill=FILL_KEY)
+r = a_val(r, "Purchase Price (our bid)", 12000000, CUR,
+          "THIS IS THE ANSWER THE MODEL SOLVES FOR, not an input we were given. It is the maximum price at "
+          "which the five-year plan clears a 14% levered IRR and a 1.80x multiple on the conservative case. "
+          "See the Sensitivities tab for the live price ladder and breakeven table.", key="price", fill=FILL_KEY)
+r = a_val(r, "Memo: Actual Trade Price", 13625000, CUR,
+          "Marion County deed dated 06/12/2026, recorded 06/26/2026, special warranty deed, assessor validity "
+          "flag 'Y' (arm's length). $115,466/unit. Prior trade 03/28/2006 at $4,400,000 was flagged 'N' "
+          "(not a valid market sale). Shown for benchmarking only — it does not drive the model.",
+          key="actual", fill=FILL_KEY)
+r = a_val(r, "  Our Bid vs Actual Trade", None, PCT, font=BLACK, key="vs_trade")
 r = a_val(r, "  Price per Unit", f"={A['price']}/{{units}}", CUR, font=BLACK, key="ppu")
 r = a_val(r, "  Price per Net Rentable SF", f"={A['price']}/{{nrsf}}", CUR2, font=BLACK, key="ppsf")
 r = a_val(r, "Acquisition Costs (% of price)", 0.015, PCT,
@@ -421,35 +442,71 @@ r = a_val(r, "Units WITHOUT In-Unit Washer/Dryer", f"={A['units']}-{A['n_wd']}",
           font=BLACK, key="n_nowd")
 
 r += 1
-r = section(wsa, r, "RENOVATION PROGRAMME")
-r = a_val(r, "Renovation Start (month of hold)", 4, NUM,
+r = section(wsa, r, "RENOVATION PROGRAMME — TWO TRACKS")
+w(wsa, f"A{r}", "The 53 units that already have laundry can be renovated IN PLACE (residents stay, no "
+                "permit, no vacancy loss) but the premium is only captured at the next renewal. The 65 units "
+                "that need laundry added require plumbing and electrical permits and a vacant unit, so they "
+                "follow natural turnover — but the premium is captured immediately on the new lease.", NOTE,
+  align="wrap")
+wsa.merge_cells(f"A{r}:H{r}")
+wsa.row_dimensions[r].height = 42
+r += 1
+
+w(wsa, f"A{r}", "TRACK A — 53 units with existing in-unit laundry (in-place)", BOLD, fill=FILL_SUB)
+wsa.merge_cells(f"A{r}:H{r}")
+r += 1
+r = a_val(r, "  Units", f"={A['n_wd']}", NUM, "Rent roll unit types containing 'w/ WD'.", font=GREEN, key="a_units")
+r = a_val(r, "  Start Month", 2, NUM,
+          "No permit needed: cosmetic work (cabinets, counters, LVP, appliance and fixture swaps) is exempt "
+          "in Marion County. Month 2 allows for GC mobilisation and a mock-up unit.", key="a_start")
+r = a_val(r, "  Units per Month", 10, NUM,
+          "In-place work does not consume a turn, so pace is limited by crew capacity rather than by lease "
+          "expiries. 10/month across 5 buildings is one crew working 2-3 days per unit.", key="a_pace", fill=FILL_KEY)
+r = a_val(r, "  Cost per Unit", 10000, CUR,
+          "Lighter than a vacant-unit scope because floors under furniture and some millwork stay: cabinet "
+          "refacing and paint, counters, appliances, lighting and plumbing fixtures, hardware.", key="a_cost")
+r = a_val(r, "  Rent Premium ($/month)", 100, CUR,
+          "Below the vacant-unit premium because the scope is lighter.", key="a_prem", fill=FILL_KEY)
+r = a_val(r, "  Incremental Downtime (days)", 0, NUM, "Resident stays in occupancy throughout.", key="a_down")
+r = a_val(r, "  Months to Capture Premium", 6, NUM,
+          "You cannot raise an in-place resident's rent until renewal. Six months is the average time to the "
+          "next lease expiry across a stabilised roll.", key="a_lag", fill=FILL_KEY)
+
+r += 1
+w(wsa, f"A{r}", "TRACK B — 65 units requiring laundry addition (vacant)", BOLD, fill=FILL_SUB)
+wsa.merge_cells(f"A{r}:H{r}")
+r += 1
+r = a_val(r, "  Units", f"={A['n_nowd']}", NUM, "Abbey 15, Verdun 25, Bordeaux 25.", font=GREEN, key="b_units")
+r = a_val(r, "  Start Month", 4, NUM,
           "Indiana permits multifamily in two sequential steps: a STATE Construction Design Release from IDHS "
-          "(Class 1 structure; 10-business-day clock, 15-20 business days typical first review) and only then "
-          "the local Marion County DBNS permit (5-20 days). With design time that is 8-12 weeks from closing. "
-          "Cosmetic scope is exempt; the 65 washer/dryer additions are what require the permit (new 240V "
-          "circuit plus supply and drain).", key="reno_start", fill=FILL_KEY)
-r = a_val(r, "Units Renovated per Month", 5, NUM,
-          "60/year against roughly 55-60 natural turns a year at 93% occupancy — renovations happen on the "
-          "turn, not by forcing residents out. Completes all 118 units in month 26.", key="reno_pace", fill=FILL_KEY)
-r = a_val(r, "Interior Renovation Cost / Unit", 13000, CUR,
-          "Cabinets and counters, LVP flooring, black appliances, lighting and plumbing fixtures, hardware, "
-          "full paint. Indianapolis classic-to-renovated scope on units last rehabbed in 2006.",
-          key="cost_int", fill=FILL_KEY)
-r = a_val(r, "W/D Addition Cost / Unit (65 units)", 5000, CUR,
-          "PRESCRIBED BY THE CASE: hookups plus the washer and dryer for every unit that does not have one.",
-          key="cost_wd", fill=FILL_KEY)
-r = a_val(r, "  Blended Renovation Cost / Unit", None, CUR, font=BLACK, key="cost_blend")
+          "(Class 1 structure; 10-business-day clock, 15-20 business days typical) BEFORE the local Marion "
+          "County DBNS permit (5-20 days). Roughly 8-12 weeks from closing with design time.", key="b_start")
+r = a_val(r, "  Units per Month", 5, NUM,
+          "Constrained by natural turnover: T-12 physical occupancy of 93.2% implies roughly 55-60 turns a "
+          "year. We do not force vacancy.", key="b_pace", fill=FILL_KEY)
+r = a_val(r, "  Interior Cost per Unit", 13000, CUR,
+          "Full vacant-unit scope: cabinets, counters, LVP throughout, appliances, lighting and plumbing "
+          "fixtures, hardware, full paint.", key="b_cost_int")
+r = a_val(r, "  W/D Addition Cost per Unit", 5000, CUR,
+          "PRESCRIBED BY THE CASE: hookups plus the washer and dryer.", key="b_cost_wd")
+r = a_val(r, "  Total Cost per Unit", None, CUR, font=BLACK, key="b_cost")
+r = a_val(r, "  Rent Premium ($/month)", 200, CUR,
+          "Full interior plus in-unit laundry. CBRE's own Upgrade Forecast puts $163 on the Verdun for a much "
+          "lighter touch plus a washer/dryer.", key="b_prem", fill=FILL_KEY)
+r = a_val(r, "  Incremental Downtime (days)", 14, NUM,
+          "Over and above a normal turn. The renovation is executed inside the vacancy window.", key="b_down")
+r = a_val(r, "  Months to Capture Premium", 1, NUM,
+          "Captured immediately on the new lease.", key="b_lag")
+
+r += 1
+w(wsa, f"A{r}", "BLENDED PROGRAMME", BOLD, fill=FILL_SUB)
+wsa.merge_cells(f"A{r}:H{r}")
+r += 1
+r = a_val(r, "  Blended Cost per Unit", None, CUR, font=BLACK, key="cost_blend")
 r = a_val(r, "  Total Renovation Capital", None, CUR, font=BLACK, key="reno_total")
-r = a_val(r, "Interior Renovation Premium ($/month)", 125, CUR,
-          "All 118 units. Against CBRE's $50 light-touch premium; our scope is materially deeper.",
-          key="prem_int", fill=FILL_KEY)
-r = a_val(r, "W/D Addition Premium ($/month)", 75, CUR,
-          "Incremental, on the 65 units gaining laundry. CBRE forecasts $163 total on the Verdun for a light "
-          "touch plus a W/D, versus our $200.", key="prem_wd", fill=FILL_KEY)
-r = a_val(r, "  Blended Premium / Unit ($/month)", None, CUR, font=BLACK, key="prem_blend")
-r = a_val(r, "  Return on Renovation Cost", None, PCT, font=BLACK, key="roc")
-r = a_val(r, "Incremental Downtime per Unit (days)", 14, NUM,
-          "Over and above a normal turn. Renovation is executed inside the vacancy window.", key="downtime")
+r = a_val(r, "  Blended Premium per Unit ($/month)", None, CUR, font=BLACK, key="prem_blend")
+r = a_val(r, "  Return on Renovation Cost", None, PCT2, font=BLACK, key="roc")
+r = a_val(r, "  Programme Completion (month of hold)", None, NUM, font=GREEN, key="done_month")
 r = a_val(r, "Capex Contingency (% of all capital)", 0.08, PCT, key="conting")
 
 r += 1
@@ -517,10 +574,13 @@ r = a_exp(r, "Repairs & Maintenance (incl. turns)", 255000, 0.03,
 r = a_exp(r, "Insurance", 95000, 0.05,
           "T-12 $94,611 ($802/unit); CBRE forecast $88,326. No loss run or bindable quote provided.", "e_ins")
 r = yr_hdr(r)
-r = a_years(r, "Real Estate Taxes", [140000, 170000, 190000, 200000, 210000], CUR,
-            "CBRE 2025-pay-2026 estimate with the SB-1 deduction is $135,374 (T-12 $149,677). Indiana "
-            "reassesses on sale; the OM's own comp study shows AV averaging 69% of sale price and growing 6.2% "
-            "a year post-trade. Largest single expense judgement.", key="e_tax", fill=FILL_KEY)
+r = a_years(r, "Real Estate Taxes", [137000, 142500, 148200, 154100, 160300], CUR,
+            "Marion County parcel 8000002 ACTUAL: 2025 net annual tax $129,648 on a $5,214,932 net assessed "
+            "value at 2.4861% (gross AV $5,547,800 less a $332,868 '2% deduction'). The 25-year assessment "
+            "record shows AV range-bound at $5.1-6.6mm since 2012 (0.35% a year) with the last assessment "
+            "change on 03/15/2022, and the 2006 sale did NOT reset it. Base case grows the actual bill at 4% "
+            "— above the 1.5% historical rate. A reassessment shock is a named sensitivity, not the base "
+            "case. See the 'Tax Record' tab.", key="e_tax", fill=FILL_KEY)
 r = a_val(r, "Replacement Reserves ($/unit/year)", 300, CUR,
           "Lender-standard for 1974 vintage. Below NOI. Grows with Other Income growth.", key="e_res")
 
@@ -544,11 +604,12 @@ wsa[f"B{AROW['ppu']}"] = f"={A['price']}/{A['units']}"
 wsa[f"B{AROW['ppsf']}"] = f"={A['price']}/{A['nrsf']}"
 wsa[f"B{AROW['ll_inplace']}"] = (
     f"=1-{A['actrent']}/({A['mktrent']}-'Unit Mix'!{{vac_mkt}})")
-wsa[f"B{AROW['cost_blend']}"] = (
-    f"=({A['n_wd']}*{A['cost_int']}+{A['n_nowd']}*({A['cost_int']}+{A['cost_wd']}))/{A['units']}")
-wsa[f"B{AROW['reno_total']}"] = f"={A['cost_blend']}*{A['units']}"
+wsa[f"B{AROW['vs_trade']}"] = f"={A['price']}/{A['actual']}-1"
+wsa[f"B{AROW['b_cost']}"] = f"={A['b_cost_int']}+{A['b_cost_wd']}"
+wsa[f"B{AROW['reno_total']}"] = f"={A['a_units']}*{A['a_cost']}+{A['b_units']}*{A['b_cost']}"
+wsa[f"B{AROW['cost_blend']}"] = f"={A['reno_total']}/{A['units']}"
 wsa[f"B{AROW['prem_blend']}"] = (
-    f"=({A['n_wd']}*{A['prem_int']}+{A['n_nowd']}*({A['prem_int']}+{A['prem_wd']}))/{A['units']}")
+    f"=({A['a_units']}*{A['a_prem']}+{A['b_units']}*{A['b_prem']})/{A['units']}")
 wsa[f"B{AROW['roc']}"] = f"={A['prem_blend']}*12/{A['cost_blend']}"
 
 # ============================================================================
@@ -558,9 +619,9 @@ wsr = wb.create_sheet("Rent Roll")
 wsr.sheet_view.showGridLines = False
 title_block(wsr, "Rent Roll as of 07/01/2026 — with case status rules and per-unit renovation scope", "P")
 hdrs = ["Unit", "BD/BA", "Unit Type", "SF", "RR Status", "UW Status", "Market Rent", "In-Place Rent",
-        "Loss to Lease", "Lease From", "Lease To", "In-Unit W/D", "Interior Reno $", "W/D Add $",
-        "Total Reno $", "Renovated Mkt Rent"]
-widths = [10, 9, 17, 8, 15, 11, 12, 12, 11, 11, 11, 10, 12, 10, 12, 15]
+        "Loss to Lease", "Lease From", "Lease To", "In-Unit W/D", "Reno Track", "Reno Cost $",
+        "Premium $/mo", "Renovated Mkt Rent"]
+widths = [10, 9, 17, 8, 15, 11, 12, 12, 11, 11, 11, 10, 18, 12, 12, 15]
 for i, (h, wd) in enumerate(zip(hdrs, widths)):
     col = get_column_letter(i + 1)
     wsr.column_dimensions[col].width = wd
@@ -584,15 +645,15 @@ for i, x in enumerate(RR):
     w(wsr, f"J{rw}", x["lf"] if occ else None, BLACK, DATE, align="center")
     w(wsr, f"K{rw}", x["lt"] if occ else None, BLACK, DATE, align="center")
     w(wsr, f"L{rw}", "Yes" if haswd else "No", BLACK, align="center")
-    w(wsr, f"M{rw}", f"={A['cost_int']}", GREEN, CUR)
-    w(wsr, f"N{rw}", f"=IF(L{rw}=\"No\",{A['cost_wd']},0)", BLACK, CUR)
-    w(wsr, f"O{rw}", f"=M{rw}+N{rw}", BLACK, CUR)
-    w(wsr, f"P{rw}", f"=G{rw}+{A['prem_int']}+IF(L{rw}=\"No\",{A['prem_wd']},0)", BLACK, CUR)
+    w(wsr, f"M{rw}", f"=IF(L{rw}=\"Yes\",\"A — in-place\",\"B — vacant + laundry\")", BLACK, align="center")
+    w(wsr, f"N{rw}", f"=IF(L{rw}=\"Yes\",{A['a_cost']},{A['b_cost']})", BLACK, CUR)
+    w(wsr, f"O{rw}", f"=IF(L{rw}=\"Yes\",{A['a_prem']},{A['b_prem']})", BLACK, CUR)
+    w(wsr, f"P{rw}", f"=G{rw}+O{rw}", BLACK, CUR)
 rN = r0 + len(RR) - 1
 tot = rN + 1
 w(wsr, f"A{tot}", f"Total / Average — {UNITS} Units", BOLD, border=TOP)
 for col, f in [("D", f"=SUM(D{r0}:D{rN})"), ("G", f"=SUM(G{r0}:G{rN})"), ("H", f"=SUM(H{r0}:H{rN})"),
-               ("I", f"=SUM(I{r0}:I{rN})"), ("M", f"=SUM(M{r0}:M{rN})"), ("N", f"=SUM(N{r0}:N{rN})"),
+               ("I", f"=SUM(I{r0}:I{rN})"), ("N", f"=SUM(N{r0}:N{rN})"),
                ("O", f"=SUM(O{r0}:O{rN})"), ("P", f"=SUM(P{r0}:P{rN})")]:
     w(wsr, f"{col}{tot}", f, BOLD, CUR if col != "D" else NUM, border=TOP)
 w(wsr, f"F{tot}", f"=COUNTIF(F{r0}:F{rN},\"Occupied\")&\" occ\"", BOLD, border=TOP, align="center")
@@ -643,8 +704,8 @@ for i, ((bdba, utype, sf, mkt), d) in enumerate(MIX):
     w(wsm, f"K{rw}", d["rent"], BLUE, CUR)
     w(wsm, f"L{rw}", f"=IF(H{rw}=0,0,K{rw}/H{rw})", BLACK, CUR)
     w(wsm, f"M{rw}", f"=IF(H{rw}=0,0,L{rw}/I{rw}-1)", BLACK, PCT)
-    w(wsm, f"N{rw}", f"={A['cost_int']}+IF(G{rw}=\"No\",{A['cost_wd']},0)", BLACK, CUR)
-    w(wsm, f"O{rw}", f"={A['prem_int']}+IF(G{rw}=\"No\",{A['prem_wd']},0)", BLACK, CUR)
+    w(wsm, f"N{rw}", f"=IF(G{rw}=\"Yes\",{A['a_cost']},{A['b_cost']})", BLACK, CUR)
+    w(wsm, f"O{rw}", f"=IF(G{rw}=\"Yes\",{A['a_prem']},{A['b_prem']})", BLACK, CUR)
     w(wsm, f"P{rw}", f"=I{rw}+O{rw}", BOLD, CUR)
     w(wsm, f"Q{rw}", f"=P{rw}/E{rw}", BLACK, CUR2)
 mN = m0 + len(MIX) - 1
@@ -1141,13 +1202,14 @@ wsc.row_dimensions[r].height = 60
 # ============================================================================
 wsn = wb.create_sheet("Reno Schedule")
 wsn.sheet_view.showGridLines = False
-title_block(wsn, "60-Month Renovation Schedule — Unit Delivery, Capital Spend and Downtime", "M")
-nh = [("A", "Month", 8), ("B", "Date", 10), ("C", "Model\nYear", 8), ("D", "Units\nCompleted", 11),
-      ("E", "Cumulative\nRenovated", 12), ("F", "Renovated Units\nEarning Premium", 15),
-      ("G", "Classic\nUnits", 10), ("H", "Reno'd w/\nExisting W/D", 13),
-      ("I", "Reno'd Needing\nW/D Add", 13), ("J", "Interior\nCapex", 12),
-      ("K", "W/D Install\nCapex", 12), ("L", "Total Reno\nCapex", 12),
-      ("M", "Downtime Vac.\n(% of GPR)", 13)]
+title_block(wsn, "60-Month Two-Track Renovation Schedule — Delivery, Premium Capture, Capital and Downtime", "P")
+nh = [("A", "Month", 8), ("B", "Date", 10), ("C", "Model\nYear", 8),
+      ("D", "A: Units\nDone", 10), ("E", "A: Cum.\nDone", 10), ("F", "A: Units\nEarning", 11),
+      ("G", "B: Units\nDone", 10), ("H", "B: Cum.\nDone", 10), ("I", "B: Units\nEarning", 11),
+      ("J", "Total\nRenovated", 11), ("K", "Units Earning\nPremium", 12),
+      ("L", "Premium in\nForce ($/mo)", 13), ("M", "Track A\nCapex", 11),
+      ("N", "Track B\nCapex", 11), ("O", "Total\nCapex", 12),
+      ("P", "Downtime Vac.\n(% of GPR)", 13)]
 for col, h, wd in nh:
     wsn.column_dimensions[col].width = wd
     w(wsn, f"{col}5", h, BOLD, fill=FILL_SUB, align="wrap", border=BOX)
@@ -1158,45 +1220,58 @@ NMONTHS = 60
 for m in range(1, NMONTHS + 1):
     rw = n0 + m - 1
     prev = rw - 1
+    cumA = "0" if m == 1 else f"E{prev}"
+    cumB = "0" if m == 1 else f"H{prev}"
     w(wsn, f"A{rw}", m, BLACK, NUM, align="center")
     w(wsn, f"B{rw}", f"=EDATE({A['start']},A{rw}-1)", BLACK, DATE, align="center")
     w(wsn, f"C{rw}", f"=ROUNDUP(A{rw}/12,0)", BLACK, NUM, align="center")
-    cum_prev = "0" if m == 1 else f"E{prev}"
-    w(wsn, f"D{rw}", f"=IF(A{rw}<{A['reno_start']},0,MAX(0,MIN({A['reno_pace']},{A['units']}-{cum_prev})))",
+    # Track A
+    w(wsn, f"D{rw}", f"=IF(A{rw}<{A['a_start']},0,MAX(0,MIN({A['a_pace']},{A['a_units']}-{cumA})))",
       BLACK, NUM, align="center")
-    w(wsn, f"E{rw}", f"={cum_prev}+D{rw}", BLACK, NUM, align="center")
-    w(wsn, f"F{rw}", f"={cum_prev}", BLACK, NUM, align="center")
-    w(wsn, f"G{rw}", f"={A['units']}-F{rw}", BLACK, NUM, align="center")
-    w(wsn, f"H{rw}", f"=D{rw}*{A['n_wd']}/{A['units']}", BLACK, NUM1, align="center")
-    w(wsn, f"I{rw}", f"=D{rw}*{A['n_nowd']}/{A['units']}", BLACK, NUM1, align="center")
-    w(wsn, f"J{rw}", f"=D{rw}*{A['cost_int']}", BLACK, CUR)
-    w(wsn, f"K{rw}", f"=I{rw}*{A['cost_wd']}", BLACK, CUR)
-    w(wsn, f"L{rw}", f"=J{rw}+K{rw}", BLACK, CUR)
-    w(wsn, f"M{rw}", f"=D{rw}*{A['downtime']}/30/{A['units']}", BLACK, PCT2)
+    w(wsn, f"E{rw}", f"={cumA}+D{rw}", BLACK, NUM, align="center")
+    lagA = m - 1 - int(0)   # resolved below via INDEX-free direct row reference
+    w(wsn, f"F{rw}", f"=IF(A{rw}-{A['a_lag']}<1,0,INDEX($E${n0}:$E${n0+NMONTHS-1},A{rw}-{A['a_lag']}))",
+      BLACK, NUM, align="center")
+    # Track B
+    w(wsn, f"G{rw}", f"=IF(A{rw}<{A['b_start']},0,MAX(0,MIN({A['b_pace']},{A['b_units']}-{cumB})))",
+      BLACK, NUM, align="center")
+    w(wsn, f"H{rw}", f"={cumB}+G{rw}", BLACK, NUM, align="center")
+    w(wsn, f"I{rw}", f"=IF(A{rw}-{A['b_lag']}<1,0,INDEX($H${n0}:$H${n0+NMONTHS-1},A{rw}-{A['b_lag']}))",
+      BLACK, NUM, align="center")
+    # combined
+    w(wsn, f"J{rw}", f"=E{rw}+H{rw}", BLACK, NUM, align="center")
+    w(wsn, f"K{rw}", f"=F{rw}+I{rw}", BLACK, NUM, align="center")
+    w(wsn, f"L{rw}", f"=F{rw}*{A['a_prem']}+I{rw}*{A['b_prem']}", BLACK, CUR)
+    w(wsn, f"M{rw}", f"=D{rw}*{A['a_cost']}", BLACK, CUR)
+    w(wsn, f"N{rw}", f"=G{rw}*{A['b_cost']}", BLACK, CUR)
+    w(wsn, f"O{rw}", f"=M{rw}+N{rw}", BLACK, CUR)
+    w(wsn, f"P{rw}", f"=(D{rw}*{A['a_down']}+G{rw}*{A['b_down']})/30/{A['units']}", BLACK, PCT2)
 nN = n0 + NMONTHS - 1
 tr = nN + 1
 w(wsn, f"A{tr}", "Total", BOLD, border=TOP)
-for col in ["D", "H", "I"]:
-    w(wsn, f"{col}{tr}", f"=SUM({col}{n0}:{col}{nN})", BOLD, NUM1, border=TOP)
-for col in ["J", "K", "L"]:
+for col in ["D", "G"]:
+    w(wsn, f"{col}{tr}", f"=SUM({col}{n0}:{col}{nN})", BOLD, NUM, border=TOP)
+for col in ["M", "N", "O"]:
     w(wsn, f"{col}{tr}", f"=SUM({col}{n0}:{col}{nN})", BOLD, CUR, border=TOP)
 
-# annual summary block
 sb = tr + 2
 w(wsn, f"A{sb}", "ANNUAL SUMMARY — FEEDS THE CASH FLOW MODEL", BOLD, fill=FILL_SUB)
 for i, c in enumerate(YR_COLS):
     w(wsn, f"{c}{sb}", f"Year {i+1}", BOLD, fill=FILL_SUB, align="center")
 NREF = {}
 summary = [
-    ("Units Completed in Year", f"=SUMIFS($D${n0}:$D${nN},$C${n0}:$C${nN},{{y}})", NUM, "done"),
+    ("Track A Units Completed in Year", f"=SUMIFS($D${n0}:$D${nN},$C${n0}:$C${nN},{{y}})", NUM, "doneA"),
+    ("Track B Units Completed in Year", f"=SUMIFS($G${n0}:$G${nN},$C${n0}:$C${nN},{{y}})", NUM, "doneB"),
     ("Cumulative Renovated at Year End",
-     f"=SUMIFS($D${n0}:$D${nN},$C${n0}:$C${nN},\"<=\"&{{y}})", NUM, "cum"),
-    ("Average Renovated Units Earning Premium",
-     f"=AVERAGEIFS($F${n0}:$F${nN},$C${n0}:$C${nN},{{y}})", NUM1, "avg_reno"),
-    ("Average Classic Units", f"=AVERAGEIFS($G${n0}:$G${nN},$C${n0}:$C${nN},{{y}})", NUM1, "avg_classic"),
-    ("Renovation Capital Spend", f"=SUMIFS($L${n0}:$L${nN},$C${n0}:$C${nN},{{y}})", CUR, "capex"),
+     f"=SUMIFS($D${n0}:$D${nN},$C${n0}:$C${nN},\"<=\"&{{y}})+SUMIFS($G${n0}:$G${nN},$C${n0}:$C${nN},\"<=\"&{{y}})",
+     NUM, "cum"),
+    ("Average Units Earning the Premium",
+     f"=AVERAGEIFS($K${n0}:$K${nN},$C${n0}:$C${nN},{{y}})", NUM1, "avg_reno"),
+    ("Average Premium in Force ($/month)",
+     f"=AVERAGEIFS($L${n0}:$L${nN},$C${n0}:$C${nN},{{y}})", CUR, "prem_force"),
+    ("Renovation Capital Spend", f"=SUMIFS($O${n0}:$O${nN},$C${n0}:$C${nN},{{y}})", CUR, "capex"),
     ("Renovation Downtime Vacancy (% of GPR)",
-     f"=AVERAGEIFS($M${n0}:$M${nN},$C${n0}:$C${nN},{{y}})", PCT2, "dvac"),
+     f"=AVERAGEIFS($P${n0}:$P${nN},$C${n0}:$C${nN},{{y}})", PCT2, "dvac"),
 ]
 for i, (lbl, f, fmt, key) in enumerate(summary):
     rw = sb + 1 + i
@@ -1204,11 +1279,19 @@ for i, (lbl, f, fmt, key) in enumerate(summary):
     for j, c in enumerate(YR_COLS):
         w(wsn, f"{c}{rw}", f.replace("{y}", str(j + 1)), BLACK, fmt, align="center")
     NREF[key] = rw
-wsn.merge_cells(f"A{sb+len(summary)+2}:M{sb+len(summary)+2}")
-w(wsn, f"A{sb+len(summary)+2}",
-  "A unit renovated during month m begins earning the renovated rent in month m+1, so column F (renovated "
-  "units earning the premium) is the prior month's cumulative count. Renovations are executed on natural "
-  "turnover at 5 units a month, completing all 118 units in month 26.", NOTE)
+dm = sb + len(summary) + 2
+w(wsn, f"A{dm}", "Programme Completion (month all 118 units are renovated)", BOLD)
+w(wsn, f"C{dm}", f"=MATCH({A['units']},$J${n0}:$J${nN},0)", BOLD, NUM, align="center", fill=FILL_KEY)
+NREF["done_month"] = dm
+wsn.merge_cells(f"A{dm+2}:P{dm+2}")
+w(wsn, f"A{dm+2}",
+  "Track A (53 units with existing laundry) is renovated in place at 10 a month from month 2 — no permit, no "
+  "vacancy loss — but the premium only lands at the next renewal, modelled as a 6-month lag. Track B (65 units "
+  "gaining laundry) needs a state Construction Design Release and a local DBNS permit and must be vacant, so it "
+  "runs at natural turnover of 5 a month from month 4 with 14 days of incremental downtime, and captures the "
+  "premium immediately. Splitting the programme this way completes all 118 units far sooner than a single-track "
+  "plan without forcing a single resident out.", NOTE, align="wrap")
+wsn.row_dimensions[dm+2].height = 56
 
 # ============================================================================
 # 9. ANNUAL MODEL
@@ -1273,26 +1356,29 @@ r = m_row(r, "Rent Factor — Mid-Year Convention",
 r += 1
 r = section(wsy, r, "UNIT POSITION")
 RS = "'Reno Schedule'"
-r = m_row(r, "Average Classic Units", "Reno Schedule",
-          f"={RS}!{{c}}${NREF['avg_classic']}", NUM1, font=GREEN, key="uc", exit_formula="=0")
-r = m_row(r, "Average Renovated Units", "Reno Schedule",
-          f"={RS}!{{c}}${NREF['avg_reno']}", NUM1, font=GREEN, key="ur",
-          exit_formula=f"={A['units']}")
-r = m_row(r, "Units Renovated in Year", "Reno Schedule",
-          f"={RS}!{{c}}${NREF['done']}", NUM, font=GREEN, key="ud", exit_formula="=0")
+r = m_row(r, "Track A Units Completed (in-place)", "Reno Schedule",
+          f"={RS}!{{c}}${NREF['doneA']}", NUM, font=GREEN, key="udA", exit_formula="=0")
+r = m_row(r, "Track B Units Completed (vacant + laundry)", "Reno Schedule",
+          f"={RS}!{{c}}${NREF['doneB']}", NUM, font=GREEN, key="udB", exit_formula="=0")
 r = m_row(r, "Cumulative Renovated (% of portfolio)", "Reno Schedule",
           f"={RS}!{{c}}${NREF['cum']}/{A['units']}", PCT, key="upct", exit_formula="=1")
+r = m_row(r, "Average Units Earning the Premium", "Reno Schedule",
+          f"={RS}!{{c}}${NREF['avg_reno']}", NUM1, font=GREEN, key="ur",
+          exit_formula=f"={A['units']}")
+r = m_row(r, "Average Premium in Force ($/month)", "Reno Schedule",
+          f"={RS}!{{c}}${NREF['prem_force']}", CUR, font=GREEN, key="premf",
+          exit_formula=f"={A['units']}*{A['prem_blend']}")
 
 r += 1
 r = section(wsy, r, "REVENUE")
-r = m_row(r, "Gross Potential Rent — Classic Units",
-          "Avg classic units × avg classic market rent × 12 × rent factor",
-          f"={{c}}{MR['uc']}*{MIXREF['mkt_avg']}*12*{{c}}{MR['fac']}", CUR, key="gpr_c",
-          exit_formula="=0")
-r = m_row(r, "Gross Potential Rent — Renovated Units",
-          "Avg renovated units × avg renovated market rent × 12 × rent factor",
-          f"={{c}}{MR['ur']}*{MIXREF['reno_avg']}*12*{{c}}{MR['fac']}", CUR, key="gpr_r",
-          exit_formula=f"={EXIT_COL}{MR['ur']}*{MIXREF['reno_avg']}*12*{EXIT_COL}{MR['fac']}")
+r = m_row(r, "Gross Potential Rent — In-Place Market Rents",
+          "All 118 units at the 07/01/2026 market rent, indexed for growth",
+          f"={A['units']}*{MIXREF['mkt_avg']}*12*{{c}}{MR['fac']}", CUR, key="gpr_c",
+          exit_formula=f"={A['units']}*{MIXREF['mkt_avg']}*12*{EXIT_COL}{MR['fac']}")
+r = m_row(r, "Gross Potential Rent — Renovation Premium",
+          "Premium in force × 12 × rent factor (Track A lags 6 months, Track B 1 month)",
+          f"={{c}}{MR['premf']}*12*{{c}}{MR['fac']}", CUR, key="gpr_r",
+          exit_formula=f"={EXIT_COL}{MR['premf']}*12*{EXIT_COL}{MR['fac']}")
 r = m_row(r, "Gross Potential Rent", "", f"={{c}}{MR['gpr_c']}+{{c}}{MR['gpr_r']}", CUR,
           bold=True, border=TOP, key="gpr",
           exit_formula=f"={EXIT_COL}{MR['gpr_c']}+{EXIT_COL}{MR['gpr_r']}")
@@ -1435,6 +1521,7 @@ for ph, row in [("{oitot}", OI_TOT_ROW), ("{gpr}", MR["gpr"]), ("{ll}", MR["ll"]
 for c in YR_COLS:
     wso[f"{c}{OI_PCT_ROW}"] = f"={c}{OI_TOT_ROW}/'Annual Model'!{c}{MR['egr']}"
 
+wsa[f"B{AROW['done_month']}"] = f"='Reno Schedule'!$C${NREF['done_month']}"
 # patch the Assumptions going-in cap now that the Annual Model NOI row is known
 wsa[f"B{AROW['goingin']}"] = f"='Annual Model'!C{MR['noi']}/{A['price']}"
 
@@ -1716,29 +1803,34 @@ w(wsq, f"C{r}", 0.0075, BLUE, PCT, align="center")
 w(wsq, f"D{r}", f"='Annual Model'!G{MR['noi']}/C{tc}-{A['exitcap']}", BLACK, PCT, align="center")
 w(wsq, f"E{r}", f'=IF(D{r}>=C{r},"PASS","FAIL")', BOLD, align="center")
 r += 1
-w(wsq, f"A{r}", "Recommended Maximum Bid", BOLD, fill=FILL_KEY)
-w(wsq, f"C{r}", 11250000, BLUE, CUR, fill=FILL_KEY)
+w(wsq, f"A{r}", "Recommended Maximum Bid (the price this model solves for)", BOLD, fill=FILL_KEY)
+w(wsq, f"C{r}", f"={A['price']}", GREEN, CUR, fill=FILL_KEY)
 QR["bid"] = r
 w(wsq, f"D{r}", f"=C{r}/{A['units']}", BOLD, CUR, fill=FILL_KEY)
 w(wsq, f"J{r}",
-  "The highest basis at which this business plan clears a 14% levered IRR and a 1.8x multiple on our "
-  "underwriting on the supply-aware rent path. See the Sensitivities tab, which computes the full price "
-  "ladder live.", NOTE, align="wrap")
+  "The highest basis at which this business plan clears a 14% levered IRR and a 1.80x multiple on the "
+  "conservative case. Set it on the Assumptions tab and the whole model, including both sensitivity grids "
+  "and all three breakeven ladders, follows.", NOTE, align="wrap")
 r += 1
 w(wsq, f"A{r}", "Implied Going-In Cap at the Recommended Bid", BLACK)
 w(wsq, f"C{r}", f"='Annual Model'!C{MR['noi']}/C{r-1}", BLACK, PCT2)
 r += 1
-w(wsq, f"A{r}", "Discount to the Implied Ask", BLACK)
-w(wsq, f"C{r}", f"=C{r-2}/{A['price']}-1", BLACK, PCT)
+w(wsq, f"A{r}", "Actual Trade Price, 12 June 2026", BLACK)
+w(wsq, f"C{r}", f"={A['actual']}", GREEN, CUR)
+w(wsq, f"J{r}", "Marion County deed, special warranty, assessor validity flag 'Y'. $115,466 per unit.",
+  NOTE, align="wrap")
 r += 1
-r = section(wsq, r, "AT THE RECOMMENDED BID — SIDE BY SIDE", "J")
+w(wsq, f"A{r}", "  Our Bid vs the Actual Trade", BLACK)
+w(wsq, f"C{r}", f"={A['price']}/{A['actual']}-1", BLACK, PCT)
+r += 1
+r = section(wsq, r, "OUR BID vs WHAT IT ACTUALLY TRADED FOR", "J")
 w(wsq, f"A{r}", "", BOLD)
-w(wsq, f"C{r}", "At the Ask", BOLD, fill=FILL_SUB, align="center")
-w(wsq, f"D{r}", "At Our Bid", BOLD, fill=FILL_SUB, align="center")
+w(wsq, f"C{r}", "At Our Bid", BOLD, fill=FILL_SUB, align="center")
+w(wsq, f"D{r}", "At Actual Trade", BOLD, fill=FILL_SUB, align="center")
 w(wsq, f"J{r}", "Operating NOI is identical in both cases — only the basis, the loan and the equity change.",
   NOTE, align="wrap")
 r += 1
-BID = f"$C${QR['bid']}"
+BID = f"{A['actual']}"
 bid_rows = [
     ("Purchase Price", f"={A['price']}", f"={BID}", CUR),
     ("Price per Unit", f"={A['price']}/{A['units']}", f"={BID}/{A['units']}", CUR),
@@ -1889,158 +1981,361 @@ for ph, row in [("{tcost}", tc), ("{debt}", QR["loan"]), ("{eq}", QR["eq"])]:
 # ============================================================================
 wss = wb.create_sheet("Sensitivities")
 wss.sheet_view.showGridLines = False
-wss.column_dimensions["A"].width = 26
+wss.column_dimensions["A"].width = 30
 for c in "BCDEFGHIJKLM":
     wss.column_dimensions[c].width = 13
-title_block(wss, "Live Sensitivity Grids — recalculate with every change to the Assumptions tab", "L")
+title_block(wss, "Live Sensitivities and Breakeven Ladders — every cell recalculates from the Assumptions tab", "M")
 
-PRICES = [10500000, 11000000, 11250000, 11750000, 12500000, 13250000, 14200000]
-CAPS = [0.0600, 0.0650, 0.0675, 0.0700, 0.0750]
-PREMS = [125, 150, 166, 190]        # blended $/month
 AMc = "'Annual Model'"
+PRICES = [10500000, 11000000, 11500000, 12000000, 12500000, 13625000, 14200000]
+CAPS = [0.0600, 0.0650, 0.0675, 0.0700, 0.0750]
+OTHER_CAP = f"({A['reno_total']}+'Capex Budget'!$B${CAP_TOT_ROW})*(1+{A['conting']})"
+LOAN_TESTS = (f"{AMc}!C{MR['noi']}/{A['mindy']}", f"{AMc}!C{MR['noi']}/({A['mindscr']}*{A['rate']})")
 
+
+def leak(yc):
+    """Share of a marginal GPR dollar that reaches NOI, before the management fee."""
+    return (f"(1-Assumptions!{yc}${AROW['ll']}-Assumptions!{yc}${AROW['vac']}"
+            f"-Assumptions!{yc}${AROW['conc']}-Assumptions!{yc}${AROW['bd']}"
+            f"-'Reno Schedule'!{yc}${NREF['dvac']})")
+
+
+def cf_block(row, price_ref, dnoi_refs, cap_ref, noi1_ref, noi6_ref):
+    """Write loan / equity / 6 cash-flow cells / IRR / EM for one scenario row."""
+    # noi1_ref can be a compound expression, so it MUST be parenthesised before dividing
+    w(wss, f"C{row}", f"=MIN(({price_ref}+{OTHER_CAP})*{A['ltc']},({noi1_ref})/{A['mindy']},"
+                      f"({noi1_ref})/({A['mindscr']}*{A['rate']}))", BLACK, CUR)
+    w(wss, f"D{row}", f"={price_ref}+{OTHER_CAP}+{price_ref}*{A['acqcost']}+C{row}*{A['fee']}"
+                      f"+{A['fincost']}-C{row}", BLACK, CUR)
+    w(wss, f"E{row}", f"=-D{row}", BLACK, CUR)
+    for i in range(5):
+        col = "FGHIJ"[i]
+        yc = YR_COLS[i]
+        f_ = f"={AMc}!{yc}{MR['cfbd']}{dnoi_refs[i]}-C{row}*{A['rate']}"
+        if i == 4:
+            f_ += f"+({noi6_ref})/{cap_ref}*(1-{A['cos']})-C{row}"
+        w(wss, f"{col}{row}", f_, BLACK, CUR)
+    w(wss, f"K{row}", f"=IRR(E{row}:J{row})", BOLD, PCT)
+    w(wss, f"L{row}", f"=SUM(F{row}:J{row})/-E{row}", BLACK, MULT)
+
+
+def helper_header(row, first, second):
+    for col, h in [("A", first), ("B", second), ("C", "Loan"), ("D", "Equity"), ("E", "Year 0"),
+                   ("F", "Year 1"), ("G", "Year 2"), ("H", "Year 3"), ("I", "Year 4"), ("J", "Year 5"),
+                   ("K", "Levered IRR"), ("L", "Equity Mult.")]:
+        w(wss, f"{col}{row}", h, BOLD, fill=FILL_SUB, align="wrap")
+    return row + 1
+
+
+# ---------------------------------------------------------------- Grid 1 ---
 r = 5
-r = section(wss, r, "HELPER BLOCK 1 — PURCHASE PRICE × EXIT CAP (live cash flows)", "L")
-w(wss, f"A{r}", "Purchase\nPrice", BOLD, fill=FILL_SUB, align="wrap")
-w(wss, f"B{r}", "Exit Cap", BOLD, fill=FILL_SUB, align="center")
-w(wss, f"C{r}", "Loan", BOLD, fill=FILL_SUB, align="center")
-w(wss, f"D{r}", "Equity", BOLD, fill=FILL_SUB, align="center")
-w(wss, f"E{r}", "Year 0", BOLD, fill=FILL_SUB, align="center")
-for i in range(5):
-    w(wss, f"{'FGHIJ'[i]}{r}", f"Year {i+1}", BOLD, fill=FILL_SUB, align="center")
-w(wss, f"K{r}", "Levered IRR", BOLD, fill=FILL_SUB, align="center")
-w(wss, f"L{r}", "Equity Mult.", BOLD, fill=FILL_SUB, align="center")
-r += 1
+r = section(wss, r, "HELPER BLOCK 1 — PURCHASE PRICE x EXIT CAP", "M")
+r = helper_header(r, "Purchase Price", "Exit Cap")
 h1 = r
-OTHER_CAP = f"({MIXREF['reno_cap']}+'Capex Budget'!$B${CAP_TOT_ROW})*(1+{A['conting']})"
-for p in PRICES:
+for p_ in PRICES:
     for cap in CAPS:
-        w(wss, f"A{r}", p, BLUE, CUR)
+        w(wss, f"A{r}", p_, BLUE, CUR)
         w(wss, f"B{r}", cap, BLUE, PCT2, align="center")
-        w(wss, f"C{r}", f"=MIN((A{r}+{OTHER_CAP})*{A['ltc']},{AMc}!C{MR['noi']}/{A['mindy']},"
-                        f"{AMc}!C{MR['noi']}/({A['mindscr']}*{A['rate']}))", BLACK, CUR)
-        w(wss, f"D{r}", f"=A{r}+{OTHER_CAP}+A{r}*{A['acqcost']}+C{r}*{A['fee']}+{A['fincost']}-C{r}",
-          BLACK, CUR)
-        w(wss, f"E{r}", f"=-D{r}", BLACK, CUR)
-        for i in range(5):
-            col = "FGHIJ"[i]
-            yc = YR_COLS[i]
-            base = f"{AMc}!{yc}{MR['cfbd']}-C{r}*{A['rate']}"
-            if i == 4:
-                base += (f"+({AMc}!{EXIT_COL}{MR['noi']}/B{r})*(1-{A['cos']})-C{r}")
-            w(wss, f"{col}{r}", f"={base}", BLACK, CUR)
-        w(wss, f"K{r}", f"=IRR(E{r}:J{r})", BOLD, PCT)
-        w(wss, f"L{r}", f"=SUM(F{r}:J{r})/-E{r}", BLACK, MULT)
+        cf_block(r, f"$A{r}", [""] * 5, f"$B{r}", f"{AMc}!C{MR['noi']}", f"{AMc}!{EXIT_COL}{MR['noi']}")
         r += 1
-h1N = r - 1
 
 r += 1
-r = section(wss, r, "GRID 1A — LEVERED IRR: PURCHASE PRICE × EXIT CAP", "G")
+r = section(wss, r, "GRID 1A — LEVERED IRR: PURCHASE PRICE x EXIT CAP", "H")
 w(wss, f"A{r}", "Purchase Price \\ Exit Cap", BOLD, fill=FILL_SUB, align="wrap")
 for j, cap in enumerate(CAPS):
     w(wss, f"{'BCDEF'[j]}{r}", cap, BOLD, PCT2, fill=FILL_SUB, align="center")
 w(wss, f"G{r}", "Price / Unit", BOLD, fill=FILL_SUB, align="center")
+w(wss, f"H{r}", "Going-in Cap", BOLD, fill=FILL_SUB, align="center")
 r += 1
-g1 = r
-for i, p in enumerate(PRICES):
-    w(wss, f"A{r}", p, BLACK, CUR)
+for i, p_ in enumerate(PRICES):
+    w(wss, f"A{r}", p_, BLACK, CUR)
     for j, cap in enumerate(CAPS):
         src = h1 + i * len(CAPS) + j
-        cell = f"{'BCDEF'[j]}{r}"
-        hl = abs(cap - 0.0675) < 1e-9 and p in (14200000, 11250000)
-        w(wss, cell, f"=K{src}", BOLD if p in (14200000, 11250000) else BLACK, PCT, align="center",
-          fill=FILL_KEY if hl else None, border=BOX)
+        hl = abs(cap - 0.0675) < 1e-9 and p_ in (13625000,)
+        w(wss, f"{'BCDEF'[j]}{r}", f"=K{src}", BOLD if p_ == 13625000 else BLACK, PCT,
+          align="center", fill=FILL_KEY if hl else None, border=BOX)
     w(wss, f"G{r}", f"=A{r}/{A['units']}", ITAL, CUR)
+    w(wss, f"H{r}", f"={AMc}!C{MR['noi']}/A{r}", ITAL, PCT2)
     r += 1
 r += 1
 wss.merge_cells(f"A{r}:H{r}")
 w(wss, f"A{r}",
-  "$14,200,000 is the price implied by the OM's 6.9% Year-1 cap rate; $12,250,000 ($103,814/unit) is the "
-  "recommended bid, the highest basis at which this business plan clears a 14% levered IRR and a 1.8x multiple. "
-  "Both cells are highlighted in the 6.75% column. Note that below roughly $13.5mm the loan is constrained by "
-  "maximum loan-to-cost, and above it by the 8.0% minimum debt yield.", NOTE, align="wrap")
-wss.row_dimensions[r].height = 44
+  "The highlighted row is the price the asset actually traded at on 12 June 2026 ($13,625,000 / $115,466 per "
+  "unit, Marion County deed, assessor validity flag 'Y'). Our bid is the highest price in this ladder that "
+  "still clears a 14% levered IRR and a 1.80x multiple.", NOTE, align="wrap")
+wss.row_dimensions[r].height = 34
 r += 2
 
-r = section(wss, r, "GRID 1B — EQUITY MULTIPLE: PURCHASE PRICE × EXIT CAP", "G")
+r = section(wss, r, "GRID 1B — EQUITY MULTIPLE: PURCHASE PRICE x EXIT CAP", "F")
 w(wss, f"A{r}", "Purchase Price \\ Exit Cap", BOLD, fill=FILL_SUB, align="wrap")
 for j, cap in enumerate(CAPS):
     w(wss, f"{'BCDEF'[j]}{r}", cap, BOLD, PCT2, fill=FILL_SUB, align="center")
 r += 1
-for i, p in enumerate(PRICES):
-    w(wss, f"A{r}", p, BLACK, CUR)
+for i, p_ in enumerate(PRICES):
+    w(wss, f"A{r}", p_, BLACK, CUR)
     for j, cap in enumerate(CAPS):
         src = h1 + i * len(CAPS) + j
         w(wss, f"{'BCDEF'[j]}{r}", f"=L{src}", BLACK, MULT, align="center", border=BOX)
     r += 1
 r += 2
 
-# ---- Grid 2: renovation premium x exit cap -------------------------------
-r = section(wss, r, "HELPER BLOCK 2 — RENOVATION PREMIUM × EXIT CAP (live cash flows)", "L")
-w(wss, f"A{r}", "Blended Premium\n($/unit/month)", BOLD, fill=FILL_SUB, align="wrap")
-w(wss, f"B{r}", "Exit Cap", BOLD, fill=FILL_SUB, align="center")
-w(wss, f"C{r}", "Δ vs Base", BOLD, fill=FILL_SUB, align="center")
-w(wss, f"D{r}", "Loan", BOLD, fill=FILL_SUB, align="center")
-w(wss, f"E{r}", "Year 0", BOLD, fill=FILL_SUB, align="center")
-for i in range(5):
-    w(wss, f"{'FGHIJ'[i]}{r}", f"Year {i+1}", BOLD, fill=FILL_SUB, align="center")
-w(wss, f"K{r}", "Levered IRR", BOLD, fill=FILL_SUB, align="center")
-w(wss, f"L{r}", "Y6 NOI", BOLD, fill=FILL_SUB, align="center")
-w(wss, f"M{r}", "Y1 NOI", BOLD, fill=FILL_SUB, align="center")
+# ---------------------------------------------------------------- Grid 2 ---
+GROWTHS = [0.010, 0.015, 0.020, 0.025, 0.030, 0.035]
+r = section(wss, r, "HELPER BLOCK 2 — FLAT MARKET RENT GROWTH x EXIT CAP", "M")
+w(wss, f"A{r}", "Applies a single flat growth rate in place of the 1.5 / 2.0 / 2.5 / 3.0 / 3.0 base path. "
+                "Gross potential rent in year y scales by (1+g)^(y-0.5) divided by the base mid-year factor; "
+                "the change flows to NOI net of loss to lease, vacancy, downtime, concessions, bad debt and "
+                "the management fee.", NOTE, align="wrap")
+wss.merge_cells(f"A{r}:M{r}")
+wss.row_dimensions[r].height = 34
 r += 1
+r = helper_header(r, "Flat Rent Growth", "Exit Cap")
 h2 = r
-for prem in PREMS:
+for g_ in GROWTHS:
     for cap in CAPS:
-        w(wss, f"A{r}", prem, BLUE, CUR)
+        w(wss, f"A{r}", g_, BLUE, PCT, align="center")
         w(wss, f"B{r}", cap, BLUE, PCT2, align="center")
-        w(wss, f"C{r}", f"=A{r}-{A['prem_blend']}", BLACK, CUR)
-        leak1 = (f"(1-Assumptions!C${AROW['ll']}-Assumptions!C${AROW['vac']}"
-                 f"-Assumptions!C${AROW['conc']}-Assumptions!C${AROW['bd']})")
-        w(wss, f"M{r}", f"={AMc}!C{MR['noi']}+$C{r}*{AMc}!C{MR['ur']}*12*{AMc}!C{MR['fac']}"
-                        f"*{leak1}*(1-{A['e_mgmt']})", BLACK, CUR)
-        w(wss, f"D{r}", f"=MIN(Returns!$C${tc}*{A['ltc']},M{r}/{A['mindy']},"
-                        f"M{r}/({A['mindscr']}*{A['rate']}))", BLACK, CUR)
-        w(wss, f"E{r}", f"=-((Returns!$C${QR['uses']}-Returns!$C${QR['loan']}*{A['fee']})"
-                        f"+D{r}*{A['fee']}-D{r})", BLACK, CUR)
+        dnoi, noi_y = [], {}
         for i in range(5):
-            col = "FGHIJ"[i]
             yc = YR_COLS[i]
-            leak = (f"(1-Assumptions!{yc}${AROW['ll']}-Assumptions!{yc}${AROW['vac']}"
-                    f"-Assumptions!{yc}${AROW['conc']}-Assumptions!{yc}${AROW['bd']})")
-            dnoi = (f"$C{r}*{AMc}!{yc}{MR['ur']}*12*{AMc}!{yc}{MR['fac']}*{leak}*(1-{A['e_mgmt']})")
-            f = f"={AMc}!{yc}{MR['cfbd']}+{dnoi}-$D{r}*{A['rate']}"
-            if i == 4:
-                f += f"+(L{r}/B{r})*(1-{A['cos']})-$D{r}"
-            w(wss, f"{col}{r}", f, BLACK, CUR)
+            scale = f"((1+$A{r})^({i+1}-0.5)/{AMc}!{yc}{MR['fac']}-1)"
+            dg = f"({AMc}!{yc}{MR['gpr']}*{scale})"
+            dnoi.append(f"+{dg}*{leak(yc)}*(1-{A['e_mgmt']})")
+            noi_y[i] = f"{AMc}!{yc}{MR['noi']}+{dg}*{leak(yc)}*(1-{A['e_mgmt']})"
+        scale6 = f"((1+$A{r})^(6-0.5)/{AMc}!{EXIT_COL}{MR['fac']}-1)"
         leak6 = (f"(1-Assumptions!G${AROW['ll']}-Assumptions!G${AROW['vac']}"
                  f"-Assumptions!G${AROW['conc']}-Assumptions!G${AROW['bd']})")
-        w(wss, f"L{r}", f"={AMc}!{EXIT_COL}{MR['noi']}+$C{r}*{A['units']}*12*"
-                        f"{AMc}!{EXIT_COL}{MR['fac']}*{leak6}*(1-{A['e_mgmt']})", BLACK, CUR)
-        w(wss, f"K{r}", f"=IRR(E{r}:J{r})", BOLD, PCT)
+        noi6 = (f"{AMc}!{EXIT_COL}{MR['noi']}+{AMc}!{EXIT_COL}{MR['gpr']}*{scale6}"
+                f"*{leak6}*(1-{A['e_mgmt']})")
+        cf_block(r, f"{A['price']}", dnoi, f"$B{r}", noi_y[0], noi6)
         r += 1
-h2N = r - 1
+
 r += 1
-r = section(wss, r, "GRID 2 — LEVERED IRR: RENOVATION PREMIUM × EXIT CAP (at the base purchase price)", "G")
-w(wss, f"A{r}", "Blended Premium \\ Exit Cap", BOLD, fill=FILL_SUB, align="wrap")
+r = section(wss, r, "GRID 2 — LEVERED IRR: FLAT RENT GROWTH x EXIT CAP (at our bid)", "G")
+w(wss, f"A{r}", "Flat Rent Growth \\ Exit Cap", BOLD, fill=FILL_SUB, align="wrap")
 for j, cap in enumerate(CAPS):
     w(wss, f"{'BCDEF'[j]}{r}", cap, BOLD, PCT2, fill=FILL_SUB, align="center")
-w(wss, f"G{r}", "Return on Cost", BOLD, fill=FILL_SUB, align="center")
+w(wss, f"G{r}", "Market evidence", BOLD, fill=FILL_SUB, align="center")
 r += 1
-for i, prem in enumerate(PREMS):
-    w(wss, f"A{r}", prem, BLACK, CUR)
+NOTES_G = {0.010: "1.1% actual YoY, 1Q-26", 0.015: "our Year 1", 0.020: "our Year 2",
+           0.025: "our Year 3", 0.030: "our Years 4-5", 0.035: "above trend"}
+for i, g_ in enumerate(GROWTHS):
+    w(wss, f"A{r}", g_, BLACK, PCT)
     for j, cap in enumerate(CAPS):
         src = h2 + i * len(CAPS) + j
         w(wss, f"{'BCDEF'[j]}{r}", f"=K{src}", BLACK, PCT, align="center", border=BOX)
-    w(wss, f"G{r}", f"=A{r}*12/{A['cost_blend']}", ITAL, PCT)
+    w(wss, f"G{r}", NOTES_G[g_], ITAL, align="center")
     r += 1
+r += 2
+
+# ------------------------------------------------------- Breakeven ladders ---
+r = section(wss, r, "BREAKEVEN LADDERS — WHERE EACH DRIVER CROSSES THE HURDLE", "M")
+w(wss, f"A{r}", "Each ladder flexes ONE driver at our bid price and the base exit cap, holding everything "
+                "else at the base case. Read down each block to find where the levered IRR crosses 10%, 12% "
+                "and 14%. Every cell is live.", NOTE, align="wrap")
+wss.merge_cells(f"A{r}:M{r}")
+wss.row_dimensions[r].height = 28
+r += 2
+
+LADDERS = []
+
+# (a) blended renovation premium
+r = section(wss, r, "LADDER A — BLENDED RENOVATION PREMIUM ($/unit/month)", "M")
+r = helper_header(r, "Blended Premium", "(base)")
+la = r
+PREMS = [100, 125, 140, 155, 170, 190]
+for pm in PREMS:
+    w(wss, f"A{r}", pm, BLUE, CUR)
+    w(wss, f"B{r}", f"={A['prem_blend']}", GREEN, CUR)
+    ratio = f"($A{r}/$B{r})"
+    dnoi, noi_y = [], {}
+    for i in range(5):
+        yc = YR_COLS[i]
+        dg = f"({AMc}!{yc}{MR['gpr_r']}*({ratio}-1))"
+        dnoi.append(f"+{dg}*{leak(yc)}*(1-{A['e_mgmt']})")
+        noi_y[i] = f"{AMc}!{yc}{MR['noi']}+{dg}*{leak(yc)}*(1-{A['e_mgmt']})"
+    leak6 = (f"(1-Assumptions!G${AROW['ll']}-Assumptions!G${AROW['vac']}"
+             f"-Assumptions!G${AROW['conc']}-Assumptions!G${AROW['bd']})")
+    noi6 = (f"{AMc}!{EXIT_COL}{MR['noi']}+{AMc}!{EXIT_COL}{MR['gpr_r']}*({ratio}-1)"
+            f"*{leak6}*(1-{A['e_mgmt']})")
+    cf_block(r, f"{A['price']}", dnoi, f"{A['exitcap']}", noi_y[0], noi6)
+    w(wss, f"M{r}", f"=$A{r}*12/{A['cost_blend']}", ITAL, PCT)
+    r += 1
+w(wss, f"M{la-1}", "Return on Cost", BOLD, fill=FILL_SUB, align="wrap")
 r += 1
-wss.merge_cells(f"A{r}:H{r}")
+
+# (b) blended renovation cost
+r = section(wss, r, "LADDER B — BLENDED RENOVATION COST ($/unit)", "M")
+r = helper_header(r, "Blended Cost", "(base)")
+lb = r
+COSTS = [11000, 12500, 14407, 16000, 18000, 20000]
+for cst in COSTS:
+    w(wss, f"A{r}", cst, BLUE, CUR)
+    w(wss, f"B{r}", f"={A['cost_blend']}", GREEN, CUR)
+    other = f"($A{r}*{A['units']}+'Capex Budget'!$B${CAP_TOT_ROW})*(1+{A['conting']})"
+    w(wss, f"C{r}", f"=MIN(({A['price']}+{other})*{A['ltc']},{LOAN_TESTS[0]},{LOAN_TESTS[1]})", BLACK, CUR)
+    w(wss, f"D{r}", f"={A['price']}+{other}+{A['price']}*{A['acqcost']}+C{r}*{A['fee']}"
+                    f"+{A['fincost']}-C{r}", BLACK, CUR)
+    w(wss, f"E{r}", f"=-D{r}", BLACK, CUR)
+    for i in range(5):
+        col = "FGHIJ"[i]
+        f_ = f"={AMc}!{YR_COLS[i]}{MR['cfbd']}-C{r}*{A['rate']}"
+        if i == 4:
+            f_ += f"+{AMc}!{EXIT_COL}{MR['noi']}/{A['exitcap']}*(1-{A['cos']})-C{r}"
+        w(wss, f"{col}{r}", f_, BLACK, CUR)
+    w(wss, f"K{r}", f"=IRR(E{r}:J{r})", BOLD, PCT)
+    w(wss, f"L{r}", f"=SUM(F{r}:J{r})/-E{r}", BLACK, MULT)
+    w(wss, f"M{r}", f"={A['prem_blend']}*12/$A{r}", ITAL, PCT)
+    r += 1
+w(wss, f"M{lb-1}", "Return on Cost", BOLD, fill=FILL_SUB, align="wrap")
+r += 1
+
+# (c) real estate taxes — the reassessment question
+r = section(wss, r, "LADDER C — REAL ESTATE TAX REASSESSMENT (Year-5 bill)", "M")
+r = helper_header(r, "Year-5 Tax Bill", "Implied AV")
+lc = r
+TAXES = [(137000, "no growth from the 2025 actual"),
+         (160300, "base case — actual bill grown 4%"),
+         (185000, "AV to ~55% of the trade price"),
+         (238700, "AV to 69% of the trade price (OM comp average)"),
+         (294000, "AV to 85% of the trade price")]
+for tx, note in TAXES:
+    w(wss, f"A{r}", tx, BLUE, CUR)
+    w(wss, f"B{r}", f"=A{r}/0.024861/{A['actual']}", BLACK, PCT)
+    dnoi, noi_y = [], {}
+    for i in range(5):
+        yc = YR_COLS[i]
+        step = f"(($A{r}-Assumptions!G${AROW['e_tax']})*{i+1}/5)"
+        dnoi.append(f"-{step}")
+        noi_y[i] = f"{AMc}!{yc}{MR['noi']}-{step}"
+    noi6 = f"{AMc}!{EXIT_COL}{MR['noi']}-($A{r}-Assumptions!G${AROW['e_tax']})*1.04"
+    cf_block(r, f"{A['price']}", dnoi, f"{A['exitcap']}", noi_y[0], noi6)
+    w(wss, f"M{r}", note, ITAL, align="wrap")
+    r += 1
+w(wss, f"M{lc-1}", "Scenario", BOLD, fill=FILL_SUB, align="wrap")
+r += 1
+wss.merge_cells(f"A{r}:M{r}")
 w(wss, f"A{r}",
-  "Grid 2 holds the purchase price at the base case and flexes the blended renovation premium. $125 is CBRE's "
-  "light-touch scope plus a partial W/D benefit; $166 is our base case; $190 approximates achieving the top of "
-  "the submarket comp range. Even at $190 the deal does not clear a value-add hurdle at the base price — the "
-  "constraint is basis, not the renovation.", NOTE, align="wrap")
-wss.row_dimensions[r].height = 44
+  "Marion County parcel 8000002 has carried a gross assessed value between $5.1mm and $6.6mm every year since "
+  "2012, and the last assessment change was recorded 03/15/2022. The 2006 sale at $4.4mm did not reset it. "
+  "Indiana values apartments at the LOWEST of the income, market and cost approaches, which is why assessed "
+  "value has never tracked trade prices here. That history is the reason the base case grows the actual "
+  "$129,648 bill at 4% rather than stepping it to a share of the purchase price — but the risk is real and "
+  "this ladder prices it.", NOTE, align="wrap")
+wss.row_dimensions[r].height = 56
+
+# ============================================================================
+# 11b. TAX RECORD
+# ============================================================================
+wtx = wb.create_sheet("Tax Record")
+wtx.sheet_view.showGridLines = False
+for col, wd in [("A", 12), ("B", 15), ("C", 15), ("D", 15), ("E", 12), ("F", 15), ("G", 14), ("H", 60)]:
+    wtx.column_dimensions[col].width = wd
+title_block(wtx, "Marion County Parcel 8000002 — 25-Year Assessment and Tax Record", "H")
+
+r = 5
+r = section(wtx, r, "PARCEL", "H")
+for lbl, val in [
+    ("Parcel Number", "8000002"), ("State Parcel Number", "49-07-04-115-001.000-800"),
+    ("Owner of Record", "4020 MONACO DRIVE OWNER LLC"), ("Use Code", "403 (apartments)"),
+    ("Tax District", "800"), ("Year Built", "1974"), ("Acreage", "9.40"),
+    ("Deed Type", "Special Warranty Deed"), ("Deed Date", "12 June 2026"),
+    ("Recorded", "26 June 2026"), ("Last Assessment Change", "15 March 2022"),
+]:
+    w(wtx, f"A{r}", lbl, BLACK)
+    w(wtx, f"B{r}", val, BLUE)
+    r += 1
+
+r += 1
+r = section(wtx, r, "ASSESSMENT AND TAX HISTORY", "H")
+for col, h in [("A", "Tax Year"), ("B", "Land AV"), ("C", "Improvements"), ("D", "Gross AV"),
+               ("E", "Tax Rate"), ("F", "Net Annual Tax"), ("G", "Tax / Unit")]:
+    w(wtx, f"{col}{r}", h, BOLD, fill=FILL_SUB, align="center")
+w(wtx, f"H{r}", "Note", BOLD, fill=FILL_SUB)
+r += 1
+HIST = [
+    (2025, 1085500, 4462300, 5547800, .024861, 129648.42, "Gross AV less a $332,868 '2% deduction' = $5,214,932 net"),
+    (2024, 1085500, 4021100, 5106600, .0254, 129656.56, ""),
+    (2023, 1085500, 5471600, 6557100, .0254, 166425.76, "25-year peak assessed value"),
+    (2022, 1085500, 4678300, 5763800, .0257, 147893.34, "Last assessment change recorded 15 March 2022"),
+    (2021, 986800, 4337100, 5323900, .0270, 139656.54, ""),
+    (2020, 986800, 4343900, 5330700, .0259, 132409.24, ""),
+    (2019, 986800, 4654600, 5641400, .0244, 131783.10, ""),
+    (2018, 986800, 4654600, 5641400, .0239, 128832.64, ""),
+    (2017, 986800, 4453700, 5440500, .0237, 122802.98, ""),
+    (2016, 986800, 4210700, 5197500, .0225, 109667.24, ""),
+    (2015, 986800, 4216800, 5203600, .0207, 107771.76, ""),
+    (2014, 986800, 4310000, 5296800, .0206, 109172.34, ""),
+    (2013, 986900, 4310000, 5296900, .0220, 110175.50, ""),
+    (2012, 986900, 4310000, 5296900, .0202, 106806.68, "Assessed value has been range-bound ever since"),
+    (2011, 511800, 2988300, 3500100, .0195, 68118.96, ""),
+    (2010, 511800, 2988300, 3500100, .0191, 67005.92, ""),
+    (2009, 511800, 3536200, 4048000, .0175, 70937.14, ""),
+    (2008, 511800, 3536300, 4048100, .0181, 73396.10, ""),
+    (2007, 511800, 3536200, 4048000, .0239, 74739.82, "AV FELL the year after the March 2006 sale"),
+    (2006, 694000, 4562800, 5256800, .0245, 97947.12, "Property sold 28 March 2006 for $4,400,000 (flagged 'N')"),
+    (2005, 257600, 3963400, 4221000, .0256, 78113.26, ""),
+    (2004, 257600, 3963400, 4221000, .0248, 77326.46, ""),
+    (2003, 257600, 3963400, 4221000, .0228, 67727.90, ""),
+    (2002, 257600, 3963400, 4221000, .0247, 75149.16, ""),
+    (2001, 329000, 2313000, 2642000, .0326, 73755.90, ""),
+    (2000, 141000, 771000, 912000, .0936, 73385.76, "Pre-2002 assessment methodology; not comparable"),
+]
+h0 = r
+for yr, land, imp, gross, rate, tax, note in HIST:
+    w(wtx, f"A{r}", str(yr), BLACK, align="center")
+    w(wtx, f"B{r}", land, BLUE, CUR)
+    w(wtx, f"C{r}", imp, BLUE, CUR)
+    w(wtx, f"D{r}", f"=B{r}+C{r}", BLACK, CUR)
+    w(wtx, f"E{r}", rate, BLUE, PCT2, align="center")
+    w(wtx, f"F{r}", tax, BLUE, CUR)
+    w(wtx, f"G{r}", f"=F{r}/{A['units']}", BLACK, CUR)
+    if note:
+        w(wtx, f"H{r}", note, NOTE, align="wrap")
+    r += 1
+hN = r - 1
+
+r += 1
+r = section(wtx, r, "WHAT THE RECORD IMPLIES FOR THE UNDERWRITING", "H")
+stats = [
+    ("Gross AV, 2012", f"=D{h0+13}", CUR, ""),
+    ("Gross AV, 2025", f"=D{h0}", CUR, ""),
+    ("  Compound annual growth, 2012-2025", f"=(D{h0}/D{h0+13})^(1/13)-1", PCT2,
+     "Assessed value has effectively stood still for thirteen years."),
+    ("Net tax, 2012", f"=F{h0+13}", CUR, ""),
+    ("Net tax, 2025", f"=F{h0}", CUR, ""),
+    ("  Compound annual growth, 2012-2025", f"=(F{h0}/F{h0+13})^(1/13)-1", PCT2,
+     "The bill has risen with the RATE, not the assessment."),
+    ("Highest gross AV on record (2023)", f"=MAX(D{h0}:D{hN})", CUR, ""),
+    ("2025 gross AV as a % of the 2026 trade price", f"=D{h0}/{A['actual']}", PCT,
+     "The OM's own comp study assumes assessed value runs at about 69% of sale price after a trade. "
+     "This parcel is at 41% BEFORE any reassessment."),
+    ("Year-1 tax underwritten", f"=Assumptions!C${AROW['e_tax']}", CUR, ""),
+    ("Year-5 tax underwritten", f"=Assumptions!G${AROW['e_tax']}", CUR,
+     "Base case grows the actual bill at 4% a year — well above the 1.5% the record shows."),
+    ("Year-5 tax if AV reset to 69% of the trade price", f"={A['actual']}*0.69*0.024861", CUR,
+     "Priced as Ladder C on the Sensitivities tab, not in the base case."),
+]
+for lbl, f, fmt, note in stats:
+    w(wtx, f"A{r}", lbl, BLACK)
+    wtx.merge_cells(f"A{r}:C{r}")
+    w(wtx, f"D{r}", f, BOLD if not lbl.startswith("  ") else BLACK, fmt)
+    if note:
+        w(wtx, f"H{r}", note, NOTE, align="wrap")
+        wtx.row_dimensions[r].height = 28
+    r += 1
+
+r += 1
+wtx.merge_cells(f"A{r}:H{r}")
+w(wtx, f"A{r}",
+  "Why this matters. Indiana values apartments at the LOWEST of the income, market and cost approaches, and "
+  "this record shows the result: the 2006 sale at $4,400,000 was followed by assessed value FALLING the next "
+  "year, and assessed value has stayed between $5.1mm and $6.6mm every year since 2012 while the property "
+  "traded twice. An earlier draft of this model stepped taxes from $140,000 to $210,000 on the assumption "
+  "that a sale resets the assessment. The public record does not support that, and correcting it is worth "
+  "roughly 1.5 points of levered IRR. The risk has not been dismissed — it is priced explicitly in Ladder C.",
+  NOTE, align="wrap")
+wtx.row_dimensions[r].height = 60
 
 # ============================================================================
 # 12. DD QUESTIONS
@@ -2093,7 +2388,7 @@ w(wsd, f"A{r+1}", f"{n} questions. 'High' priority items are those where a diffe
 FREEZE = {
     "Assumptions": "B5", "Rent Roll": "B6", "Unit Mix": "B6", "T-12 Recast": "B6",
     "Other Income": "B6", "Capex Budget": "B6", "Reno Schedule": "B6",
-    "Annual Model": "C7", "Returns": "B6", "Sensitivities": "B6", "DD Questions": "C6",
+    "Annual Model": "C7", "Returns": "B6", "Sensitivities": "B6", "Tax Record": "B6", "DD Questions": "C6",
 }
 for sheet in wb.worksheets:
     ps = sheet.page_setup
