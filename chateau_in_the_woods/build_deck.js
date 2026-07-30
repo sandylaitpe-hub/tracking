@@ -166,7 +166,6 @@ s1.addText("Rent roll 07/01/2026 · T-12 Feb-25 to Jan-26 · CBRE OM 09/10/2025 
   { x: 0.45, y: 7.16, w: 12.43, h: 0.22, fontFace: BODY, fontSize: 7.5, color: "7C8F85", margin: 0 });
 
 s1.addNotes("The model was not handed a price — it solves for one. $12.0mm is the highest basis at which this plan clears 14% and 1.80x on rent growth taken from 1Q-26 actuals. It traded 12% above that on 12 June 2026. Conservative on what we do not control (rent growth, exit cap, taxes evidenced against 25 years of assessment record); confident on what we do (renovation premium, pace, ancillary income).");
-
 // =========================================================================
 // SLIDE 2 — WHERE THE VALUE COMES FROM, AND WHAT MOVES IT
 // =========================================================================
@@ -175,21 +174,21 @@ s2.background = { color: WHITE };
 s2.addShape(pres.ShapeType.rect, { x: 0, y: 0, w: 13.333, h: 0.10, fill: { color: GREEN2 } });
 
 s2.addText("Where the value comes from — and what moves it", {
-  x: 0.45, y: 0.22, w: 9.6, h: 0.44, fontFace: HEAD, fontSize: 21, bold: true, color: INK, margin: 0,
+  x: 0.45, y: 0.20, w: 9.6, h: 0.40, fontFace: HEAD, fontSize: 21, bold: true, color: INK, margin: 0,
 });
 s2.addText("Chateau in the Woods  ·  118 Units  ·  Indianapolis, IN", {
-  x: 9.4, y: 0.34, w: 3.48, h: 0.26, fontFace: BODY, fontSize: 10, color: MUTED, align: "right", margin: 0,
+  x: 9.4, y: 0.30, w: 3.48, h: 0.26, fontFace: BODY, fontSize: 10, color: MUTED, align: "right", margin: 0,
 });
 
 const CW = 4.02, CX = [0.45, 4.66, 8.87];
 
 // ---- (a) NOI by year -----------------------------------------------------
-h2(s2, CX[0], 0.86, CW, "NOI grows 34% in five years", "$873K in Year 1 → $1,171K in Year 5");
+h2(s2, CX[0], 0.76, CW, "NOI grows 34% in five years", "$873K in Year 1 → $1,171K in Year 5");
 s2.addChart(pres.ChartType.bar, [{
   name: "NOI", labels: ["Y1", "Y2", "Y3", "Y4", "Y5"],
   values: [873, 1060, 1108, 1142, 1171],
 }], Object.assign({}, CH, {
-  x: CX[0] - 0.18, y: 1.32, w: CW + 0.28, h: 1.86,
+  x: CX[0] - 0.18, y: 1.20, w: CW + 0.28, h: 1.62,
   barDir: "col", chartColors: [GREEN, GREEN2, GREEN2, GREEN2, GREEN2], barGapWidthPct: 45,
   showValue: true, dataLabelPosition: "outEnd", dataLabelFormatCode: '$#,##0"K"',
   dataLabelFontSize: 8, dataLabelColor: INK,
@@ -199,7 +198,7 @@ s2.addChart(pres.ChartType.bar, [{
 }));
 
 // ---- (b) yield on cost vs exit cap ---------------------------------------
-h2(s2, CX[1], 0.86, CW, "Yield on cost clears the exit cap", "The value-add test: 7.86% vs 6.75% = +111 bps");
+h2(s2, CX[1], 0.76, CW, "Yield on cost clears the exit cap", "The value-add test: 7.86% vs 6.75% = +111 bps");
 s2.addChart([
   { type: pres.ChartType.line,
     data: [{ name: "Yield on cost", labels: ["Y1", "Y2", "Y3", "Y4", "Y5"],
@@ -210,7 +209,7 @@ s2.addChart([
              values: [0.0675, 0.0675, 0.0675, 0.0675, 0.0675] }],
     options: { chartColors: [GOLD], lineSize: 1.5, lineDash: "dash", lineDataSymbol: "none" } },
 ], Object.assign({}, CH, {
-  x: CX[1] - 0.18, y: 1.32, w: CW + 0.28, h: 1.86,
+  x: CX[1] - 0.18, y: 1.20, w: CW + 0.28, h: 1.62,
   showValue: false,
   catAxisLabelFontSize: 8.5, catAxisLabelColor: MUTED,
   valAxisLabelFontSize: 8, valAxisLabelColor: MUTED, valAxisLabelFormatCode: "0.0%",
@@ -219,17 +218,17 @@ s2.addChart([
   plotArea: { fill: { color: WHITE } }, chartArea: { fill: { color: WHITE } },
 }));
 s2.addText("Solid = yield on cost   ·   dashed = 6.75% exit cap", {
-  x: CX[1], y: 3.16, w: CW, h: 0.18, fontFace: BODY, fontSize: 7.5, italic: true, color: MUTED, margin: 0 });
+  x: CX[1], y: 2.84, w: CW, h: 0.18, fontFace: BODY, fontSize: 7.5, italic: true, color: MUTED, margin: 0 });
 
 // ---- (c) renovation schedule --------------------------------------------
-h2(s2, CX[2], 0.86, CW, "Two tracks, done in month 16", "Cumulative units renovated, by month");
+h2(s2, CX[2], 0.76, CW, "Two tracks, done in month 16", "Cumulative units renovated, by month");
 s2.addChart(pres.ChartType.bar, [
   { name: "Track A — in place", labels: Array.from({ length: 18 }, (_, i) => String(i + 1)),
     values: [0, 10, 20, 30, 40, 50, 53, 53, 53, 53, 53, 53, 53, 53, 53, 53, 53, 53] },
   { name: "Track B — vacant + laundry", labels: Array.from({ length: 18 }, (_, i) => String(i + 1)),
     values: [0, 0, 0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 65, 65] },
 ], Object.assign({}, CH, {
-  x: CX[2] - 0.18, y: 1.32, w: CW + 0.28, h: 1.86,
+  x: CX[2] - 0.18, y: 1.20, w: CW + 0.28, h: 1.62,
   barDir: "col", barGrouping: "stacked", chartColors: [GREEN, SAGE2], barGapWidthPct: 20,
   showValue: false,
   catAxisLabelFontSize: 7, catAxisLabelColor: MUTED,
@@ -238,17 +237,16 @@ s2.addChart(pres.ChartType.bar, [
   valGridLine: { style: "solid", color: "EAEFEB", size: 0.5 },
   plotArea: { fill: { color: WHITE } }, chartArea: { fill: { color: WHITE } },
 }));
-s2.addText("Dark = 53 units renovated in place (no permit, no vacancy loss)   ·   pale = 65 units taken vacant to add laundry", {
-  x: CX[2], y: 3.16, w: CW, h: 0.30, fontFace: BODY, fontSize: 7.5, italic: true, color: MUTED,
+s2.addText("Dark = 53 units renovated in place (no permit, no vacancy loss)  ·  pale = 65 units taken vacant to add laundry", {
+  x: CX[2], y: 2.84, w: CW, h: 0.30, fontFace: BODY, fontSize: 7.5, italic: true, color: MUTED,
   lineSpacing: 9, margin: 0 });
 
 // ---- tornado -------------------------------------------------------------
-h2(s2, 0.45, 3.56, 8.0, "What moves the 14.0% — breakeven ladders",
-   "Levered IRR at our $12.0mm bid. Each bar spans the full range tested in the model; the left number is the downside, the right the upside.");
+h2(s2, 0.45, 3.24, 7.4, "What moves the 14.0% — breakeven ladders",
+   "Levered IRR at our $12.0mm bid. Each bar spans the full range tested; left number is the downside, right the upside.");
 
 // Floating bars: the upside series is drawn first, then the downside series is
 // overlaid 100% in white so only the span between them stays coloured.
-// widest span last — a horizontal bar chart plots the first category at the bottom
 const TOR = [
   ["Renovation cost $20.0K → $11.0K",     0.1135, 0.1566],
   ["Renovation premium $100 → $190 /mo",  0.1020, 0.1623],
@@ -260,54 +258,102 @@ s2.addChart(pres.ChartType.bar, [
   { name: "upside", labels: TOR.map(t => t[0]), values: TOR.map(t => t[2]) },
   { name: "downside", labels: TOR.map(t => t[0]), values: TOR.map(t => t[1]) },
 ], Object.assign({}, CH, {
-  x: 0.20, y: 4.12, w: 12.95, h: 2.28,
+  x: 0.20, y: 3.76, w: 7.75, h: 2.20,
   barDir: "bar", barGrouping: "clustered", barOverlapPct: 100,
   chartColors: [SAGE2, WHITE], barGapWidthPct: 55,
   showValue: true, dataLabelPosition: "inEnd", dataLabelFormatCode: "0.0%",
-  dataLabelFontSize: 8.5, dataLabelColor: INK,
-  catAxisLabelFontSize: 9.5, catAxisLabelColor: INK, catAxisLineShow: false,
+  dataLabelFontSize: 8, dataLabelColor: INK,
+  catAxisLabelFontSize: 8.5, catAxisLabelColor: INK, catAxisLineShow: false,
   valAxisHidden: true, valGridLine: { style: "none" },
   valAxisMinVal: 0.04, valAxisMaxVal: 0.20,
   plotArea: { fill: { color: WHITE } }, chartArea: { fill: { color: WHITE } },
 }));
 
-// ---- verdict strip -------------------------------------------------------
-s2.addShape(pres.ShapeType.roundRect, {
-  x: 0.45, y: 6.48, w: 12.43, h: 0.78, fill: { color: DEEP }, rectRadius: 0.05, shadow: sh(),
+// ---- major assumptions ---------------------------------------------------
+h2(s2, 8.15, 3.24, 4.73, "Major assumptions",
+   "Set off Yardi 1Q-26 actuals and the 25-year county tax record — not forecasts");
+const aH = (t) => ({ text: t, options: { bold: true, fontSize: 8.5, color: WHITE,
+  fill: { color: INK }, valign: "middle" } });
+const aR = (a, b) => ([
+  { text: a, options: { fontSize: 8.5, color: "3A4A42" } },
+  { text: b, options: { fontSize: 8.5, bold: true, color: INK, align: "right" } },
+]);
+s2.addTable([
+  [aH("Driver"), aH("Underwritten")],
+  aR("Purchase price — SOLVED, not given", "$12,000,000"),
+  aR("Market rent growth, Y1 to Y5", "1.5 / 2.0 / 2.5 / 3.0 / 3.0%"),
+  aR("Stabilised vacancy / Year-1 bad debt", "5.5% / 1.50%"),
+  aR("Track A — start / pace / cost / prem", "mo 2 / 10 / $10,000 / $100"),
+  aR("Track B — start / pace / cost / prem", "mo 4 / 5 / $18,000 / $200"),
+  aR("Blended cost / premium / return on cost", "$14,407 / $155 / 12.9%"),
+  aR("Non-unit capital + 8% contingency", "$1,199,800"),
+  aR("Operating expenses, Year 1", "$8,929 per unit"),
+  aR("Real estate taxes, Y1 to Y5", "$137,000 to $160,300"),
+  aR("Debt — LTC / rate / structure", "65% / 5.85% / interest-only"),
+  aR("Exit cap / cost of sale", "6.75% / 1.5%"),
+  aR("Data hierarchy — the Excel files govern", "53 with laundry, not 78"),
+], {
+  x: 8.15, y: 3.76, w: 4.73, colW: [2.73, 2.00], rowH: 0.183, fontFace: BODY,
+  border: { type: "solid", color: LINE, pt: 0.5 }, valign: "middle", margin: [1, 5, 1, 5],
 });
-s2.addText("VERDICT", { x: 0.72, y: 6.56, w: 1.4, h: 0.24, fontFace: BODY, fontSize: 9,
-  bold: true, color: SAGE, margin: 0 });
-s2.addText("Rent growth, not renovation, is the deal. Every controllable driver holds the IRR inside 11–16%; the market alone swings it 7% to 19%. Yardi has metro rents flat on a trailing-three-month basis and 2025 starts more than doubled — so we underwrite 1.5% to 3.0% and let the price absorb the difference.",
-  { x: 2.05, y: 6.54, w: 10.6, h: 0.66, fontFace: BODY, fontSize: 10, color: "DDE8E1",
-    lineSpacing: 12.5, valign: "middle", margin: 0 });
 
-s2.addNotes("Read the tornado from the top: the only bar that breaks the deal is the one we do not control. Rent growth at a flat 1.0% takes it to 7.1%; at 3.5% it is 18.7%. Everything we do control — premium, cost, pace — moves it by roughly 5 points either way, which is exactly why the bid, not the business plan, is the decision in front of the committee.");
+// ---- opportunities / risks / assessment ---------------------------------
+function mini(x, w, title, accent, items) {
+  s2.addShape(pres.ShapeType.rect, { x, y: 6.26, w, h: 0.035, fill: { color: accent } });
+  s2.addText(title, { x, y: 6.34, w, h: 0.20, fontFace: BODY, fontSize: 9, bold: true,
+    color: accent, margin: 0 });
+  s2.addText(items.map((it, i) => ([
+    { text: it[0] + " ", options: { bold: true, color: INK } },
+    { text: it[1], options: { color: "4A5A52", breakLine: i !== items.length - 1 } },
+  ])).flat(), { x, y: 6.56, w, h: 0.86, fontFace: BODY, fontSize: 8, lineSpacing: 9.8,
+    paraSpaceAfter: 2, valign: "top", margin: 0 });
+}
+mini(0.45, 3.90, "KEY OPPORTUNITIES", GREEN, [
+  ["12.9% return on renovation cost.", "$14,407 buys $155 a month."],
+  ["All 118 units in 16 months.", "Two tracks, nobody displaced, no permit on 53."],
+  ["~$110K a year uncollected.", "Tech fee 60% penetrated, valet trash unbilled, no pet rent."],
+]);
+mini(4.60, 3.90, "KEY RISKS", RED, [
+  ["Rent growth — the dominant variable.", "At a flat 1.0%, the IRR is 7.1%."],
+  ["Basis.", "It traded 12% above our bid; there the plan returns 7.9%."],
+  ["Unproven premium, 1974 plant.", "Nothing renovated to standard; 3.5 of 5 roofs original."],
+]);
+s2.addShape(pres.ShapeType.roundRect, {
+  x: 8.75, y: 6.26, w: 4.13, h: 1.06, fill: { color: DEEP }, rectRadius: 0.05, shadow: sh(),
+});
+s2.addText("OVERALL ASSESSMENT", { x: 8.95, y: 6.36, w: 3.8, h: 0.20, fontFace: BODY, fontSize: 8.5,
+  bold: true, color: SAGE, margin: 0 });
+s2.addText("A genuinely accretive plan on a well-located asset — but only at a price. We bid $12.0mm and were outbid by 12%. On 1.1% actual metro rent growth, that is the right outcome.",
+  { x: 8.95, y: 6.58, w: 3.78, h: 0.66, fontFace: BODY, fontSize: 8.5, color: "DDE8E1",
+    lineSpacing: 10.5, valign: "top", margin: 0 });
+
+s2.addNotes("Read the tornado from the bottom: the only bar that breaks the deal is the one we do not control. Rent growth at a flat 1.0% takes it to 7.1%; at 3.5% it is 18.7%. Everything we do control — premium, cost, pace — moves it roughly 5 points either way, which is why the bid, not the business plan, is the decision in front of the committee.");
 
 // =========================================================================
-// APPENDIX A — BUSINESS PLAN
+// APPENDIX — SUPPORTING DETAIL
 // =========================================================================
 const a1 = pres.addSlide();
 a1.background = { color: WHITE };
 a1.addShape(pres.ShapeType.rect, { x: 0, y: 0, w: 13.333, h: 0.10, fill: { color: GREEN2 } });
-a1.addText("Appendix A  ·  The business plan", { x: 0.45, y: 0.24, w: 9.0, h: 0.40,
-  fontFace: HEAD, fontSize: 22, bold: true, color: INK, margin: 0 });
-a1.addText("$2.90mm of capital · $24,575 per unit · 16 months", { x: 9.0, y: 0.34, w: 3.88, h: 0.26,
+a1.addText("Appendix  ·  Business plan, price sensitivity and the evidence", { x: 0.45, y: 0.22, w: 9.6, h: 0.40,
+  fontFace: HEAD, fontSize: 20, bold: true, color: INK, margin: 0 });
+a1.addText("Full detail in the 13-tab workbook", { x: 9.4, y: 0.32, w: 3.48, h: 0.26,
   fontFace: BODY, fontSize: 10, color: MUTED, align: "right", margin: 0 });
 
-// two-track table
-h2(a1, 0.45, 0.86, 7.4, "Two tracks, chosen by what each unit needs");
-const trH = (t) => ({ text: t, options: { bold: true, fontSize: 9.5, color: WHITE,
+// ---- two-track table -----------------------------------------------------
+h2(a1, 0.45, 0.86, 6.0, "Two tracks, chosen by what each unit needs");
+const trH = (t) => ({ text: t, options: { bold: true, fontSize: 9, color: WHITE,
   fill: { color: GREEN }, valign: "middle" } });
 const trR = (a, b, c) => ([
-  { text: a, options: { fontSize: 9, color: MUTED } },
-  { text: b, options: { fontSize: 9, color: INK, bold: true } },
-  { text: c, options: { fontSize: 9, color: INK, bold: true } },
+  { text: a, options: { fontSize: 8.5, color: MUTED } },
+  { text: b, options: { fontSize: 8.5, color: INK, bold: true } },
+  { text: c, options: { fontSize: 8.5, color: INK, bold: true } },
 ]);
 a1.addTable([
   [trH(""), trH("Track A — in place"), trH("Track B — vacant unit")],
-  trR("Units", "53 (laundry already in unit)", "65 (laundry to be added)"),
+  trR("Units", "53 — laundry already in unit", "65 — laundry to be added"),
   trR("Resident impact", "None — resident stays", "Natural turnover only"),
-  trR("Permit", "None — cosmetic scope exempt", "State CDR, then Marion County DBNS"),
+  trR("Permit", "None — cosmetic scope exempt", "State CDR, then county DBNS"),
   trR("Start / pace", "Month 2 / 10 per month", "Month 4 / 5 per month"),
   trR("Cost per unit", "$10,000", "$13,000 + $5,000 laundry"),
   trR("Rent premium", "$100 / month", "$200 / month"),
@@ -315,21 +361,21 @@ a1.addTable([
   trR("Downtime", "None", "14 incremental days"),
   trR("Complete", "Month 7", "Month 16"),
 ], {
-  x: 0.45, y: 1.24, w: 7.4, colW: [1.85, 2.80, 2.75], rowH: 0.235, fontFace: BODY,
+  x: 0.45, y: 1.26, w: 6.0, colW: [1.55, 2.25, 2.20], rowH: 0.215, fontFace: BODY,
   border: { type: "solid", color: LINE, pt: 0.5 }, valign: "middle", margin: [2, 5, 2, 5],
 });
 a1.addText([
   { text: "Blended $14,407 per unit buys a $155 per month premium — a 12.9% return on cost", options: { bold: true, color: INK } },
   { text: ", against a 6.75% exit. A single-track plan at 5 units a month would take 27 months; running the 53 in place in parallel finishes in 16 without forcing a single resident out.", options: { color: MUTED } },
-], { x: 0.45, y: 3.72, w: 7.4, h: 0.52, fontFace: BODY, fontSize: 9.5, lineSpacing: 12, margin: 0 });
+], { x: 0.45, y: 3.66, w: 6.0, h: 0.62, fontFace: BODY, fontSize: 9, lineSpacing: 11.5, margin: 0 });
 
-// capital budget chart
-h2(a1, 8.25, 0.86, 4.63, "Where the $2.90mm goes");
+// ---- capital budget ------------------------------------------------------
+h2(a1, 0.45, 4.36, 6.0, "Where the $2.90mm of capital goes", "$24,575 per unit, all funded at closing in Sources & Uses");
 a1.addChart(pres.ChartType.bar, [{
   name: "Capital", labels: ["Unit renovation\n118 units", "Non-unit capital\nroof, drains, amenity", "Contingency\n8%"],
   values: [1700, 985, 215],
 }], Object.assign({}, CH, {
-  x: 8.10, y: 1.24, w: 4.90, h: 2.60,
+  x: 0.30, y: 4.90, w: 6.25, h: 2.10,
   barDir: "col", chartColors: [GREEN, GREEN2, SAGE2], barGapWidthPct: 55,
   showValue: true, dataLabelPosition: "outEnd", dataLabelFormatCode: '$#,##0"K"',
   dataLabelFontSize: 9, dataLabelColor: INK,
@@ -337,161 +383,15 @@ a1.addChart(pres.ChartType.bar, [{
   valAxisHidden: true, valGridLine: { style: "none" }, valAxisMaxVal: 2100, valAxisMinVal: 0,
   plotArea: { fill: { color: WHITE } }, chartArea: { fill: { color: WHITE } },
 }));
+a1.addText("Average levered cash-on-cash 8.4% — 4.9% in Year 1 while the renovation runs, 10.1% by Year 5.",
+  { x: 0.45, y: 7.02, w: 6.0, h: 0.24, fontFace: BODY, fontSize: 8.5, italic: true, color: MUTED, margin: 0 });
 
-// cash-on-cash
-h2(a1, 0.45, 4.40, 5.9, "Levered cash-on-cash by year", "Interest-only debt · reserves $300/unit · at our $12.0mm bid");
-a1.addChart(pres.ChartType.bar, [{
-  name: "Cash-on-cash", labels: ["Y1", "Y2", "Y3", "Y4", "Y5"],
-  values: [0.0485, 0.0817, 0.0901, 0.0961, 0.1010],
-}], Object.assign({}, CH, {
-  x: 0.30, y: 4.90, w: 6.05, h: 2.10,
-  barDir: "col", chartColors: [SAGE2, GREEN2, GREEN2, GREEN2, GREEN], barGapWidthPct: 50,
-  showValue: true, dataLabelPosition: "outEnd", dataLabelFormatCode: "0.0%",
-  dataLabelFontSize: 9, dataLabelColor: INK,
-  catAxisLabelFontSize: 9, catAxisLabelColor: MUTED,
-  valAxisHidden: true, valGridLine: { style: "none" }, valAxisMaxVal: 0.125, valAxisMinVal: 0,
-  plotArea: { fill: { color: WHITE } }, chartArea: { fill: { color: WHITE } },
-}));
-a1.addText("Year 1 carries the renovation downtime and the ramp on ancillary income; the plan is stabilised from Year 2. Average 8.4%.",
-  { x: 0.45, y: 6.98, w: 5.9, h: 0.30, fontFace: BODY, fontSize: 8.5, italic: true, color: MUTED,
-    lineSpacing: 10.5, margin: 0 });
-
-// revenue build
-h2(a1, 6.85, 4.40, 6.03, "Effective gross revenue build", "$1.93mm in Year 1 → $2.39mm in Year 5");
-a1.addChart(pres.ChartType.bar, [
-  { name: "Net rental income", labels: ["Y1", "Y2", "Y3", "Y4", "Y5"], values: [1688, 1889, 1966, 2031, 2092] },
-  { name: "Other income", labels: ["Y1", "Y2", "Y3", "Y4", "Y5"], values: [238, 269, 279, 289, 298] },
-], Object.assign({}, CH, {
-  x: 6.70, y: 4.90, w: 6.33, h: 2.10,
-  barDir: "col", barGrouping: "stacked", chartColors: [GREEN, SAGE2], barGapWidthPct: 50,
-  showValue: false,
-  catAxisLabelFontSize: 9, catAxisLabelColor: MUTED,
-  valAxisLabelFontSize: 8, valAxisLabelColor: MUTED, valAxisLabelFormatCode: '$#,##0"K"',
-  valAxisMaxVal: 2500, valAxisMinVal: 0, valAxisMajorUnit: 500,
-  valGridLine: { style: "solid", color: "EAEFEB", size: 0.5 },
-  plotArea: { fill: { color: WHITE } }, chartArea: { fill: { color: WHITE } },
-}));
-a1.addText("Dark = net rental income after loss to lease, vacancy, concessions and bad debt.  Pale = other income — RUBS, technology fee, valet trash, new pet rent, carports and fees.",
-  { x: 6.85, y: 6.98, w: 6.03, h: 0.30, fontFace: BODY, fontSize: 8.5, italic: true, color: MUTED,
-    lineSpacing: 10.5, margin: 0 });
-
-// =========================================================================
-// APPENDIX B — OPPORTUNITIES AND RISKS
-// =========================================================================
-const a2 = pres.addSlide();
-a2.background = { color: WHITE };
-a2.addShape(pres.ShapeType.rect, { x: 0, y: 0, w: 13.333, h: 0.10, fill: { color: GREEN2 } });
-a2.addText("Appendix B  ·  Opportunities and risks", { x: 0.45, y: 0.24, w: 9.0, h: 0.40,
-  fontFace: HEAD, fontSize: 22, bold: true, color: INK, margin: 0 });
-a2.addText("Ranked by effect on levered IRR", { x: 9.0, y: 0.34, w: 3.88, h: 0.26,
-  fontFace: BODY, fontSize: 10, color: MUTED, align: "right", margin: 0 });
-
-function column(x, w, heading, accent, items, y0) {
-  a2.addShape(pres.ShapeType.roundRect, { x: x - 0.15, y: y0 - 0.10, w: w + 0.30, h: 0.42,
-    fill: { color: accent }, rectRadius: 0.04 });
-  a2.addText(heading, { x: x, y: y0 - 0.10, w: w, h: 0.42, fontFace: HEAD,
-    fontSize: 13, bold: true, color: WHITE, valign: "middle", margin: 0 });
-  a2.addText(items.map((it, i) => ([
-    { text: it[0] + "  ", options: { bold: true, color: accent } },
-    { text: it[1], options: { color: "3A4A42", breakLine: i !== items.length - 1 } },
-  ])).flat(), {
-    x, y: y0 + 0.44, w, h: 3.90, fontFace: BODY, fontSize: 10, lineSpacing: 12.5,
-    paraSpaceAfter: 9, margin: 0, valign: "top",
-  });
-}
-
-const OPPS = [
-  ["Two-track renovation, 16 months.", "The 53 units with laundry go in place at 10 a month from month 2 — no permit, no vacancy loss. The 65 needing laundry follow natural turnover. All 118 complete in month 16 without displacing a resident."],
-  ["In-unit laundry, all 118 units.", "65 units lack it. At the case's $5,000 per unit it is the highest-return item in the plan. The rent roll shows 53 units with machines, not the OM's 78."],
-  ["12.9% return on renovation cost.", "$14,407 per unit for a $155 monthly premium against a 6.75% exit; Year-5 yield on cost of 7.86% sits 111 bps above it."],
-  ["Taxes are lower than they look.", "Marion County parcel 8000002 paid $129,648 in 2025. Assessed value has been range-bound $5.1–6.6mm since 2012 and last changed March 2022; the 2006 sale did not reset it. Today's AV is 41% of the 2026 trade price."],
-  ["Under-collected ancillary income.", "The $49 technology fee is roughly 60% penetrated, the $25 valet trash charge is not billed although the property starts paying for it in Jan-26, and there is no pet rent — about $110K a year of run-rate."],
-  ["Operational slack.", "2.2% loss to lease and 6.8% trailing physical vacancy against a 5.5% stabilised target."],
-];
-const RISKS = [
-  ["Rent growth. The dominant variable.", "Metro rents flat on a trailing-three-month basis and +1.1% year over year in 1Q-26, with 2025 starts more than doubled — delivering 2027-28, inside our hold, and Carmel taking over half of 2026 deliveries just north of us. At a flat 1.0% the deal returns 7.1%; at 3.0%, 16.7%."],
-  ["Basis. We were outbid by 12%.", "It traded at $13,625,000. At that price the same plan returns 7.9% and 1.42x, and the yield-on-cost spread over the exit collapses from 111 bps to 34 bps."],
-  ["Tax reassessment.", "Base case grows the actual bill 4% a year. If assessed value reset to 69% of the trade price the Year-5 bill is $238,700 and the IRR falls to 10.3%. The record says it will not, but Ladder C prices it."],
-  ["Unproven rent premium.", "Nothing has been renovated to a current standard. At $125 rather than $155 the IRR is 12.0%; at $190 it is 16.2%. A leased mock-up before we go hard would settle it."],
-  ["1974 physical risk.", "3.5 of 5 original rubber roofs, 37 below-grade units needing drains and sump pumps, original sliders, central gas water heaters. Plus 4 evictions and 8 notices on the rent roll."],
-];
-column(0.60, 5.85, "  Key opportunities", GREEN, OPPS, 0.92);
-column(7.05, 5.85, "  Key risks", RED, RISKS, 0.92);
-
-// ---- what we would resolve before going hard -----------------------------
-a2.addShape(pres.ShapeType.roundRect, {
-  x: 0.45, y: 5.32, w: 12.43, h: 1.85, fill: { color: PALE }, rectRadius: 0.05,
-});
-a2.addText("WHAT WE WOULD RESOLVE BEFORE GOING HARD", { x: 0.75, y: 5.48, w: 6.0, h: 0.24,
-  fontFace: BODY, fontSize: 9.5, bold: true, color: GREEN, margin: 0 });
-a2.addText("Each item below is a live question in the 62-question diligence list; each has a priced consequence in the model.", {
-  x: 6.8, y: 5.48, w: 5.78, h: 0.24, fontFace: BODY, fontSize: 8.5, italic: true, color: MUTED,
-  align: "right", margin: 0 });
-const GATES = [
-  ["Lease a renovated mock-up", "The $155 premium is the second-biggest driver and the only one still unproven. A signed lease moves the bid by roughly $600K."],
-  ["Escrow or price the tax risk", "Tie a holdback to the first post-closing Form 11A. Worth 3.7 points of IRR if the assessment does reset."],
-  ["Count the washer/dryers on site", "The OM says 78, its own schedules say 54, the rent roll says 53. Every 10 units of error is $50,000 of capital."],
-  ["Seller credit for immediate needs", "Sump pumps, patio drains and asphalt — about $190,000 of work identified before we own it."],
-];
-GATES.forEach(([t, d], i) => {
-  const x = 0.75 + i * 3.09;
-  a2.addShape(pres.ShapeType.rect, { x, y: 5.86, w: 2.72, h: 0.035, fill: { color: GREEN2 } });
-  a2.addText(t, { x, y: 5.94, w: 2.78, h: 0.24, fontFace: BODY, fontSize: 9.5, bold: true,
-    color: INK, margin: 0 });
-  a2.addText(d, { x, y: 6.20, w: 2.78, h: 0.85, fontFace: BODY, fontSize: 8.5, color: "3A4A42",
-    lineSpacing: 10.5, valign: "top", margin: 0 });
-});
-
-// =========================================================================
-// APPENDIX C — ASSUMPTIONS AND SENSITIVITY GRID
-// =========================================================================
-const a3 = pres.addSlide();
-a3.background = { color: WHITE };
-a3.addShape(pres.ShapeType.rect, { x: 0, y: 0, w: 13.333, h: 0.10, fill: { color: GREEN2 } });
-a3.addText("Appendix C  ·  Assumptions and the sensitivity grid", { x: 0.45, y: 0.24, w: 9.2, h: 0.40,
-  fontFace: HEAD, fontSize: 20, bold: true, color: INK, margin: 0 });
-a3.addText("Every figure below is a live input in the workbook", { x: 9.4, y: 0.34, w: 3.48, h: 0.26,
-  fontFace: BODY, fontSize: 10, color: MUTED, align: "right", margin: 0 });
-
-h2(a3, 0.45, 0.92, 6.0, "Major assumptions");
-const aH = (t) => ({ text: t, options: { bold: true, fontSize: 9, color: WHITE,
-  fill: { color: INK }, valign: "middle" } });
-const aR = (a, b) => ([
-  { text: a, options: { fontSize: 9, color: "3A4A42" } },
-  { text: b, options: { fontSize: 9, bold: true, color: INK, align: "right" } },
-]);
-a3.addTable([
-  [aH("Driver"), aH("Underwritten")],
-  aR("Purchase price — SOLVED, not given", "$12,000,000"),
-  aR("Market rent growth, Y1 to Y5", "1.5 / 2.0 / 2.5 / 3.0 / 3.0%"),
-  aR("Loss to lease, Y1 to Y5", "2.2% burning to 1.5%"),
-  aR("Stabilised vacancy / concessions", "5.5% / 0.75% to 0.50%"),
-  aR("Bad debt, Y1 to Y5", "1.50% to 1.00%"),
-  aR("Track A — start / pace / cost / premium", "mo 2 / 10 / $10,000 / $100"),
-  aR("Track B — start / pace / cost / premium", "mo 4 / 5 / $18,000 / $200"),
-  aR("Blended cost / premium / return on cost", "$14,407 / $155 / 12.9%"),
-  aR("Renovation downtime, Track B", "14 incremental days"),
-  aR("Non-unit capital + 8% contingency", "$1,199,800"),
-  aR("Operating expenses, Year 1", "$8,929 per unit"),
-  aR("Real estate taxes, Y1 to Y5", "$137,000 to $160,300"),
-  aR("Replacement reserves", "$300 per unit, +3%"),
-  aR("Debt — LTC / rate / structure / fee", "65% / 5.85% / IO / 1.0%"),
-  aR("Debt test — min debt yield / DSCR", "8.0% / 1.25x"),
-  aR("Acquisition cost / cost of sale", "1.5% / 1.5%"),
-  aR("Exit cap rate", "6.75%, held constant"),
-], {
-  x: 0.45, y: 1.34, w: 6.0, colW: [3.55, 2.45], rowH: 0.213, fontFace: BODY,
-  border: { type: "solid", color: LINE, pt: 0.5 }, valign: "middle", margin: [2, 5, 2, 5],
-});
-a3.addText("Rent growth is set off Yardi Matrix 1Q-2026 ACTUALS and taxes off the 25-year Marion County assessment record — neither is a broker forecast. Where the rent roll and T-12 conflict with the OM, the Excel files govern: 53 units have in-unit laundry, not the OM's 78, so 65 units carry the case's $5,000 addition.",
-  { x: 0.45, y: 5.32, w: 6.0, h: 0.60, fontFace: BODY, fontSize: 8.5, italic: true, color: MUTED,
-    lineSpacing: 10.5, valign: "top", margin: 0 });
-
-h2(a3, 6.85, 0.92, 6.03, "Levered IRR — purchase price × exit cap",
+// ---- price x exit cap grid ----------------------------------------------
+h2(a1, 6.85, 0.86, 6.03, "Levered IRR — purchase price × exit cap",
    "The hurdle moves with the exit: at a 7.25% exit we can pay $11.25mm; at 6.25%, $12.87mm.");
 const gH = (t) => ({ text: t, options: { bold: true, fontSize: 9, color: WHITE,
   fill: { color: GREEN }, align: "center", valign: "middle" } });
-const gCell = (v, hi) => ({
+const gCell = (v) => ({
   text: (v * 100).toFixed(1) + "%",
   options: { fontSize: 9, align: "center", bold: v >= 0.14,
     color: v >= 0.14 ? INK : MUTED,
@@ -505,21 +405,22 @@ const GRID = [
   ["$13.0mm", [0.135, 0.119, 0.102, 0.086, 0.070]],
   ["$13.625mm", [0.113, 0.096, 0.079, 0.062, 0.045]],
 ];
-a3.addTable([
+a1.addTable([
   [gH("Purchase price"), gH("6.25%"), gH("6.50%"), gH("6.75%"), gH("7.00%"), gH("7.25%")],
   ...GRID.map(([p, vals]) => ([
     { text: p, options: { fontSize: 9, bold: p === "$12.0mm", color: p === "$13.625mm" ? RED : INK } },
     ...vals.map(v => gCell(v)),
   ])),
 ], {
-  x: 6.85, y: 1.44, w: 6.03, colW: [1.43, 0.92, 0.92, 0.92, 0.92, 0.92], rowH: 0.235,
+  x: 6.85, y: 1.40, w: 6.03, colW: [1.43, 0.92, 0.92, 0.92, 0.92, 0.92], rowH: 0.235,
   fontFace: BODY, border: { type: "solid", color: LINE, pt: 0.5 }, valign: "middle",
   margin: [2, 5, 2, 5],
 });
-a3.addText("Shaded ≥ 14%.  Base case $12.0mm at a 6.75% exit = 14.0%.  $13.625mm is what it traded for.", {
-  x: 6.85, y: 3.16, w: 6.03, h: 0.20, fontFace: BODY, fontSize: 8, italic: true, color: MUTED, margin: 0 });
+a1.addText("Shaded ≥ 14%.  Base case $12.0mm at a 6.75% exit = 14.0%.  $13.625mm is what it traded for.", {
+  x: 6.85, y: 3.12, w: 6.03, h: 0.20, fontFace: BODY, fontSize: 8, italic: true, color: MUTED, margin: 0 });
 
-h2(a3, 6.85, 3.52, 6.03, "Market and public-record evidence");
+// ---- evidence ------------------------------------------------------------
+h2(a1, 6.85, 3.48, 6.03, "Market and public-record evidence", "Actuals, not forecasts — this is what the assumptions are set off");
 const eH = (t) => ({ text: t, options: { bold: true, fontSize: 9, color: WHITE,
   fill: { color: INK }, valign: "middle" } });
 const eR = (a, b, c) => ([
@@ -527,7 +428,7 @@ const eR = (a, b, c) => ([
   { text: b, options: { fontSize: 8.5, bold: true, color: INK, align: "right" } },
   { text: c, options: { fontSize: 8, color: MUTED } },
 ]);
-a3.addTable([
+a1.addTable([
   [eH("Evidence"), eH("Actual"), eH("Source")],
   eR("Indianapolis metro asking rent, 1Q-26", "$1,310", "Yardi Matrix"),
   eR("Trailing-three-month rent change", "FLAT", "Yardi Matrix"),
@@ -540,16 +441,12 @@ a3.addTable([
   eR("Trade price, deed 12 Jun 2026", "$13,625,000", "Marion County"),
   eR("Prior sale, Mar 2006", "$4,400,000", "Marion County"),
 ], {
-  x: 6.85, y: 3.96, w: 6.03, colW: [3.12, 1.55, 1.36], rowH: 0.215, fontFace: BODY,
+  x: 6.85, y: 4.02, w: 6.03, colW: [3.12, 1.55, 1.36], rowH: 0.208, fontFace: BODY,
   border: { type: "solid", color: LINE, pt: 0.5 }, valign: "middle", margin: [2, 5, 2, 5],
 });
-a3.addText("Indiana values apartments at the lowest of the income, market and cost approaches — which is why assessed value here has not tracked trade prices. An earlier draft of this model stepped taxes toward a share of the purchase price; the record does not support it, and correcting it is worth about 1.5 points of levered IRR. The risk is still priced, in Ladder C.",
-  { x: 6.85, y: 6.42, w: 6.03, h: 0.72, fontFace: BODY, fontSize: 8.5, italic: true, color: MUTED,
+a1.addText("Indiana values apartments at the lowest of the income, market and cost approaches — which is why assessed value here has not tracked trade prices. An earlier draft stepped taxes toward a share of the purchase price; the record does not support it, and correcting it is worth about 1.5 points of levered IRR. The risk is still priced, in Ladder C.",
+  { x: 6.85, y: 6.36, w: 6.03, h: 0.76, fontFace: BODY, fontSize: 8.5, italic: true, color: MUTED,
     lineSpacing: 10.5, valign: "top", margin: 0 });
-
-a3.addText("Full detail — 13 tabs, 3,332 formulas, zero formula errors — in Chateau_in_the_Woods_5yr_Cash_Flow_Model.xlsx.  62 diligence questions with the answer assumed for each in Chateau_in_the_Woods_Due_Diligence_Questions.docx.",
-  { x: 0.45, y: 6.08, w: 6.0, h: 0.50, fontFace: BODY, fontSize: 8.5, color: MUTED,
-    lineSpacing: 10.5, margin: 0 });
 
 pres.writeFile({ fileName: "Chateau_in_the_Woods_IC_Presentation.pptx" })
   .then(f => console.log("wrote", f));
