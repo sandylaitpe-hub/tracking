@@ -7,7 +7,7 @@
 | File | What it is |
 |---|---|
 | `Chateau_in_the_Woods_5yr_Cash_Flow_Model.xlsx` | Dynamic five-year cash flow model, 13 tabs, 3,332 formulas, zero formula errors. Every projection cell is a formula off the `Assumptions` tab. |
-| `Chateau_in_the_Woods_IC_Presentation.pptx` | Two-slide investment committee memorandum: recommendation and returns; opportunities, risks, assumptions and overall assessment. |
+| `Chateau_in_the_Woods_IC_Presentation.pptx` | Chart-led investment committee deck: two main pages (recommendation and returns; where the value comes from and what moves it) plus three appendix pages (business plan, opportunities and risks, assumptions and the sensitivity grid). Eight native charts — the price ladder, the yield-on-cost spread, the two-track schedule and a breakeven tornado. |
 | `Chateau_in_the_Woods_Due_Diligence_Questions.docx` | 62 diligence questions across 10 categories, each paired with the reasonable answer assumed in the model. |
 
 ## The question this model answers
