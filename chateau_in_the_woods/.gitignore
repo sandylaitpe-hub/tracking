@@ -1,0 +1,8 @@
+node_modules/
+package.json
+package-lock.json
+*.pdf
+*.jpg
+sol.pkl
+recalc_out.txt
+verify_out.txt
