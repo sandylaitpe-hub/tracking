@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>證件相拍攝指引｜合格與不合格示例</title>
+<style>
+  :root{
+    --paper:#FBFAF6;
+    --panel:#F2EDE2;
+    --ink:#231F1A;
+    --ink-soft:#6E675E;
+    --hair:#DFD8CA;
+    --pass:#1E6B4C;
+    --fail:#92283A;
+    --measure:#B0384A;
+    --photo-bg:#8CBBD8;
+    --focus:#1E6B4C;
+
+    --f-head:"PingFang TC","Noto Sans TC","Microsoft JhengHei","Hiragino Sans TC","Heiti TC",sans-serif;
+    --f-body:"PingFang TC","Noto Sans TC","Microsoft JhengHei","Hiragino Sans TC",sans-serif;
+    --f-tech:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+  }
+  @media (prefers-color-scheme:dark){
+    :root:not([data-theme="light"]){
+      --paper:#17150F;
+      --panel:#211E18;
+      --ink:#EFEAE0;
+      --ink-soft:#9A9187;
+      --hair:#332E26;
+      --pass:#63C395;
+      --fail:#E68796;
+      --measure:#DB7482;
+      --photo-bg:#6C9CBA;
+      --focus:#63C395;
+    }
+  }
+  :root[data-theme="dark"]{
+    --paper:#17150F;
+    --panel:#211E18;
+    --ink:#EFEAE0;
+    --ink-soft:#9A9187;
+    --hair:#332E26;
+    --pass:#63C395;
+    --fail:#E68796;
+    --measure:#DB7482;
+    --photo-bg:#6C9CBA;
+    --focus:#63C395;
+  }
+
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:var(--f-body);
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  .sheet{
+    max-width:920px;
+    margin:0 auto;
+    padding:clamp(24px,5vw,56px) clamp(18px,4vw,40px) 64px;
+    display:flex;
+    flex-direction:column;
+    gap:clamp(28px,4vw,44px);
+  }
+
+  /* ---------- controls ---------- */
+  .controls{
+    display:flex;
+    flex-wrap:wrap;
+    align-items:center;
+    gap:14px 22px;
+    padding:16px 18px;
+    background:var(--panel);
+    border:1px solid var(--hair);
+    border-radius:3px;
+  }
+  .controls .lede{
+    flex:1 1 100%;
+    margin:0;
+    font-size:13px;
+    color:var(--ink-soft);
+  }
+  .picker{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    padding:9px 18px;
+    background:var(--ink);
+    color:var(--paper);
+    border:0;
+    border-radius:2px;
+    font-family:var(--f-head);
+    font-size:14px;
+    font-weight:700;
+    letter-spacing:.04em;
+    cursor:pointer;
+  }
+  .picker:hover{opacity:.86;}
+  .picker:focus-visible,
+  input[type=range]:focus-visible{outline:2px solid var(--focus);outline-offset:3px;}
+  #file{position:absolute;width:1px;height:1px;opacity:0;pointer-events:none;}
+  .slider{
+    display:inline-flex;
+    align-items:center;
+    gap:10px;
+    font-size:13px;
+    color:var(--ink-soft);
+  }
+  .slider input[type=range]{width:130px;accent-color:var(--focus);}
+  .hint{
+    font-size:12.5px;
+    color:var(--ink-soft);
+    font-family:var(--f-tech);
+  }
+
+  /* ---------- photo frames ---------- */
+  .frame{
+    position:relative;
+    aspect-ratio:35/45;
+    background:var(--photo-bg);
+    overflow:hidden;
+    border-radius:1px;
+  }
+  .frame img{
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    transform:
+      translate(calc(var(--ox,0%) + var(--dx,0%)), calc(var(--oy,0%) + var(--dy,0%)))
+      rotate(var(--rot,0deg))
+      scale(calc(var(--z,1) * var(--dz,1)));
+    filter:var(--fx,none);
+    transform-origin:50% 42%;
+  }
+  .frame .veil{
+    position:absolute;
+    inset:0;
+    background:var(--veil,none);
+    pointer-events:none;
+  }
+  body:not(.has-photo) .frame img{display:none;}
+  .guide{
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+    pointer-events:none;
+    opacity:.5;
+  }
+  body.has-photo .tile .guide{display:none;}
+  body.has-photo .hero-frame .guide{opacity:.28;}
+  body.has-photo.no-guide .guide{display:none;}
+
+  /* ---------- pass block ---------- */
+  .pass{
+    display:grid;
+    grid-template-columns:minmax(200px,1fr) auto;
+    align-items:center;
+    gap:clamp(20px,5vw,56px);
+  }
+  .badge-col{display:flex;flex-direction:column;gap:14px;}
+  .stamp{
+    width:104px;height:104px;
+    border:5px solid var(--pass);
+    border-radius:50%;
+    display:grid;place-items:center;
+    color:var(--pass);
+    font-family:var(--f-head);
+    font-size:34px;
+    font-weight:800;
+    letter-spacing:.06em;
+  }
+  .badge-col h2{
+    margin:0;
+    font-family:var(--f-head);
+    font-size:clamp(30px,6vw,42px);
+    font-weight:800;
+    letter-spacing:.06em;
+    color:var(--pass);
+    text-wrap:balance;
+  }
+  .badge-col p{
+    margin:0;
+    font-size:14.5px;
+    color:var(--ink-soft);
+    max-width:22em;
+  }
+
+  .hero-measure{display:flex;flex-direction:column;gap:10px;}
+  .hero-row{display:flex;align-items:stretch;gap:12px;}
+  .hero-frame{
+    width:clamp(180px,30vw,244px);
+    cursor:grab;
+    touch-action:none;
+    box-shadow:0 1px 0 var(--hair);
+  }
+  .hero-frame:active{cursor:grabbing;}
+  .mv{
+    position:relative;
+    display:flex;
+    align-items:center;
+    padding-left:20px;
+  }
+  .mv::before{
+    content:"";position:absolute;left:4px;top:0;bottom:0;
+    width:1px;background:var(--measure);
+  }
+  .mv::after{
+    content:"";position:absolute;left:0;top:0;bottom:0;width:9px;
+    border-top:1px solid var(--measure);
+    border-bottom:1px solid var(--measure);
+  }
+  .mh{
+    position:relative;
+    width:clamp(180px,30vw,244px);
+    padding-top:20px;
+    text-align:center;
+  }
+  .mh::before{
+    content:"";position:absolute;top:4px;left:0;right:0;
+    height:1px;background:var(--measure);
+  }
+  .mh::after{
+    content:"";position:absolute;top:0;left:0;right:0;height:9px;
+    border-left:1px solid var(--measure);
+    border-right:1px solid var(--measure);
+  }
+  .mv span,.mh span{
+    font-family:var(--f-tech);
+    font-size:15px;
+    font-weight:600;
+    color:var(--measure);
+    font-variant-numeric:tabular-nums;
+  }
+
+  /* ---------- fail block ---------- */
+  .fail-head{
+    display:flex;
+    align-items:baseline;
+    gap:14px;
+    flex-wrap:wrap;
+  }
+  .fail-head h2{
+    margin:0;
+    font-family:var(--f-head);
+    font-size:clamp(24px,5vw,34px);
+    font-weight:800;
+    letter-spacing:.05em;
+    color:var(--fail);
+  }
+  .fail-head .sub{font-size:14px;color:var(--ink-soft);}
+  .fail-head .rule{
+    flex:1 1 60px;
+    height:1px;
+    background:var(--fail);
+    opacity:.55;
+    align-self:center;
+    min-width:40px;
+  }
+  .grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:clamp(14px,2.5vw,26px) clamp(12px,2vw,22px);
+    margin-top:22px;
+  }
+  @media (max-width:720px){.grid{grid-template-columns:repeat(2,1fr);}}
+  .tile{margin:0;display:flex;flex-direction:column;gap:9px;}
+  .tile figcaption{
+    display:flex;
+    align-items:center;
+    gap:7px;
+    font-family:var(--f-head);
+    font-size:clamp(14px,2.4vw,16px);
+    font-weight:700;
+    letter-spacing:.02em;
+  }
+  .tile .x{color:var(--fail);font-size:1.05em;line-height:1;}
+  .tile .why{
+    font-family:var(--f-body);
+    font-size:12px;
+    font-weight:400;
+    color:var(--ink-soft);
+    letter-spacing:0;
+  }
+
+  /* ---------- note ---------- */
+  .note{
+    border-top:1px solid var(--hair);
+    padding-top:18px;
+    font-size:13.5px;
+    color:var(--ink-soft);
+    max-width:60ch;
+  }
+  .note b{color:var(--ink);font-weight:700;}
+
+  @media (max-width:640px){
+    .pass{grid-template-columns:1fr;justify-items:start;}
+  }
+  @media print{
+    :root{
+      --paper:#fff;--panel:#fff;--ink:#231F1A;--ink-soft:#6E675E;
+      --hair:#DFD8CA;--pass:#1E6B4C;--fail:#92283A;--measure:#B0384A;--photo-bg:#8CBBD8;
+    }
+    .controls{display:none;}
+    .sheet{padding:0;}
+  }
+</style>
+</head>
+<body>
+
+<main class="sheet">
+
+  <div class="controls">
+    <p class="lede">選一張你自己的相片，下面的示例會即時用它算出來。相片只在這個瀏覽器分頁裡處理，不會上傳。</p>
+    <label class="picker" for="file">選擇相片</label>
+    <input id="file" type="file" accept="image/*">
+    <label class="slider">縮放
+      <input id="zoom" type="range" min="1" max="3" step="0.01" value="1.35">
+    </label>
+    <label class="slider">
+      <input id="guideToggle" type="checkbox" checked> 顯示對位線
+    </label>
+    <span class="hint">在大圖上拖曳可移動位置</span>
+  </div>
+
+  <section class="pass">
+    <div class="badge-col">
+      <div class="stamp">OK</div>
+      <h2>合格示例</h2>
+      <p>正面朝向鏡頭，五官清楚可見，表情自然，背景單一無雜物，頭頂到下巴約佔相片高度的七成。</p>
+    </div>
+
+    <div class="hero-measure">
+      <div class="hero-row">
+        <div class="frame hero-frame" id="hero">
+          <img id="heroImg" alt="你選擇的相片，裁切為合格的證件相構圖">
+          <div class="veil"></div>
+          <svg class="guide" viewBox="0 0 35 45" aria-hidden="true">
+            <g fill="none" stroke="#fff" stroke-width=".35" stroke-dasharray="1.2 1" opacity=".85">
+              <ellipse cx="17.5" cy="17" rx="8.4" ry="10.6"/>
+              <path d="M4 45c1.6-8 6.6-11.6 13.5-11.6S29.4 37 31 45"/>
+              <path d="M17.5 3.4v38"/>
+            </g>
+          </svg>
+        </div>
+        <div class="mv"><span>45mm</span></div>
+      </div>
+      <div class="mh"><span>35mm</span></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="fail-head">
+      <h2>不合格示例</h2>
+      <span class="sub">（以下相片不可使用）</span>
+      <span class="rule"></span>
+    </div>
+
+    <div class="grid" id="grid">
+      <figure class="tile" style="--dz:1.95;--dy:6%">
+        <div class="frame"><img alt="臉部過大的不合格示例"><div class="veil"></div>
+          <svg class="guide" viewBox="0 0 35 45" aria-hidden="true"><g fill="none" stroke="#fff" stroke-width=".35" stroke-dasharray="1.2 1" opacity=".85"><ellipse cx="17.5" cy="17" rx="8.4" ry="10.6"/><path d="M4 45c1.6-8 6.6-11.6 13.5-11.6S29.4 37 31 45"/></g></svg>
+        </div>
+        <figcaption><span class="x">✕</span>太近<span class="why">頭部超出框線</span></figcaption>
+      </figure>
+
+      <figure class="tile" style="--dz:0.52">
+        <div class="frame"><img alt="臉部過小的不合格示例"><div class="veil"></div>
+          <svg class="guide" viewBox="0 0 35 45" aria-hidden="true"><g fill="none" stroke="#fff" stroke-width=".35" stroke-dasharray="1.2 1" opacity=".85"><ellipse cx="17.5" cy="17" rx="8.4" ry="10.6"/><path d="M4 45c1.6-8 6.6-11.6 13.5-11.6S29.4 37 31 45"/></g></svg>
+        </div>
+        <figcaption><span class="x">✕</span>太遠<span class="why">頭部佔比不足</span></figcaption>
+      </figure>
+
+      <figure class="tile" style="--fx:blur(3.2px)">
+        <div class="frame"><img alt="失焦模糊的不合格示例"><div class="veil"></div>
+          <svg class="guide" viewBox="0 0 35 45" aria-hidden="true"><g fill="none" stroke="#fff" stroke-width=".35" stroke-dasharray="1.2 1" opacity=".85"><ellipse cx="17.5" cy="17" rx="8.4" ry="10.6"/><path d="M4 45c1.6-8 6.6-11.6 13.5-11.6S29.4 37 31 45"/></g></svg>
+        </div>
+        <figcaption><span class="x">✕</span>模糊<span class="why">對焦不清或手震</span></figcaption>
+      </figure>
+
+      <figure class="tile" style="--rot:15deg;--dz:1.18">
+        <div class="frame"><img alt="頭部傾斜的不合格示例"><div class="veil"></div>
+          <svg class="guide" viewBox="0 0 35 45" aria-hidden="true"><g fill="none" stroke="#fff" stroke-width=".35" stroke-dasharray="1.2 1" opacity=".85"><ellipse cx="17.5" cy="17" rx="8.4" ry="10.6"/><path d="M4 45c1.6-8 6.6-11.6 13.5-11.6S29.4 37 31 45"/></g></svg>
+        </div>
+        <figcaption><span class="x">✕</span>頭部傾斜<span class="why">未保持水平</span></figcaption>
+      </figure>
+
+      <figure class="tile" style="--fx:brightness(1.62) contrast(.72) saturate(.65)">
+        <div class="frame"><img alt="曝光過度的不合格示例"><div class="veil"></div>
+          <svg class="guide" viewBox="0 0 35 45" aria-hidden="true"><g fill="none" stroke="#fff" stroke-width=".35" stroke-dasharray="1.2 1" opacity=".85"><ellipse cx="17.5" cy="17" rx="8.4" ry="10.6"/><path d="M4 45c1.6-8 6.6-11.6 13.5-11.6S29.4 37 31 45"/></g></svg>
+        </div>
+        <figcaption><span class="x">✕</span>曝光過度<span class="why">五官細節消失</span></figcaption>
+      </figure>
+
+      <figure class="tile" style="--fx:brightness(.62) contrast(1.1);--veil:linear-gradient(100deg,rgba(0,0,0,.55) 0%,rgba(0,0,0,.12) 55%,rgba(0,0,0,0) 100%)">
+        <div class="frame"><img alt="光線不足且臉部有陰影的不合格示例"><div class="veil"></div>
+          <svg class="guide" viewBox="0 0 35 45" aria-hidden="true"><g fill="none" stroke="#fff" stroke-width=".35" stroke-dasharray="1.2 1" opacity=".85"><ellipse cx="17.5" cy="17" rx="8.4" ry="10.6"/><path d="M4 45c1.6-8 6.6-11.6 13.5-11.6S29.4 37 31 45"/></g></svg>
+        </div>
+        <figcaption><span class="x">✕</span>臉部陰影<span class="why">光線太暗或側光</span></figcaption>
+      </figure>
+
+      <figure class="tile" style="--dx:24%;--dy:-7%;--dz:1.1">
+        <div class="frame"><img alt="臉部偏離中心的不合格示例"><div class="veil"></div>
+          <svg class="guide" viewBox="0 0 35 45" aria-hidden="true"><g fill="none" stroke="#fff" stroke-width=".35" stroke-dasharray="1.2 1" opacity=".85"><ellipse cx="17.5" cy="17" rx="8.4" ry="10.6"/><path d="M4 45c1.6-8 6.6-11.6 13.5-11.6S29.4 37 31 45"/></g></svg>
+        </div>
+        <figcaption><span class="x">✕</span>偏離中心<span class="why">臉未置中</span></figcaption>
+      </figure>
+
+      <figure class="tile" style="--fx:saturate(1.75) contrast(1.16) sepia(.18);--veil:radial-gradient(60% 45% at 50% 34%,rgba(255,255,255,.34) 0%,rgba(255,255,255,0) 100%)">
+        <div class="frame"><img alt="套用美顏濾鏡的不合格示例"><div class="veil"></div>
+          <svg class="guide" viewBox="0 0 35 45" aria-hidden="true"><g fill="none" stroke="#fff" stroke-width=".35" stroke-dasharray="1.2 1" opacity=".85"><ellipse cx="17.5" cy="17" rx="8.4" ry="10.6"/><path d="M4 45c1.6-8 6.6-11.6 13.5-11.6S29.4 37 31 45"/></g></svg>
+        </div>
+        <figcaption><span class="x">✕</span>套用濾鏡<span class="why">美顏或調色後失真</span></figcaption>
+      </figure>
+    </div>
+
+    <p class="note">
+      <b>還有幾種情況這裡示範不出來，需要重新拍攝：</b>閉眼、露齒大笑、吐舌、戴帽或頭飾、戴太陽眼鏡、頭髮遮住眼睛、以及背景有其他人或雜物。這些都不是裁切或調光能改的，只能重拍。
+    </p>
+  </section>
+
+</main>
+
+<script>
+(function(){
+  var body=document.body,
+      file=document.getElementById('file'),
+      zoom=document.getElementById('zoom'),
+      guideToggle=document.getElementById('guideToggle'),
+      hero=document.getElementById('hero'),
+      sheet=document.querySelector('.sheet'),
+      imgs=document.querySelectorAll('.frame img'),
+      url=null,
+      ox=0, oy=0;
+
+  function setVar(n,v){sheet.style.setProperty(n,v);}
+
+  setVar('--z',zoom.value);
+  setVar('--ox','0%');
+  setVar('--oy','0%');
+
+  file.addEventListener('change',function(){
+    var f=file.files && file.files[0];
+    if(!f) return;
+    if(url) URL.revokeObjectURL(url);
+    url=URL.createObjectURL(f);
+    for(var i=0;i<imgs.length;i++) imgs[i].src=url;
+    body.classList.add('has-photo');
+  });
+
+  zoom.addEventListener('input',function(){setVar('--z',zoom.value);});
+
+  guideToggle.addEventListener('change',function(){
+    body.classList.toggle('no-guide',!guideToggle.checked);
+  });
+
+  var dragging=false,sx=0,sy=0,bx=0,by=0;
+  function clamp(v){return Math.max(-45,Math.min(45,v));}
+
+  hero.addEventListener('pointerdown',function(e){
+    if(!body.classList.contains('has-photo')) return;
+    dragging=true; sx=e.clientX; sy=e.clientY; bx=ox; by=oy;
+    hero.setPointerCapture(e.pointerId);
+  });
+  hero.addEventListener('pointermove',function(e){
+    if(!dragging) return;
+    var r=hero.getBoundingClientRect();
+    ox=clamp(bx+(e.clientX-sx)/r.width*100);
+    oy=clamp(by+(e.clientY-sy)/r.height*100);
+    setVar('--ox',ox+'%');
+    setVar('--oy',oy+'%');
+  });
+  function end(e){
+    if(!dragging) return;
+    dragging=false;
+    try{hero.releasePointerCapture(e.pointerId);}catch(err){}
+  }
+  hero.addEventListener('pointerup',end);
+  hero.addEventListener('pointercancel',end);
+
+  hero.addEventListener('wheel',function(e){
+    if(!body.classList.contains('has-photo')) return;
+    e.preventDefault();
+    var z=Math.max(1,Math.min(3,parseFloat(zoom.value)-e.deltaY*0.0016));
+    zoom.value=z; setVar('--z',z);
+  },{passive:false});
+})();
+</script>
+</body>
+</html>
